@@ -210,9 +210,23 @@ class AdvanceCustomLogin {
             wp_enqueue_style( 'login_dashboard', $asset_file_link . 'css/login-settings.css', [], filemtime($folder_path.'css/login-settings.css') );            
             wp_enqueue_script( 'bootstrap', $asset_file_link . 'js/bootstrap.bundle.min.js',['jquery'],filemtime($folder_path.'js/bootstrap.bundle.min.js'), true );
             wp_enqueue_script('select2', $asset_file_link . 'js/select2.js', ['jquery'], '4.0', true);
-            wp_enqueue_script( 'login_dashboard', $asset_file_link . 'js/login-settings.js',['jquery'],filemtime($folder_path.'js/login-settings.js'), true );
+            // Add the color picker css file       
+            // wp_enqueue_style( 'wp-color-picker' ); 
+            wp_enqueue_script( 'login_dashboard', $asset_file_link . 'js/login-settings.js',['jquery','wp-color-picker'],filemtime($folder_path.'js/login-settings.js'), true );
 
         
+    }
+
+    /**
+     * Function that will check if value is a valid HEX color.
+     */
+    public function check_color( $value ) { 
+         
+        if ( preg_match( '/^#[a-f0-9]{6}$/i', $value ) ) { // if user insert a HEX color with #     
+            return true;
+        }
+         
+        return false;
     }
 
     /**

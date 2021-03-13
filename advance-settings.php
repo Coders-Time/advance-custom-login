@@ -52,6 +52,17 @@ defined( 'ABSPATH' ) || exit;
 					      <option value="4"> <?php esc_html_e( 'Slider Background', 'advsign' ); ?> </option>
 					    </select>
 					  </div>
+
+
+					  	<div class="form-group">
+						    <label for="colorPicker">  <?php esc_html_e( 'Select Background Color', 'advsign' ); ?> </label>
+						    <input type="text" class="form-control" id="colorPicker" aria-describedby="bgcolorHelp">
+						    <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+						</div>
+
+
+
+
 					   
 					  <div class="form-group">
 					    <label for="exampleFormControlTextarea1">Example textarea</label>

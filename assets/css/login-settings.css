@@ -1,0 +1,50 @@
+/*override load-styles.php style*/
+
+.custom-switch{padding-left: 5.25rem}
+
+.custom-switch .custom-control-label::before {
+	width: 5rem;
+    left: -5.2rem;
+}
+.custom-control-label::before {
+    height: 2rem;
+}
+
+.custom-switch .custom-control-input:checked~.custom-control-label::after {
+    -webkit-transform: translateX(3rem);
+    transform: translateX(3rem);
+}
+
+
+.custom-switch .custom-control-label::after {
+    width: calc(2rem - 4px);
+    height: calc(2rem - 4px);
+    left: calc(-5.25rem + 2px);
+}
+
+.custom-control-label{
+	padding-top: 9px;
+    padding-left: 10px;
+}
+
+
+/*select2*/
+.select2-container {
+	width: 100%!important
+}
+
+.select2-selection {
+	font-size: 14px;
+	outline: 0;
+	min-height: 48px;
+	text-align: left
+}
+
+.select2-selection__rendered {
+	margin: 10px
+}
+
+.select2-selection__arrow {
+	margin: 10px
+}
+

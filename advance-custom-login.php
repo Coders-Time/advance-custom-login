@@ -79,6 +79,7 @@ class AdvanceCustomLogin {
 
         $info = '';
 
+
         include ( 'advance-settings.php' );
 
     }
@@ -198,15 +199,18 @@ class AdvanceCustomLogin {
 
     public function adv_login_dashboard_stylesheet ( $screen ) {
 
-        if ( 'toplevel_page_advance-login' == $screen ) {
+        if( $screen != 'toplevel_page_advance-login') { return; }
+
+
             $asset_file_link = plugins_url( '/assets/', __FILE__ );
             $folder_path= __DIR__ .'/assets/';
 
-            wp_enqueue_style( 'bootstrap', $asset_file_link . 'css/bootstrap.min.css', [], '5.0' );
+            wp_enqueue_style('select2', $asset_file_link . 'css/select2.css', [], '4.0');
+            wp_enqueue_style( 'bootstrap', $asset_file_link . 'css/bootstrap.min.css', [], '4.6' );
             wp_enqueue_style( 'login_dashboard', $asset_file_link . 'css/login-settings.css', [], filemtime($folder_path.'css/login-settings.css') );            
             wp_enqueue_script( 'bootstrap', $asset_file_link . 'js/bootstrap.bundle.min.js',['jquery'],filemtime($folder_path.'js/bootstrap.bundle.min.js'), true );
+            wp_enqueue_script('select2', $asset_file_link . 'js/select2.js', ['jquery'], '4.0', true);
             wp_enqueue_script( 'login_dashboard', $asset_file_link . 'js/login-settings.js',['jquery'],filemtime($folder_path.'js/login-settings.js'), true );
-        }
 
         
     }

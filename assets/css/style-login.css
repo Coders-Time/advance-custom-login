@@ -26,3 +26,7 @@ body.login div#login p#backtoblog {}
 body.login div#login p#backtoblog a {
     color: #998877;
 }
+
+input[type=checkbox], input[type=radio] {
+    margin: 0 0 0 0;
+}

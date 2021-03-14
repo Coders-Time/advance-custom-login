@@ -54,9 +54,9 @@ class AdvanceCustomLogin {
         add_filter( 'wp_login_errors', [ $this, 'gen_registered_success_message' ], 10, 2 );
         add_filter( 'login_title', [ $this, 'custom_login_title' ], 99 );
         add_filter( 'admin_footer_text', [ $this, 'remove_footer_admin' ]);
-        
     }
 
+    
     /**
      *
      * Create Manual order menu with cart icon

@@ -8,6 +8,8 @@
 		console.clear();
 
 		$('#colorPicker').wpColorPicker(myOptions);
+		$('#borderColorPicker').wpColorPicker(myOptions);
+		$('#formShadowColorPicker').wpColorPicker(myOptions);
 
 		var myOptions = {
 		    // you can declare a default color here,

@@ -48,6 +48,16 @@
 	margin: 10px
 }
 
+.wp-core-ui .button{
+    margin-right: 1%;
+    padding: 0.4% 2%;
+}
+
+.wp-core-ui .button.button-small{
+	margin-left: 1%;
+	padding: 0.6% 2%;
+}
+
 
 
 

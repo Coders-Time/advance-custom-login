@@ -9,7 +9,14 @@
 
 		$('#colorPicker').wpColorPicker(myOptions);
 		$('#borderColorPicker').wpColorPicker(myOptions);
-		$('#formShadowColorPicker').wpColorPicker(myOptions);
+		$('#borderColorPicker').wpColorPicker(myOptions);
+		$('#messageFontColorPicker').wpColorPicker(myOptions);
+		$('#headlineFontColorPicker').wpColorPicker(myOptions);
+		$('#inputFontColorPicker').wpColorPicker(myOptions);
+		$('#linkColorPicker').wpColorPicker(myOptions);
+		$('#buttonColorPicker').wpColorPicker(myOptions);
+		$('#loginButtonColorPicker').wpColorPicker(myOptions);
+		$('#linkShadowColorPicker').wpColorPicker(myOptions);
 
 		var myOptions = {
 		    // you can declare a default color here,

@@ -135,7 +135,7 @@ class AdvanceCustomLogin {
        {
          $tmp = $errors->errors;   
 
-         $old = __('Registration complete. Please check your email.');
+         $old = __('Registration complete. Please check your email.','advsign');
          $new = 'Registration successfully complete.';
 
          // Loop through the errors messages and modify the corresponding message:

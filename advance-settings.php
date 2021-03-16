@@ -544,19 +544,387 @@ defined( 'ABSPATH' ) || exit;
 				  </div>
 				  <!-- font tab ends -->
 				  <!-- logo tab starts -->
-				  <div class="tab-pane fade" id="nav-logo" role="tabpanel" aria-labelledby="nav-logo-tab">Logo
+				  <div class="tab-pane fade" id="nav-logo" role="tabpanel" aria-labelledby="nav-logo-tab">
+				  	<div class="form-group alert border fade show">
+						<label for="login_logo"> <?php esc_html_e( 'Logo Image', 'advsign' ); ?>  </label>
+						<input type="url" value="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" class="form-control " id="login_logo" aria-describedby="login_logoHelp" readonly>
+						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </small></a>
+						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small></a>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<label for="select-background"> <?php esc_html_e( 'Show Logo', 'advsign' ); ?>	</label>
+						<div>
+							<input type="radio" name="showLogo" id="showLogo1" value="option1" checked>
+							<label class="form-check-label" for="showLogo1">
+								<?php esc_html_e( 'Yes', 'advsign' ); ?> 
+							</label>
+						</div>
+						<div>
+							<input type="radio" name="showLogo" id="showLogo2" value="option2">
+							<label class="form-check-label" for="showLogo2">
+								<?php esc_html_e( 'No', 'advsign' ); ?> 
+							</label>
+						</div>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="logo_width"><?php esc_html_e( 'Logo Image Width', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" id="logo_width">
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="logo_height"><?php esc_html_e( 'Logo Image Height', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" id="logo_height">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="logo_link_url"><?php esc_html_e( 'Logo Link URL', 'advsign' ); ?></label>
+									<input type="text" class="form-control" id="logo_link_url" aria-describedby="logo_link_url">
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="logo_title"><?php esc_html_e( 'Logo Image Title', 'advsign' ); ?></label>
+									<input type="text" class="form-control" id="logo_title" aria-describedby="logo_title">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+					</div>
 				  </div>
 				  <!-- logo tab ends -->
 				  <!-- social tab starts -->
-				  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">Social
+				  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
+				  	<div class="form-group border p-3 mb-3 rounded">
+						<label for="social_icon_placement"> <?php esc_html_e( 'Social Icon Placement', 'advsign' ); ?>	</label>
+						<select class="form-control" id="social_icon_placement" name="social_icon_placement">
+							<option value="0"> <?php esc_html_e( 'No Icon', 'advsign' ); ?> </option>
+							<option value="1"> <?php esc_html_e( 'Outer', 'advsign' ); ?> </option>
+							<option value="2"> <?php esc_html_e( 'Inner', 'advsign' ); ?> </option>
+							<option value="3"> <?php esc_html_e( 'Both', 'advsign' ); ?> </option>
+						</select>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="select-background"> <?php esc_html_e( 'Social Media Icon Size', 'advsign' ); ?>	</label>
+									<div>
+										<input type="radio" name="social_icon_size" id="social_icon_size1" value="option1" checked>
+										<label class="form-check-label" for="social_icon_size1">
+											<?php esc_html_e( 'Small', 'advsign' ); ?> 
+										</label>
+									</div>
+									<div>
+										<input type="radio" name="social_icon_size" id="social_icon_size2" value="option2">
+										<label class="form-check-label" for="social_icon_size2">
+											<?php esc_html_e( 'Medium', 'advsign' ); ?> 
+										</label>
+									</div>
+									<div>
+										<input type="radio" name="social_icon_size" id="social_icon_size3" value="option2">
+										<label class="form-check-label" for="social_icon_size3">
+											<?php esc_html_e( 'Rectangle', 'advsign' ); ?> 
+										</label>
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="select-background"> <?php esc_html_e( 'Social Media Icon Layout', 'advsign' ); ?>	</label>
+									<div>
+										<input type="radio" name="social_icon_layout" id="social_icon_layout1" value="option1" checked>
+										<label class="form-check-label" for="social_icon_layout1">
+											<?php esc_html_e( 'Rectangle', 'advsign' ); ?> 
+										</label>
+									</div>
+									<div>
+										<input type="radio" name="social_icon_layout" id="social_icon_layout2" value="option2">
+										<label class="form-check-label" for="social_icon_layout2">
+											<?php esc_html_e( 'Circle', 'advsign' ); ?> 
+										</label>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color', 'advsign' ); ?> </label>
+								<input type="text" class="form-control" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
+								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color On Hover', 'advsign' ); ?> </label>
+								<input type="text" class="form-control" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
+								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+							</div>
+						</div>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Background Color', 'advsign' ); ?> </label>
+								<input type="text" class="form-control" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
+								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="colorPicker">  <?php esc_html_e( 'Social Media Background Color On Hover', 'advsign' ); ?> </label>
+								<input type="text" class="form-control" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
+								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+							</div>
+						</div>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Window', 'advsign' ); ?>	</label>
+									<div>
+										<input type="radio" name="social_icon_new_tab" id="social_icon_new1" value="option1" checked>
+										<label class="form-check-label" for="social_icon_size1">
+											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
+										</label>
+									</div>
+									<div>
+										<input type="radio" name="social_icon_new_tab" id="social_icon_new2" value="option2">
+										<label class="form-check-label" for="social_icon_size2">
+											<?php esc_html_e( 'No', 'advsign' ); ?> 
+										</label>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+						<label for="logo_link_url"><?php esc_html_e( 'Social Links', 'advsign' ); ?></label>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="facebook_link"><?php esc_html_e( 'Facebook', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-facebook-f"></i></div>
+										</div>
+										<input type="text" class="form-control" id="facebook_link" placeholder="facebook account url">
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="twitter_link"><?php esc_html_e( 'Twitter', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-twitter"></i></div>
+										</div>
+										<input type="text" class="form-control" id="twitter_link" placeholder="twiiter account url">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="linkedin_link"><?php esc_html_e( 'Linkedin', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-linkedin-in"></i></div>
+										</div>
+										<input type="text" class="form-control" id="linkedin_link" placeholder="linkedin account url">
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="g+_link"><?php esc_html_e( 'Google Plus', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-google-plus-g"></i></div>
+										</div>
+										<input type="text" class="form-control" id="g+_link" placeholder="G+ account url">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="pinterest_link"><?php esc_html_e( 'Pinterest', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-pinterest-p"></i></div>
+										</div>
+										<input type="text" class="form-control" id="pinterest_link" placeholder="pinterest account url">
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="digg_link"><?php esc_html_e( 'Digg', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-digg"></i></div>
+										</div>
+										<input type="text" class="form-control" id="digg_link" placeholder="digg account url">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="youtube_link"><?php esc_html_e( 'YouTube', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-youtube"></i></div>
+										</div>
+										<input type="text" class="form-control" id="youtube_link" placeholder="youtube account url">
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="flickr_link"><?php esc_html_e( 'Flickr', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-flickr"></i></div>
+										</div>
+										<input type="text" class="form-control" id="flickr_link" placeholder="flickr account url">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="tumblr_link"><?php esc_html_e( 'Tumblr', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-tumblr"></i></div>
+										</div>
+										<input type="text" class="form-control" id="tumblr_link" placeholder="tumblr account url">
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="skype_link"><?php esc_html_e( 'Skype', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-skype"></i></div>
+										</div>
+										<input type="text" class="form-control" id="skype_link" placeholder="skype account url">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="insta_link"><?php esc_html_e( 'Instagram', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-instagram"></i></div>
+										</div>
+										<input type="text" class="form-control" id="insta_link" placeholder="instagram account url">
+									</div>
+								</div>
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="telegram_link"><?php esc_html_e( 'Telegram', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-telegram-plane"></i></div>
+										</div>
+										<input type="text" class="form-control" id="telegram_link" placeholder="telegram account url">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label class="sr-only" for="watsapp_link"><?php esc_html_e( 'Watsapp', 'advsign' ); ?></label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+										<div class="input-group-text"><i class="fab fa-whatsapp"></i></div>
+										</div>
+										<input type="text" class="form-control" id="watsapp_link" placeholder="watsapp account url">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
 				  </div>
 				  <!-- social tab ends -->
 				  <!-- google captcha tab starts -->
-				  <div class="tab-pane fade" id="nav-google" role="tabpanel" aria-labelledby="nav-google-tab">Google Captcha
+				  <div class="tab-pane fade" id="nav-google" role="tabpanel" aria-labelledby="nav-google-tab">
+				 	 <div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="captcha"> <?php esc_html_e( 'Captcha Display', 'advsign' ); ?>	</label>
+									<div>
+										<input type="radio" name="google_captcha" id="google_captcha1" value="option1" checked>
+										<label class="form-check-label" for="social_icon_size1">
+											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
+										</label>
+									</div>
+									<div>
+										<input type="radio" name="google_captcha" id="google_captcha2" value="option2">
+										<label class="form-check-label" for="social_icon_size2">
+											<?php esc_html_e( 'No', 'advsign' ); ?> 
+										</label>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				 	 <div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="captcha_version"> <?php esc_html_e( 'Choose Google Captcha Version', 'advsign' ); ?></label>
+									<div>
+										<input type="radio" name="captcha_version" id="captcha_version1" value="option1" checked>
+										<label class="form-check-label" for="captcha_version2">
+											<?php esc_html_e( 'v2', 'advsign' ); ?> 
+										</label>
+									</div>
+									<div>
+										<input type="radio" name="captcha_version" id="captcha_version2" value="option2">
+										<label class="form-check-label" for="captcha_version3">
+											<?php esc_html_e( 'v3', 'advsign' ); ?> 
+										</label>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="form-group">
+								<label for="site_key"><?php esc_html_e( 'Site Key', 'advsign' ); ?></label>
+								<input type="text" class="form-control" id="site_key" aria-describedby="logo_link_url">
+							</div>
+						</form>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<div class="form-group">
+								<label for="secret_key"><?php esc_html_e( 'Secret Key', 'advsign' ); ?></label>
+								<input type="text" class="form-control" id="secret_key" aria-describedby="logo_link_url">
+							</div>
+						</form>
+					</div>
 				  </div>
 				  <!-- google captcha tab ends -->
 				  <!-- export/import tab starts -->
-				  <div class="tab-pane fade" id="nav-expi" role="tabpanel" aria-labelledby="nav-expi-tab">Export/Import
+				  <div class="tab-pane fade" id="nav-expi" role="tabpanel" aria-labelledby="nav-expi-tab">
+				  	<div class="border p-3 mb-3 rounded">
+						<form> 
+							<label for="captcha"> <?php esc_html_e( 'Export File', 'advsign' ); ?>	</label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Export File" aria-label="export-file" aria-describedby="basic-addon2" readonly>
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Export', 'advsign' ); ?></button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="border p-3 mb-3 rounded">
+						<form> 
+							<label for="captcha"> <?php esc_html_e( 'Import File', 'advsign' ); ?>	</label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Import File" aria-label="import-file" aria-describedby="basic-addon2" readonly>
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Import', 'advsign' ); ?></button>
+								</div>
+							</div>
+						</form>
+					</div>
 				  </div>
 				  <!-- export/import tab ends -->
 				</div>

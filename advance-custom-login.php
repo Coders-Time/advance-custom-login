@@ -207,6 +207,7 @@ class AdvanceCustomLogin {
 
             wp_enqueue_style('select2', $asset_file_link . 'css/select2.css', [], '4.0');
             wp_enqueue_style( 'bootstrap', $asset_file_link . 'css/bootstrap.min.css', [], '4.6' );
+            wp_enqueue_style( 'fontawesome', $asset_file_link . 'css/fontawesome.min.css', [], '5.15.2' );
             wp_enqueue_style( 'login_dashboard', $asset_file_link . 'css/login-settings.css', [], filemtime($folder_path.'css/login-settings.css') );            
             wp_enqueue_script( 'bootstrap', $asset_file_link . 'js/bootstrap.bundle.min.js',['jquery'],filemtime($folder_path.'js/bootstrap.bundle.min.js'), true );
             wp_enqueue_script('select2', $asset_file_link . 'js/select2.js', ['jquery'], '4.0', true);

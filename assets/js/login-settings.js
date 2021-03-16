@@ -17,6 +17,10 @@
 		$('#buttonColorPicker').wpColorPicker(myOptions);
 		$('#loginButtonColorPicker').wpColorPicker(myOptions);
 		$('#linkShadowColorPicker').wpColorPicker(myOptions);
+		$('#socialIconColorPicker').wpColorPicker(myOptions);
+		$('#socialHoverColorPicker').wpColorPicker(myOptions);
+		$('#socialIconbgColorPicker').wpColorPicker(myOptions);
+		$('#socialHoverbgColorPicker').wpColorPicker(myOptions);
 
 		var myOptions = {
 		    // you can declare a default color here,

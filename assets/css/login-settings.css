@@ -58,6 +58,32 @@
 	padding: 0.6% 2%;
 }
 
+.wp-picker-container .wp-color-result.button {
+    min-height: 30px;
+    margin: 0 6px 10px 0;
+    padding: 0 0 0 60px;
+    font-size: 16px;
+}
 
+.wp-color-result-text{
+	background: #f6f7f7;
+    border-radius: 0 2px 2px 0;
+    border-left: 1px solid #c3c4c7;
+    color: #50575e;
+    display: block;
+    line-height: 2.54545455;
+    padding: 0 20px;
+    text-align: center;
+}
+    
+/*carousel gallery style*/
+.carousel-inner img {
+  max-width: 500px;
+  max-height: 350px;
+}
+.carousel {
+    max-height: 350px;
+    max-width: 500px
+}
 
 

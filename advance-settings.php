@@ -57,7 +57,7 @@ defined( 'ABSPATH' ) || exit;
 				  <div class="tab-pane fade" id="nav-background" role="tabpanel" aria-labelledby="nav-background-tab">
 
 				  	<form> 
-					  <div class="form-group">
+					  <div class="form-group mb-5">
 					    <label for="select-background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
 					    <select class="form-control" id="select-background" name="select-background">
 					      <option value="0"> <?php esc_html_e( 'Select Background', 'advsign' ); ?> </option>
@@ -69,11 +69,64 @@ defined( 'ABSPATH' ) || exit;
 					  </div>
 
 
-					  	<div class="form-group">
-						    <label for="colorPicker">  <?php esc_html_e( 'Select Background Color', 'advsign' ); ?> </label>
-						    <input type="text" class="form-control" id="colorPicker" aria-describedby="bgcolorHelp">
+					  	<div class="bg_color_change form-group d-none">
+						    <label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
+						    <input type="text" class="form-control" id="colorPicker" value="#dd3333" aria-describedby="bgcolorHelp" name="login-background-color" data-default-color="#000000">
 						    <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 						</div>
+
+
+						<div class="bg_img_change_area form-group mb-3 d-none">
+							<label for="background_img">  <?php esc_html_e( 'Set Background Image', 'advsign' ); ?> </label>
+							<div class="preview_image mb-3">
+								<img src="http://localhost/wordpress/wp-content/plugins/admin-custom-login//images/background-image.png" class="img-fluid uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
+							</div>
+							<div class="button_area ml-5">
+								<button type="button" class="btn pl-5 pr-5 btn-lg btn-primary upload_login_bg_img"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
+								<button type="button" class="btn pl-5 pr-5 btn-lg btn-warning ml-3 remove_login_bg_img d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
+							</div>
+						</div>
+
+
+						<div class="bg_slider_change form_group mt-3 mb-5 d-none">
+							<label for="lbgsa-type"> <?php esc_html_e( 'Slider animation type', 'advsign' ); ?> </label>
+						    <select class="form-control" name="lbgsa-type" id="lbgsa-type">
+						      <option value="1"> <?php esc_html_e( 'Slides only', 'advsign' ); ?> </option>
+						      <option value="2"> <?php esc_html_e( 'Slider with control', 'advsign' ); ?> </option>
+						      <option value="3"> <?php esc_html_e( 'Slider with indicator', 'advsign' ); ?> </option>
+						      <option value="4"> <?php esc_html_e( 'Slider fade effect', 'advsign' ); ?> </option>
+						      <option value="5"> <?php esc_html_e( 'Slider Disable Touch', 'advsign' ); ?> </option>
+						    </select>
+						</div>
+
+
+						<div class="bg_slider_change form-group d-none">
+							<label for="gallery">  <?php esc_html_e( 'Set Background Gallery', 'advsign' ); ?> </label>
+							<div class="preview_gallery mb-3">
+
+								<div id="logincarousel" class="carousel slide" data-ride="carousel">
+								  <ol class="carousel-indicators"> </ol>
+								  <div class="carousel-inner"> </div>
+								  <div class="control d-none">
+								  	<a class="carousel-control-prev" href="#logincarousel" role="button" data-slide="prev">
+									    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									    <span class="sr-only">Previous</span>
+									  </a>
+									  <a class="carousel-control-next" href="#logincarousel" role="button" data-slide="next">
+									    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+									    <span class="sr-only">Next</span>
+									  </a>
+								  </div>
+								  
+								</div>
+
+							</div>
+							<div class="button_area ml-5">
+								<button type="button" class="btn pl-5 pr-5 btn-lg btn-primary upload_login_bg_gallery"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
+								<button type="button" class="btn pl-5 pr-5 btn-lg btn-warning ml-3 remove_login_bg_gallery d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
+							</div>
+						</div>
+
 					   
 					  <!-- <div class="form-group">
 					    <label for="exampleFormControlTextarea1">Example textarea</label>
@@ -122,7 +175,7 @@ defined( 'ABSPATH' ) || exit;
 						<form> 
 							<div class="form-group">
 								<label for="select-background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
-								<select class="form-control" id="select-background" name="select-background">
+								<select class="form-control" id="select_background_login" name="select-background">
 								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
 								<option value="1"> <?php esc_html_e( 'Static Background Color', 'advsign' ); ?> </option>
 								<option value="2"> <?php esc_html_e( 'Static Background Image', 'advsign' ); ?> </option>

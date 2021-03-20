@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: Advance Custom Login
-Plugin URI: 
-Description: Wordpress login page customization with Latest bootstrap
-Version: 1.0.0
-Author: coderstime
-Author URI: https://profiles.wordpress.org/coderstime/
-Domain Path: /languages
-License: GPLv2 or later
-Text Domain: advsign
+    Plugin Name: Advance Custom Login
+    Plugin URI: 
+    Description: Wordpress login page customization with Latest bootstrap
+    Version: 1.0.0
+    Author: coderstime
+    Author URI: https://profiles.wordpress.org/coderstime/
+    Domain Path: /languages
+    License: GPLv2 or later
+    Text Domain: advsign
  */
 
 
@@ -22,6 +22,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @author Coders Time <coderstime@gmail.com>
  */
+
+define( 'WP_CTL_FILE', __FILE__ );
+define( 'WP_CTL_PLUGIN_PATH', __DIR__ );
+define( 'WP_CTL_BASENAME', plugin_basename( WP_CTL_FILE ) );
+define( 'WP_CTL_DIR', plugin_dir_url( WP_CTL_FILE ) );
 
 
 class AdvanceCustomLogin {
@@ -76,12 +81,8 @@ class AdvanceCustomLogin {
     /*Settings Page html*/
 
     public function advsign_settings_page ( ) {
-
         $info = '';
-
-
         include ( 'advance-settings.php' );
-
     }
 
 
@@ -153,12 +154,12 @@ class AdvanceCustomLogin {
     }
 
     public function gen_login_logo() {
-        // $logo_url = $this->gen_login_logo_url();
-        $logo_url = get_template_directory_uri();
+        $logo_url = esc_url(WP_CTL_DIR . 'assets/images/logo.svg');
+
         ?>
             <style type="text/css">
                 #login h1 a, .login h1 a {
-                    background-image: url( <?=$logo_url; ?>/assets/img/logo/logo.png);
+                    background-image: url( <?=$logo_url?>);
                     height:79px;
                     width:370px;
                     background-size:370px 79px;
@@ -172,7 +173,8 @@ class AdvanceCustomLogin {
         add_filter( 'gettext', [ $this,'gen_gettext' ], 10, 3 );
     }
 
-    public function gen_gettext( $translated_text, $text_to_translate, $textdomain ){
+    public function gen_gettext( $translated_text, $text_to_translate, $textdomain )
+    {
         if ( 'Username or Email Address' == $text_to_translate ) {
             $translated_text = __( 'Username or Email', 'advsign' );
         } elseif ( 'Password' == $text_to_translate ) {
@@ -185,7 +187,8 @@ class AdvanceCustomLogin {
         return home_url();
     }
 
-    public function gen_login_logo_url_title() {
+    public function gen_login_logo_url_title() 
+    {
         return get_bloginfo('name');
     }
 
@@ -220,8 +223,8 @@ class AdvanceCustomLogin {
     /**
      * Function that will check if value is a valid HEX color.
      */
-    public function check_color( $value ) { 
-         
+    public function check_color( $value ) 
+    {
         if ( preg_match( '/^#[a-f0-9]{6}$/i', $value ) ) { // if user insert a HEX color with #     
             return true;
         }
@@ -242,10 +245,6 @@ class AdvanceCustomLogin {
                 '<a href="' . esc_url( 'https://www.facebook.com/coderstime' ) . '">' . __( 'Support', 'advsign' ) . '</a>',
                 '<a href="' . esc_url( 'https://wordpress.org/support/plugin/manual-order/reviews/#new-post' ) . '">' . __( 'Review', 'advsign' ) . '</a>',
             ], $links );
-    }
-
-    public function __destruct(){
-
     }
 
 }

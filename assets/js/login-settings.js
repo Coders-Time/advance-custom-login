@@ -181,5 +181,42 @@
             }
         });
 
+        function singleImageUpload ( ...areas ) {
+            var attachment = '';
+            var mediaUploader;
+
+            if( mediaUploader ){
+                mediaUploader.open();
+                return;
+            }
+            mediaUploader = wp.media.frames.file_frame = wp.media({
+                title: 'Choose a Image',
+                button: {
+                    text: 'Choose image'
+                },
+                multiple: false
+            });  
+            mediaUploader.on('select', function(){
+                attachment = mediaUploader.state().get('selection').first().toJSON();
+                
+                for(var i=0; i<areas.length;i++){
+                    if ($(areas[i]).attr('src')) {
+                        $(areas[i]).attr('src',attachment.url);
+                    } else {
+                        $(areas[i]).val(attachment.url).data('id',attachment.id);
+                    }                    
+                }
+            });
+            mediaUploader.open();        
+            
+        }
+
+        $("#login_logoHelp").click(function(e){
+            e.preventDefault();
+            singleImageUpload( "#login_logo",'.uploaded_login_logo_img' );
+        });
+
+        
+
     });
 })(jQuery);

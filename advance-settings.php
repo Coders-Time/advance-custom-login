@@ -600,9 +600,16 @@ defined( 'ABSPATH' ) || exit;
 				  <div class="tab-pane fade" id="nav-logo" role="tabpanel" aria-labelledby="nav-logo-tab">
 				  	<div class="form-group alert border fade show">
 						<label for="login_logo"> <?php esc_html_e( 'Logo Image', 'advsign' ); ?>  </label>
-						<input type="url" value="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" class="form-control " id="login_logo" aria-describedby="login_logoHelp" readonly>
-						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </small></a>
-						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small></a>
+						<div class="preview_logo mb-3">
+
+							<?php $logo_url = WP_CTL_DIR . 'assets/images/logo.svg'; ?>
+
+							<img src="<?php echo esc_url( $logo_url ); ?>" class="w-25 rounded mx-auto d-block uploaded_login_logo_img" data-id="0" alt="<?php esc_html_e( 'logo image', 'advsign' ); ?>">
+							
+						</div>
+						<input type="url" value="<?php echo esc_url( $logo_url ); ?>" class="form-control " id="login_logo" data-id='0' aria-describedby="login_logoHelp" readonly>
+						<small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Change Image', 'advsign' ); ?> </small>
+						<small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small>
 					</div>
 					<div class="border p-3 mb-3 rounded">
 						<label for="select-background"> <?php esc_html_e( 'Show Logo', 'advsign' ); ?>	</label>

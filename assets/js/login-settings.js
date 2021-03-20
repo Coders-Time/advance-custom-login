@@ -117,32 +117,7 @@
                     attachment = attachment.toJSON();
                     active_class = i == 0 ? 'active' : '';
 
-                    switch ( type = $("#lbgsa-type").val() ) {
-                        case '1':
-                            $("#logincarousel .control").addClass('d-none');
-                            break;
-                        case '2':
-                            $("#logincarousel .control").removeClass('d-none');
-                            break;
-                        case '3':
-                            $("#logincarousel .control").removeClass('d-none');
-                            $("#logincarousel .carousel-indicators").append(`
-                                <li data-target="#logincarousel" data-slide-to="${i}" class="${active_class}"></li>
-                                `);
-                            break;
-                        case '4':
-                            $("#logincarousel").addClass('carousel-fade');
-                            $("#logincarousel .control").removeClass('d-none');
-                            break;
-                        case '5':
-                            $("#logincarousel").attr("data-touch","false");
-                            $("#logincarousel").attr("data-interval","false");
-                            $("#logincarousel").removeAttr("data-ride");
-                            $("#logincarousel .control").removeClass('d-none');
-                            break;
-                        default:
-                            break;
-                    }
+                    sliderChange($("#lbgsa-type").val(), null, i,active_class);
 
                     $("#logincarousel .carousel-inner").append(`
                     <div class="carousel-item ${active_class}">
@@ -155,6 +130,47 @@
             galleryUploader.open();
         });
         /*Media upload */
+
+
+        $("#lbgsa-type").change(function(){
+            sliderChange( $(this).val(), true );
+        });
+
+        function sliderChange( type, change =null, i=0, active_class = '') {
+            switch ( type ) {
+                    case '1':
+                        $("#logincarousel .control").addClass('d-none');
+                        break;
+                    case '2':
+                        $("#logincarousel .control").removeClass('d-none');
+                        break;
+                    case '3':
+                        $("#logincarousel .control").removeClass('d-none');
+                        if (!change) {
+                            $("#logincarousel .carousel-indicators").append(`
+                            <li data-target="#logincarousel" data-slide-to="${i}" class="${active_class}"></li>
+                            `);
+                        } else {
+
+                        }
+                        
+                        break;
+                    case '4':
+                        $("#logincarousel").addClass('carousel-fade');
+                        $("#logincarousel .control").removeClass('d-none');
+                        break;
+                    case '5':
+                        $("#logincarousel").attr("data-touch","false");
+                        $("#logincarousel").attr("data-interval","false");
+                        $("#logincarousel").removeAttr("data-ride");
+                        $("#logincarousel .control").removeClass('d-none');
+                        break;
+                    default:
+                        break;
+                }
+        }
+
+
 
         $(".remove_login_bg_gallery, .remove_login_bg_img").click(function(){
             if ($("#logincarousel .carousel-inner .carousel-item").length) {

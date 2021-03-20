@@ -199,23 +199,52 @@
             mediaUploader.on('select', function(){
                 attachment = mediaUploader.state().get('selection').first().toJSON();
                 
-                for(var i=0; i<areas.length;i++){
-                    if ($(areas[i]).attr('src')) {
-                        $(areas[i]).attr('src',attachment.url);
+                for(var i=0; i<areas.length;i++) {
+
+                    if ( $(areas[i]).is(":hidden")) {
+                        console.log('testing');
+                        $(areas[i]).val(attachment.id);
                     } else {
-                        $(areas[i]).val(attachment.url).data('id',attachment.id);
-                    }                    
+                        if ($(areas[i]).attr('src')) {
+                            $(areas[i]).attr('src',attachment.url);
+                        } else {
+                            $(areas[i]).val(attachment.url);
+                        }
+                    }           
                 }
             });
-            mediaUploader.open();        
-            
+            mediaUploader.open();
         }
 
         $("#login_logoHelp").click(function(e){
             e.preventDefault();
-            singleImageUpload( "#login_logo",'.uploaded_login_logo_img' );
+            singleImageUpload( "#login_logo",'.uploaded_login_logo_img','#login_logo_id' );
         });
 
+        $("#logo_width").change(function(){
+            console.log($(this).val());
+            var logo_width = $(this).val();
+            $(".uploaded_login_logo_img").css('width',logo_width + 'px');
+            $(".uploaded_login_logo_img").css('height','auto');
+        });
+
+        $("#logo_height").change(function(){
+            console.log($(this).val());
+            var logo_height = $(this).val();
+            $(".uploaded_login_logo_img").css('height',logo_height + 'px');
+        });
+
+        if ($('#advsign-modal .data').length > 0) {
+            tb_show( $('#content').text(), "#TB_inline?inlineId=advsign-modal&width=700");
+        }
+
+        $( 'body' ).on( 'thickbox:removed', function() {
+            var url = window.location.href;
+            var a = url.indexOf("?");
+            var b = url.substring(a);
+            var c = url.replace(b,"?page=advance-login");
+            window.history.pushState({}, document.title, c );
+        });
         
 
     });

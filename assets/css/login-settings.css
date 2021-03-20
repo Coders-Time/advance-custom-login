@@ -87,3 +87,8 @@
 }
 
 
+#advsign-modal{display:none}
+#TB_ajaxContent{display:flex;justify-content:center;align-items:center}
+.advsign-modal-content p{font-size:20px}
+.advsign-modal-content span{width: 100%;margin-bottom: 5px;}
+

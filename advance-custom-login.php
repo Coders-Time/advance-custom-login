@@ -59,6 +59,73 @@ class AdvanceCustomLogin {
         add_filter( 'wp_login_errors', [ $this, 'gen_registered_success_message' ], 10, 2 );
         add_filter( 'login_title', [ $this, 'custom_login_title' ], 99 );
         add_filter( 'admin_footer_text', [ $this, 'remove_footer_admin' ]);
+
+        add_action('admin_post_logo_form',[$this,'admin_post_advsign_logo_func']);
+        add_action('advsign_processing_complete',[$this,'advsign_processing_completed_func']);
+    }
+
+    public function advsign_processing_completed_func( $saved_id ) {
+
+        $saved_info = get_option($saved_id);
+        $message =  __("<div class='data'> <p>Saved data successfully</p><code>%s</code></div>", 'advsign');
+
+        $msg = '{<br>';
+
+        foreach ($saved_info as $key => $value) {
+            $msg .= "<span> '{$key}'' : '{$value}'  </span><br>";
+        }
+
+        // printf($message, '' );
+        printf($message, $msg . '}' );
+
+    }
+
+    public function admin_post_advsign_logo_func ( ) {
+        if (isset($_POST['submit'])) {
+
+            $data_list = [
+                'login_logo_id',
+                'logo_show',
+                'logo_width',
+                'logo_height',
+                'logo_link',
+                'logo_title',
+            ];
+            $saved_id =  $this->advsign_process_submission( 'logo', $data_list );
+            wp_safe_redirect(
+                esc_url_raw(
+                    add_query_arg('saved_id', $saved_id, admin_url('admin.php?page=advance-login'))
+                )
+            );
+        }
+        die();
+    }
+
+    public function advsign_process_submission ( $nonce, $data_list ) {
+        $advsignlogo = $_POST['advsignlogo'];
+
+        $processed = get_transient("advsign{$advsignlogo}");
+
+        if ($processed) {
+            wp_send_json( $processed, 200 );
+            return 'login_logo';
+        }
+
+        if ( wp_verify_nonce( sanitize_text_field($_POST[ $nonce . '_advsign_nonce']), $nonce .'_advsign_form')  ) {
+
+            $data = [];
+            foreach ( $_POST as $key => $value ) {
+                if ( in_array($key, $data_list )) {
+                    $data[$key] = $value;
+                }
+            }
+            update_option('login_logo', $data);
+            set_transient("advsign{$advsignlogo}", $data, 60);
+            return 'login_logo';
+            wp_send_json_success( $data, 200 );
+            die();
+        }
+        die;
     }
 
     
@@ -81,7 +148,7 @@ class AdvanceCustomLogin {
     /*Settings Page html*/
 
     public function advsign_settings_page ( ) {
-        $info = '';
+        $login_logo = get_option('login_logo') ?? '';
         include ( 'advance-settings.php' );
     }
 
@@ -154,15 +221,25 @@ class AdvanceCustomLogin {
     }
 
     public function gen_login_logo() {
-        $logo_url = esc_url(WP_CTL_DIR . 'assets/images/logo.svg');
+        $login_logo = get_option('login_logo');
+        $default_logo = esc_url(WP_CTL_DIR . 'assets/images/logo.svg');
+        if ($login_logo) {
+            if (!$login_logo['logo_show']) { ?>
+                <style> body.login div#login h1{ display: none; } </style> 
+            <?php }
+
+            $logo_width = $login_logo['logo_width'];
+            $logo_height = $login_logo['logo_height'];
+            $logo_url = wp_get_attachment_image_src ( $login_logo['login_logo_id'], 'thumbnail' )[0];
+        }       
 
         ?>
             <style type="text/css">
                 #login h1 a, .login h1 a {
-                    background-image: url( <?=$logo_url?>);
-                    height:79px;
-                    width:370px;
-                    background-size:370px 79px;
+                    background-image: url( <?=$logo_url ? : $default_logo; ?>);
+                    height:<?php echo $logo_height ? : 84;?>px;
+                    width:<?php echo $logo_width ? : 370;?>px;
+                    background-size:<?php echo $logo_width ? : 370;?>px <?php echo $logo_height ? : 84;?>px;
                     background-repeat: no-repeat;
                 }
             </style>
@@ -217,7 +294,9 @@ class AdvanceCustomLogin {
             wp_enqueue_media(); /*media upload*/
             // Add the color picker css file       
             // wp_enqueue_style( 'wp-color-picker' ); 
+            add_thickbox();
             wp_enqueue_script( 'login_dashboard', $asset_file_link . 'js/login-settings.js',['jquery','wp-color-picker'],filemtime($folder_path.'js/login-settings.js'), true );
+            
     }
 
     /**

@@ -47,7 +47,7 @@ class AdvanceCustomLogin {
         add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), [ $this, 'action_links' ] );
 
         /*Create Dashboad menu*/
-        add_action('admin_menu', [$this,'create_dashboard_menu']);
+        add_action( 'admin_menu', [$this,'create_dashboard_menu']);
 
         add_action( 'login_enqueue_scripts', [ $this, 'gen_login_logo' ] );
         add_action( 'login_head', [ $this,'gen_login_head' ] );
@@ -60,8 +60,11 @@ class AdvanceCustomLogin {
         add_filter( 'login_title', [ $this, 'custom_login_title' ], 99 );
         add_filter( 'admin_footer_text', [ $this, 'remove_footer_admin' ]);
 
-        add_action('admin_post_logo_form',[$this,'admin_post_advsign_logo_func']);
-        add_action('advsign_processing_complete',[$this,'advsign_processing_completed_func']);
+        add_action( 'admin_post_logo_form',[$this,'admin_post_advsign_logo_func']);
+        add_action( 'advsign_processing_complete',[$this,'advsign_processing_completed_func']);
+        //This loads the function on the login page
+        add_action( 'admin_post_bg_color_form', [$this,'advsign_bg_color_form'] );
+        add_action( 'login_enqueue_scripts', [$this,'login_change_background_color'] );
     }
 
     public function advsign_processing_completed_func( $saved_id ) {
@@ -131,13 +134,13 @@ class AdvanceCustomLogin {
     
     /**
      *
-     * Create Manual order menu with cart icon
+     * Create Advance Custom Login icon 
      *
      */
     public function create_dashboard_menu ( ) {
         add_menu_page(
-            __('Advance Custom Login', 'mofw'),
-            __('Advance Login', 'mofw'),
+            __('Advance Custom Login', 'advsign'),
+            __('Advance Login', 'advsign'),
             'administrator',
             'advance-login',
             [ $this,'advsign_settings_page'],
@@ -161,7 +164,7 @@ class AdvanceCustomLogin {
      */
     
     public function activate ( ) {
-        add_option('mofw_active',time());
+        add_option('advsign_active',time());
     }
 
     /**
@@ -171,7 +174,7 @@ class AdvanceCustomLogin {
      */
 
     public function deactivate ( ) {
-        add_option('mofw_deactive',time());
+        add_option('advsign_deactive',time());
     }
 
     /**
@@ -180,7 +183,7 @@ class AdvanceCustomLogin {
      * @uses load_plugin_textdomain()
      */
     public function localization_setup() {
-        load_plugin_textdomain( 'mofw', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        load_plugin_textdomain( 'advsign', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
     public function remove_footer_admin ( ) {
@@ -322,9 +325,33 @@ class AdvanceCustomLogin {
             [
                 '<a href="' . admin_url( 'admin.php?page=advance-login' ) . '">' . __( 'Settings', 'advsign' ) . '</a>',
                 '<a href="' . esc_url( 'https://www.facebook.com/coderstime' ) . '">' . __( 'Support', 'advsign' ) . '</a>',
-                '<a href="' . esc_url( 'https://wordpress.org/support/plugin/manual-order/reviews/#new-post' ) . '">' . __( 'Review', 'advsign' ) . '</a>',
+                '<a href="' . esc_url( 'https://wordpress.org/support/plugin/advance-custom-login/reviews/#new-post' ) . '">' . __( 'Review', 'advsign' ) . '</a>',
             ], $links );
     }
+
+
+    public function advsign_bg_color_form(){
+        $advsignbgcolor = $_POST['login_bg_color'];
+        echo $advsignbgcolor;
+        if(!get_option('login_bg_color')){
+            update_option('login_bg_color', $advsignbgcolor);
+        }
+        
+        $this->login_change_background_color($advsignbgcolor);
+    }
+
+    //Custom CSS that removes the backgroung color in a function
+    public function login_change_background_color($advsignbgcolor) {
+        ?>
+        <style type="text/css">
+            body.login {
+            }
+        </style>
+    <?php }
+
+
+
+
 
 }
 

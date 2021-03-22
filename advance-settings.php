@@ -56,7 +56,6 @@ defined( 'ABSPATH' ) || exit;
 				  <!-- background tab starts -->
 				  <div class="tab-pane fade" id="nav-background" role="tabpanel" aria-labelledby="nav-background-tab">
 
-				  	<form> 
 					  <div class="form-group mb-5">
 					    <label for="select-background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
 					    <select class="form-control" id="select-background" name="select-background">
@@ -70,16 +69,22 @@ defined( 'ABSPATH' ) || exit;
 
 
 					  	<div class="bg_color_change form-group d-none">
-						    <label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
-						    <input type="text" class="form-control" id="colorPicker" value="#dd3333" aria-describedby="bgcolorHelp" name="login-background-color" data-default-color="#000000">
-						    <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+						  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=bg_color_form" method="post">
+								<label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
+								<input type="text" class="form-control" id="colorPicker" value="#dd3333" aria-describedby="bgcolorHelp" name="login_bg_color" data-default-color="#000000">
+								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+								<input type='hidden' name='action' value='bg_color_form' />
+								<div class="text-center">
+									<button type="submit" class="btn btn-primary mt-5" name="submit" value="Submit"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+								</div>								
+							</form>
 						</div>
 
 
 						<div class="bg_img_change_area form-group mb-3 d-none">
 							<label for="background_img">  <?php esc_html_e( 'Set Background Image', 'advsign' ); ?> </label>
 							<div class="preview_image mb-3">
-								<img src="http://localhost/wordpress/wp-content/plugins/admin-custom-login//images/background-image.png" class="img-fluid uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
+								<img src="<?php echo plugin_dir_url( __DIR__ )?>advance-custom-login/assets/images/background-image.png" class="img-thumbnail uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
 							</div>
 							<div class="button_area ml-5">
 								<button type="button" class="btn pl-5 pr-5 btn-lg btn-primary upload_login_bg_img"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
@@ -127,12 +132,10 @@ defined( 'ABSPATH' ) || exit;
 							</div>
 						</div>
 
-					   
 					  <!-- <div class="form-group">
 					    <label for="exampleFormControlTextarea1">Example textarea</label>
 					    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 					  </div> -->
-					</form>
 
 				  </div>
 				  <!-- background tab ends -->
@@ -615,7 +618,6 @@ defined( 'ABSPATH' ) || exit;
 							<input type="url" value="<?php echo esc_url( $logo_url ? : $logo_default_url ); ?>" class="form-control " id="login_logo" data-id='0' aria-describedby="login_logoHelp" readonly>
 							<input type="hidden" name="login_logo_id" id="login_logo_id" value="<?php echo $login_logo['login_logo_id'] ? : 0; ?>">
 							<small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Change Image', 'advsign' ); ?> </small>
-							<small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small>
 						</div>
 						<div class="border p-3 mb-3 rounded">
 							<label for="select-background"> <?php esc_html_e( 'Show Logo', 'advsign' ); ?>	</label>
@@ -671,17 +673,17 @@ defined( 'ABSPATH' ) || exit;
 				  <!-- logo tab ends -->
 				  <!-- social tab starts -->
 				  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
-				  	<div class="form-group border p-3 mb-3 rounded">
-						<label for="social_icon_placement"> <?php esc_html_e( 'Social Icon Placement', 'advsign' ); ?>	</label>
-						<select class="form-control" id="social_icon_placement" name="social_icon_placement">
-							<option value="0"> <?php esc_html_e( 'No Icon', 'advsign' ); ?> </option>
-							<option value="1"> <?php esc_html_e( 'Outer', 'advsign' ); ?> </option>
-							<option value="2"> <?php esc_html_e( 'Inner', 'advsign' ); ?> </option>
-							<option value="3"> <?php esc_html_e( 'Both', 'advsign' ); ?> </option>
-						</select>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+						<div class="form-group border p-3 mb-3 rounded">
+							<label for="social_icon_placement"> <?php esc_html_e( 'Social Icon Placement', 'advsign' ); ?>	</label>
+							<select class="form-control" id="social_icon_placement" name="social_icon_placement">
+								<option value="0"> <?php esc_html_e( 'No Icon', 'advsign' ); ?> </option>
+								<option value="1"> <?php esc_html_e( 'Outer', 'advsign' ); ?> </option>
+								<option value="2"> <?php esc_html_e( 'Inner', 'advsign' ); ?> </option>
+								<option value="3"> <?php esc_html_e( 'Both', 'advsign' ); ?> </option>
+							</select>
+						</div>
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="select-background"> <?php esc_html_e( 'Social Media Icon Size', 'advsign' ); ?>	</label>
@@ -720,38 +722,36 @@ defined( 'ABSPATH' ) || exit;
 									</div>
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<div class="row">
-							<div class="col-md-6 form-group">
-								<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color', 'advsign' ); ?> </label>
-								<input type="text" class="form-control" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
-								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-							</div>
-							<div class="col-md-6 form-group">
-								<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color On Hover', 'advsign' ); ?> </label>
-								<input type="text" class="form-control" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
-								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+						</div>
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
+									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color On Hover', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
+									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<div class="row">
-							<div class="col-md-6 form-group">
-								<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Background Color', 'advsign' ); ?> </label>
-								<input type="text" class="form-control" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
-								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-							</div>
-							<div class="col-md-6 form-group">
-								<label for="colorPicker">  <?php esc_html_e( 'Social Media Background Color On Hover', 'advsign' ); ?> </label>
-								<input type="text" class="form-control" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
-								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Background Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
+									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="colorPicker">  <?php esc_html_e( 'Social Media Background Color On Hover', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
+									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Window', 'advsign' ); ?>	</label>
@@ -769,11 +769,9 @@ defined( 'ABSPATH' ) || exit;
 									</div>
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
-						<label for="logo_link_url"><?php esc_html_e( 'Social Links', 'advsign' ); ?></label>
+						</div>
+						<div class="border p-3 mb-3 rounded">
+							<label for="logo_link_url"><?php esc_html_e( 'Social Links', 'advsign' ); ?></label>
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label class="sr-only" for="facebook_link"><?php esc_html_e( 'Facebook', 'advsign' ); ?></label>
@@ -905,8 +903,8 @@ defined( 'ABSPATH' ) || exit;
 									</div>
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
+					</form>
 				  </div>
 				  <!-- social tab ends -->
 				  <!-- google captcha tab starts -->

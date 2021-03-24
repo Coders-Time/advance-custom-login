@@ -12,7 +12,6 @@ defined( 'ABSPATH' ) || exit;
                 </div>			
 
 			<div class="design_area my-5">
-
 				<nav>
 				  <div class="nav nav-tabs mb-5" id="nav-tab" role="tablist">
 				    <a class="nav-link text-dark active" id="nav-dashboard-tab" data-toggle="tab" href="#nav-dashboard" role="tab" aria-controls="nav-dashboard" aria-selected="true"><?php esc_html_e( 'Dashboard', 'advsign' ); ?></a>
@@ -26,6 +25,7 @@ defined( 'ABSPATH' ) || exit;
 				  </div>
 				</nav>
 				<div class="tab-content" id="nav-tabContent">
+
 				  <!-- dashboard tab starts -->
 				  <div class="tab-pane fade show active" id="nav-dashboard" role="tabpanel" aria-labelledby="nav-dashboard-tab">
 
@@ -53,84 +53,84 @@ defined( 'ABSPATH' ) || exit;
 
 				  </div>
 				  <!-- dashboard tab ends -->
+
 				  <!-- background tab starts -->
 				  <div class="tab-pane fade" id="nav-background" role="tabpanel" aria-labelledby="nav-background-tab">
+					
+					<div class="form-group mb-5">
+						<label for="select-background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
+						<select class="form-control" id="select-background" name="select-background">
+							<option value="0"> <?php esc_html_e( 'Select Background', 'advsign' ); ?> </option>
+							<option value="1"> <?php esc_html_e( 'Default Background', 'advsign' ); ?> </option>
+							<option value="2"> <?php esc_html_e( 'Image Background', 'advsign' ); ?> </option>
+							<option value="3"> <?php esc_html_e( 'Color Background', 'advsign' ); ?> </option>
+							<option value="4"> <?php esc_html_e( 'Slider Background', 'advsign' ); ?> </option>
+						</select>
+					</div>
 
-					  <div class="form-group mb-5">
-					    <label for="select-background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
-					    <select class="form-control" id="select-background" name="select-background">
-					      <option value="0"> <?php esc_html_e( 'Select Background', 'advsign' ); ?> </option>
-					      <option value="1"> <?php esc_html_e( 'Default Background', 'advsign' ); ?> </option>
-					      <option value="2"> <?php esc_html_e( 'Image Background', 'advsign' ); ?> </option>
-					      <option value="3"> <?php esc_html_e( 'Color Background', 'advsign' ); ?> </option>
-					      <option value="4"> <?php esc_html_e( 'Slider Background', 'advsign' ); ?> </option>
-					    </select>
-					  </div>
+					<div class="bg_color_change form-group d-none">
+						<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=bg_color_form" method="post">
+							<label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
+							<input type="text" class="form-control" id="colorPicker" value="#dd3333" aria-describedby="bgcolorHelp" name="login_bg_color" data-default-color="#000000">
+							<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+							<input type='hidden' name='action' value='bg_color_form' />
+							<div class="text-center">
+								<button type="submit" class="btn btn-primary mt-5" name="submit" value="Submit"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+							</div>								
+						</form>
+					</div>
 
 
-					  	<div class="bg_color_change form-group d-none">
-						  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=bg_color_form" method="post">
-								<label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
-								<input type="text" class="form-control" id="colorPicker" value="#dd3333" aria-describedby="bgcolorHelp" name="login_bg_color" data-default-color="#000000">
-								<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-								<input type='hidden' name='action' value='bg_color_form' />
-								<div class="text-center">
-									<button type="submit" class="btn btn-primary mt-5" name="submit" value="Submit"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
-								</div>								
-							</form>
+					<div class="bg_img_change_area form-group mb-3 d-none">
+						<label for="background_img">  <?php esc_html_e( 'Set Background Image', 'advsign' ); ?> </label>
+						<div class="preview_image mb-3">
+							<img src="<?php echo plugin_dir_url( __DIR__ )?>advance-custom-login/assets/images/background-image.png" class="img-thumbnail uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
 						</div>
-
-
-						<div class="bg_img_change_area form-group mb-3 d-none">
-							<label for="background_img">  <?php esc_html_e( 'Set Background Image', 'advsign' ); ?> </label>
-							<div class="preview_image mb-3">
-								<img src="<?php echo plugin_dir_url( __DIR__ )?>advance-custom-login/assets/images/background-image.png" class="img-thumbnail uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
-							</div>
-							<div class="button_area ml-5">
-								<button type="button" class="btn pl-5 pr-5 btn-lg btn-primary upload_login_bg_img"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
-								<button type="button" class="btn pl-5 pr-5 btn-lg btn-warning ml-3 remove_login_bg_img d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
-							</div>
+						<div class="button_area text-center">
+							<button type="button" class="btn pl-3 pr-3 btn-primary upload_login_bg_img"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
+							<button type="button" class="btn pl-3 pr-3 btn-warning ml-3 remove_login_bg_img d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
 						</div>
+					</div>
 
 
-						<div class="bg_slider_change form_group mt-3 mb-5 d-none">
-							<label for="lbgsa-type"> <?php esc_html_e( 'Slider animation type', 'advsign' ); ?> </label>
-						    <select class="form-control" name="lbgsa-type" id="lbgsa-type">
-						      <option value="1"> <?php esc_html_e( 'Slides only', 'advsign' ); ?> </option>
-						      <option value="2"> <?php esc_html_e( 'Slider with control', 'advsign' ); ?> </option>
-						      <option value="3"> <?php esc_html_e( 'Slider with indicator', 'advsign' ); ?> </option>
-						      <option value="4"> <?php esc_html_e( 'Slider fade effect', 'advsign' ); ?> </option>
-						      <option value="5"> <?php esc_html_e( 'Slider Disable Touch', 'advsign' ); ?> </option>
-						    </select>
-						</div>
+					<div class="bg_slider_change form_group mt-3 mb-5 d-none">
+						<label for="lbgsa-type"> <?php esc_html_e( 'Slider animation type', 'advsign' ); ?> </label>
+						<select class="form-control" name="lbgsa-type" id="lbgsa-type">
+							<option value="1"> <?php esc_html_e( 'Slides only', 'advsign' ); ?> </option>
+							<option value="2"> <?php esc_html_e( 'Slider with control', 'advsign' ); ?> </option>
+							<option value="3"> <?php esc_html_e( 'Slider with indicator', 'advsign' ); ?> </option>
+							<option value="4"> <?php esc_html_e( 'Slider fade effect', 'advsign' ); ?> </option>
+							<option value="5"> <?php esc_html_e( 'Slider Disable Touch', 'advsign' ); ?> </option>
+						</select>
+					</div>
 
 
-						<div class="bg_slider_change form-group d-none">
-							<label for="gallery">  <?php esc_html_e( 'Set Background Gallery', 'advsign' ); ?> </label>
-							<div class="preview_gallery mb-3">
+					<div class="bg_slider_change form-group d-none">
+						<label for="gallery">  <?php esc_html_e( 'Set Background Gallery', 'advsign' ); ?> </label>
+						<div class="preview_gallery mb-3">
 
-								<div id="logincarousel" class="carousel slide" data-ride="carousel">
-								  <ol class="carousel-indicators"> </ol>
-								  <div class="carousel-inner"> </div>
-								  <div class="control d-none">
-								  	<a class="carousel-control-prev" href="#logincarousel" role="button" data-slide="prev">
-									    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									    <span class="sr-only">Previous</span>
-									  </a>
-									  <a class="carousel-control-next" href="#logincarousel" role="button" data-slide="next">
-									    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-									    <span class="sr-only">Next</span>
-									  </a>
-								  </div>
-								  
+							<div id="logincarousel" class="carousel slide" data-ride="carousel">
+								<ol class="carousel-indicators"> </ol>
+								<div class="carousel-inner"> </div>
+								<div class="control d-none">
+								<a class="carousel-control-prev" href="#logincarousel" role="button" data-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="sr-only"><?php esc_html_e( 'Previous', 'advsign' ); ?></span>
+									</a>
+									<a class="carousel-control-next" href="#logincarousel" role="button" data-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="sr-only"><?php esc_html_e( 'Next', 'advsign' ); ?></span>
+									</a>
 								</div>
+							</div>
 
-							</div>
-							<div class="button_area ml-5">
-								<button type="button" class="btn pl-5 pr-5 btn-lg btn-primary upload_login_bg_gallery"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
-								<button type="button" class="btn pl-5 pr-5 btn-lg btn-warning ml-3 remove_login_bg_gallery d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
-							</div>
 						</div>
+						<div class="button_area text-center">
+							<button type="button" class="btn pl-3 pr-3 btn-primary upload_login_bg_gallery"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
+							<button type="button" class="btn pl-3 pr-3 btn-danger ml-3 remove_login_bg_gallery d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
+							<button type="button" class="btn pl-3 pr-3 btn-success ml-3 submit_login_bg_gallery d-none"><?php esc_html_e( 'Submit', 'advsign' ); ?></button>
+						</div>
+					</div>
 
 					  <!-- <div class="form-group">
 					    <label for="exampleFormControlTextarea1">Example textarea</label>
@@ -139,78 +139,79 @@ defined( 'ABSPATH' ) || exit;
 
 				  </div>
 				  <!-- background tab ends -->
+
 				  <!-- login tab starts -->
 				  <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
-				  	<div class="border p-3 mb-3 rounded">
-						<form> 
+				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=login_tab_form" method="post">	
+					 	<!-- Login Form Position -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
-								<label for="login-form"> <?php esc_html_e( 'Login Form Position', 'advsign' ); ?>	</label>
-								<select class="form-control" id="login-form" name="login-form">
+								<label for="login_form_position"> <?php esc_html_e( 'Login Form Position', 'advsign' ); ?>	</label>
+								<select class="form-control" id="login_form_position" name="login_form_position">
 								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
 								<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
 								<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
 								</select>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<label for="select-background"> <?php esc_html_e( 'Float Settings', 'advsign' ); ?>	</label>
-						<div>
-							<input type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-							<label class="form-check-label" for="exampleRadios1">
-								<?php esc_html_e( 'Left', 'advsign' ); ?> 
-							</label>
 						</div>
-						<div>
-							<input type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-							<label class="form-check-label" for="exampleRadios2">
-								<?php esc_html_e( 'Center', 'advsign' ); ?> 
-							</label>
+						<!-- Float Settings -->
+						<div class="border p-3 mb-3 rounded">
+							<label for="select-background"> <?php esc_html_e( 'Float Settings', 'advsign' ); ?>	</label>
+							<div>
+								<input type="radio" name="float_settings" id="floatsettings1" value="left" checked>
+								<label class="form-check-label" for="floatsettings1">
+									<?php esc_html_e( 'Left', 'advsign' ); ?> 
+								</label>
+							</div>
+							<div>
+								<input type="radio" name="float_settings" id="floatsettings2" value="center">
+								<label class="form-check-label" for="floatsettings2">
+									<?php esc_html_e( 'Center', 'advsign' ); ?> 
+								</label>
+							</div>
+							<div>
+								<input type="radio" name="float_settings" id="floatsettings3" value="right">
+								<label class="form-check-label" for="floatsettings3">
+									<?php esc_html_e( 'Right', 'advsign' ); ?> 
+								</label>
+							</div>
 						</div>
-						<div>
-							<input type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-							<label class="form-check-label" for="exampleRadios2">
-								<?php esc_html_e( 'Right', 'advsign' ); ?> 
-							</label>
-						</div>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						<!-- Background -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
-								<label for="select-background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
-								<select class="form-control" id="select_background_login" name="select-background">
+								<label for="select_background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
+								<select class="form-control" id="login_form_background" name="login_form_background">
 								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
 								<option value="1"> <?php esc_html_e( 'Static Background Color', 'advsign' ); ?> </option>
 								<option value="2"> <?php esc_html_e( 'Static Background Image', 'advsign' ); ?> </option>
 								</select>
 							</div>
-						</form>
-					</div>
-					<div class="form-group alert border fade show">
-						<label for="bg_img"> <?php esc_html_e( 'Background Image', 'advsign' ); ?>  </label>
-						<input type="url" value="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" class="form-control " id="bg_img" aria-describedby="bg_img" readonly>
-						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="uploadHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </small></a>
-						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="previewHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small></a>
-						<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="removeHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Remove', 'advsign' ); ?> </small></a>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Background Image Url -->
+						<div class="form-group alert border fade show">
+							<label for="bg_img_url"> <?php esc_html_e( 'Background Image Url', 'advsign' ); ?>  </label>
+							<input type="url" value="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" name="bg_img_url" class="form-control " id="bg_img_url" aria-describedby="bg_img_url" readonly>
+							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="uploadHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </small></a>
+							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="previewHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small></a>
+							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="removeHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Remove', 'advsign' ); ?> </small></a>
+						</div>
+						<!-- Background Repeat -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
-								<label for="background-repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?>	</label>
-								<select class="form-control" id="background-repeat" name="background-repeat">
+								<label for="login_bg_repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?>	</label>
+								<select class="form-control" id="login_bg_repeat" name="login_bg_repeat">
 								<option value="0"> <?php esc_html_e( 'No Repeat', 'advsign' ); ?> </option>
 								<option value="1"> <?php esc_html_e( 'Repeat', 'advsign' ); ?> </option>
 								<option value="2"> <?php esc_html_e( 'Repeat Horizontally', 'advsign' ); ?> </option>
 								<option value="3"> <?php esc_html_e( 'Repeat Vertically', 'advsign' ); ?> </option>
 								</select>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Background Position -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
-								<label for="background-position"> <?php esc_html_e( 'Background Position', 'advsign' ); ?>	</label>
-								<select class="form-control" id="background-position" name="background-position">
+								<label for="login_form_bg_position"> <?php esc_html_e( 'Background Position', 'advsign' ); ?>	</label>
+								<select class="form-control" id="login_form_bg_position" name="login_form_bg_position">
 								<option value="0"> <?php esc_html_e( 'Left Top', 'advsign' ); ?> </option>
 								<option value="1"> <?php esc_html_e( 'Left Center', 'advsign' ); ?> </option>
 								<option value="2"> <?php esc_html_e( 'Left Bottom', 'advsign' ); ?> </option>
@@ -222,14 +223,13 @@ defined( 'ABSPATH' ) || exit;
 								<option value="8"> <?php esc_html_e( 'Center Bottom', 'advsign' ); ?> </option>
 								</select>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Background Effect -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="background-effect"> <?php esc_html_e( 'Background Effect', 'advsign' ); ?>	</label>
-									<select class="form-control" id="background-effect" name="background-effect">
+									<label for="login_bg_effect"> <?php esc_html_e( 'Background Effect', 'advsign' ); ?>	</label>
+									<select class="form-control" id="login_bg_effect" name="login_bg_effect">
 									<option value="0"> <?php esc_html_e( 'No Overlay Effect', 'advsign' ); ?> </option>
 									<option value="1"> <?php esc_html_e( 'Overlay Effect 1', 'advsign' ); ?> </option>
 									<option value="2"> <?php esc_html_e( 'Overlay Effect 2', 'advsign' ); ?> </option>
@@ -237,33 +237,31 @@ defined( 'ABSPATH' ) || exit;
 									</select>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="customRange1"><?php esc_html_e( 'Login Form Width', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="customRange1">
+									<label for="login_form_width"><?php esc_html_e( 'Login Form Width', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" name="login_form_width" id="customRange1">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Border Color -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Select Border Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="borderColorPicker" aria-describedby="bgcolorHelp">
+									<label for="form_border_color">  <?php esc_html_e( 'Select Border Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="form_border_color" name="form_border_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="customRange2"><?php esc_html_e( 'Border Radius', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="customRange2">
+									<label for="login_border_radius"><?php esc_html_e( 'Border Radius', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" id="login_border_radius" name="login_border_radius">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Border Style -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="border-style"> <?php esc_html_e( 'Border Style', 'advsign' ); ?>	</label>
-									<select class="form-control" id="border-style" name="border-style">
+									<label for="border_style"> <?php esc_html_e( 'Border Style', 'advsign' ); ?>	</label>
+									<select class="form-control" id="border_style" name="border_style">
 									<option value="0"> <?php esc_html_e( 'None', 'advsign' ); ?> </option>
 									<option value="1"> <?php esc_html_e( 'Solid', 'advsign' ); ?> </option>
 									<option value="2"> <?php esc_html_e( 'Dotted', 'advsign' ); ?> </option>
@@ -276,327 +274,326 @@ defined( 'ABSPATH' ) || exit;
 									<input type="range" class="custom-range" id="customRange3">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Box Shadow -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="border-style"> <?php esc_html_e( 'Enable Form Shadow', 'advsign' ); ?>	</label>
 									<div>
-										<input type="radio" name="formRadios" id="yesRadios1" value="option1" checked>
+										<input type="radio" name="form_shadow" id="yesRadios1" value="yes" checked>
 										<label class="form-check-label" for="yesRadios1">
 											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="formRadios" id="noRadios2" value="option2">
+										<input type="radio" name="form_shadow" id="noRadios2" value="no">
 										<label class="form-check-label" for="noRadios2">
 											<?php esc_html_e( 'No', 'advsign' ); ?> 
 										</label>
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="formShadowColorPicker">  <?php esc_html_e( 'Form Shadow Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="formShadowColorPicker" aria-describedby="bgcolorHelp">
+									<label for="form_shadow_color_picker">  <?php esc_html_e( 'Form Shadow Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="form_shadow_color_picker" name="form_shadow_color_picker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Username Field -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<div>
 										<label for="username_email"><?php esc_html_e( 'Username or Email Field Label Text', 'advsign' ); ?></label>
-    									<input type="text" class="form-control" id="username_email" aria-describedby="username_email">
+										<input type="text" class="form-control" name="username_email" id="username_email" aria-describedby="username_email">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="username_placeholder"><?php esc_html_e( 'Username or Email Field Placeholder Text', 'advsign' ); ?></label>
-    								<input type="text" class="form-control" id="username_placeholder" aria-describedby="username_placeholder">
+									<input type="text" class="form-control" name="username_placeholder" id="username_placeholder" aria-describedby="username_placeholder">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Login Button and Redirect Link -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<div>
 										<label for="login_button_text"><?php esc_html_e( 'Log In Button Text', 'advsign' ); ?></label>
-    									<input type="text" class="form-control" id="login_button_text" aria-describedby="login_button_text">
+										<input type="text" class="form-control" id="login_button_text" name="login_button_text" aria-describedby="login_button_text">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="username_placeholder"><?php esc_html_e( 'Forcefully Redirect', 'advsign' ); ?></label>
+									<label for="redirect_url"><?php esc_html_e( 'Forcefully Redirect', 'advsign' ); ?></label>
 									<div class="form-check form-check-inline ml-3">
-										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+										<input class="form-check-input" type="radio" name="redirect_url" id="redirect_url1" value="yes">
 										<label class="form-check-label" for="inlineRadio1">Yes</label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+										<input class="form-check-input" type="radio" name="redirect_url" id="redirect_url2" value="no">
 										<label class="form-check-label" for="inlineRadio2">No</label>
 									</div>
-    								<input type="text" class="form-control" id="username_placeholder" aria-describedby="username_placeholder" placeholder="Redirect URL">
+									<input type="text" class="form-control" id="username_placeholder" name="username_placeholder" aria-describedby="username_placeholder" placeholder="Redirect URL">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Redirect after Login -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<div>
 										<label for="redirect_user"><?php esc_html_e( 'Redirect Users After Login (Not Work For Admin)', 'advsign' ); ?></label>
-    									<input type="text" class="form-control" id="redirect_user" aria-describedby="redirect_user">
+										<input type="text" class="form-control" id="redirect_user" name="redirect_user" aria-describedby="redirect_user">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="display_text"><?php esc_html_e( 'Display Note To User Above Login Form', 'advsign' ); ?></label>
-    								<input type="text" class="form-control" id="display_text" aria-describedby="display_text">
+									<input type="text" class="form-control" id="display_text" name="display_text" aria-describedby="display_text">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Message -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Message Font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="messageFontColorPicker" aria-describedby="bgcolorHelp">
+									<label for="messageFontColorPicker">  <?php esc_html_e( 'Message Font Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="messageFontColorPicker" name="messageFontColorPicker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="customRange2"><?php esc_html_e( 'Message Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="customRange2">
+									<label for="message_font_size"><?php esc_html_e( 'Message Font Size', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" id="message_font_size" name="message_font_size">
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						</div>
+						<!-- Custom Css -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
-								<label for="exampleFormControlTextarea1"><?php esc_html_e( 'Custom Css', 'advsign' ); ?></label>
-    							<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+								<label for="login_custom_css"><?php esc_html_e( 'Custom Css', 'advsign' ); ?></label>
+								<textarea class="form-control" id="login_custom_css" rows="3" name="login_custom_css"></textarea>
 								<small class="form-text text-muted"><?php esc_html_e( 'Enter any custom css you want to apply on login panel.Note: Please Do Not Use Style Tag With Custom CSS.', 'advsign' ); ?></small>
 							</div>
-						</form>
-					</div>
-
-					<div class="text-center">
-						<button type="submit" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
-					</div>
+						</div>
+						<!-- Submit Button -->
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+						</div>
+					</form>
 				  </div>
 				  <!-- login tab ends -->
+
 				  <!-- font tab starts -->
 				  <div class="tab-pane fade" id="nav-font" role="tabpanel" aria-labelledby="nav-font-tab">
-				 	<div class="border p-3 mb-3 rounded">
-						<form> 
+				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=font_tab_form" method="post">	
+					  	<!-- Headline Colors  -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-4 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Headline Font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="headlineFontColorPicker" aria-describedby="bgcolorHelp">
+									<label for="headline_font_color">  <?php esc_html_e( 'Headline Font Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="headline_font_color" name="headline_font_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-4 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Input Font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="inputFontColorPicker" aria-describedby="bgcolorHelp">
+									<label for="input_font_color">  <?php esc_html_e( 'Input Font Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="input_font_color" name="input_font_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-4 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Link Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="linkColorPicker" aria-describedby="bgcolorHelp">
+									<label for="link_color">  <?php esc_html_e( 'Link Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="link_color" name="link_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-								</div>
-							</div>
-						</form>
-					</div>
-				 	<div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="row">
-								<div class="col-md-4 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Button Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="buttonColorPicker" aria-describedby="bgcolorHelp">
-									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-								</div>
-								<div class="col-md-4 form-group">
-									<label for="colorPicker">  <?php esc_html_e( 'Login Button font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="loginButtonColorPicker" aria-describedby="bgcolorHelp">
-									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-								</div>
-							</div>
-						</form>
-					</div>
-				 	<div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="row">
-								<div class="col-md-6 form-group">
-									<label for="headlineRange"><?php esc_html_e( 'Headline Font size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="headlineRange">
-								</div>
-								<div class="col-md-6 form-group">
-									<label for="inputFontRange"><?php esc_html_e( 'Input Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="inputFontRange">
-								</div>
-							</div>
-						</form>
-					</div>
-				 	<div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="row">
-								<div class="col-md-6 form-group">
-									<label for="linkfontRange"><?php esc_html_e( 'Link Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="linkfontRange">
-								</div>
-								<div class="col-md-6 form-group">
-									<label for="buttonFontRange"><?php esc_html_e( 'Button Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="buttonFontRange">
-								</div>
-							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<label for="showRememberField"><?php esc_html_e( 'Show Remember Me Field', 'advsign' ); ?></label>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="form-check form-check-inline ml-5">
-									<input class="form-check-input" type="radio" name="showRememberRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label" for="inlineRadio1">Yes</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="showRememberRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label" for="inlineRadio2">No</label>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<label for="showRememberField"><?php esc_html_e( 'Show Back To Site Link', 'advsign' ); ?></label>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="form-check form-check-inline ml-5">
-									<input class="form-check-input" type="radio" name="showBackSiteRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label" for="inlineRadio1">Yes</label>
+						<!-- Button Colors -->
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-4 form-group">
+									<label for="button_color">  <?php esc_html_e( 'Button Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="button_color" name="button_color" aria-describedby="bgcolorHelp">
+									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="showBackSiteRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label" for="inlineRadio2">No</label>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<label for="showRememberField"><?php esc_html_e( 'Show Copyright link text', 'advsign' ); ?></label>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="form-check form-check-inline ml-5">
-									<input class="form-check-input" type="radio" name="showCopurightedRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label" for="inlineRadio1">Yes</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="showCopurightedRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label" for="inlineRadio2">No</label>
+								<div class="col-md-4 form-group">
+									<label for="button_font_color">  <?php esc_html_e( 'Login Button font Color', 'advsign' ); ?> </label>
+									<input type="text" class="form-control" id="button_font_color" name="button_font_color" aria-describedby="bgcolorHelp">
+									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<label for="showRememberField"><?php esc_html_e( 'Enable Link shadow', 'advsign' ); ?></label>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="form-check form-check-inline ml-5">
-									<input class="form-check-input" type="radio" name="EnableLinkRadioOptions" id="inlineRadio1" value="option1">
-									<label class="form-check-label" for="inlineRadio1">Yes</label>
-								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="EnableLinkRadioOptions" id="inlineRadio2" value="option2">
-									<label class="form-check-label" for="inlineRadio2">No</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<label for="colorPicker">  <?php esc_html_e( 'Link Shadow Color', 'advsign' ); ?> </label>
-						<input type="text" class="form-control" id="linkShadowColorPicker" aria-describedby="bgcolorHelp">
-						<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						<!-- Headline Font size -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="headline-font-style"> <?php esc_html_e( 'Headline Font Style', 'advsign' ); ?>	</label>
-									<select class="form-control" id="headline-font-style" name="headline-font-style">
+									<label for="headline_font_size"><?php esc_html_e( 'Headline Font size', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" name="headline_font_size" id="headline_font_size">
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="input_font_size"><?php esc_html_e( 'Input Font Size', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" name="input_font_size" id="input_font_size">
+								</div>
+							</div>
+						</div>
+						<!-- Link and Button Font Size -->
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="link_font_size"><?php esc_html_e( 'Link Font Size', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" id="link_font_size" name="link_font_size">
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="button_font_size"><?php esc_html_e( 'Button Font Size', 'advsign' ); ?></label>
+									<input type="range" class="custom-range" id="button_font_size" name="button_font_size">
+								</div>
+							</div>
+						</div>
+						<!-- Show Remember Field -->
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-3 form-group">
+									<label for="show_remember_field"><?php esc_html_e( 'Show Remember Me Field', 'advsign' ); ?></label>
+								</div>
+								<div class="col-md-6 form-group">
+									<div class="form-check form-check-inline ml-5">
+										<input class="form-check-input" type="radio" name="show_remember_field" id="inlineRadio1" value="yes">
+										<label class="form-check-label" for="inlineRadio1">Yes</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="show_remember_field" id="inlineRadio2" value="no">
+										<label class="form-check-label" for="inlineRadio2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 form-group">
+									<label for="back_to_site"><?php esc_html_e( 'Show Back To Site Link', 'advsign' ); ?></label>
+								</div>
+								<div class="col-md-6 form-group">
+									<div class="form-check form-check-inline ml-5">
+										<input class="form-check-input" type="radio" name="back_to_site" id="inlineRadio1" value="yes">
+										<label class="form-check-label" for="inlineRadio1">Yes</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="back_to_site" id="inlineRadio2" value="no">
+										<label class="form-check-label" for="inlineRadio2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 form-group">
+									<label for="show_copyright_text"><?php esc_html_e( 'Show Copyright link text', 'advsign' ); ?></label>
+								</div>
+								<div class="col-md-6 form-group">
+									<div class="form-check form-check-inline ml-5">
+										<input class="form-check-input" type="radio" name="show_copyright_text" id="inlineRadio1" value="yes">
+										<label class="form-check-label" for="inlineRadio1">Yes</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="show_copyright_text" id="inlineRadio2" value="no">
+										<label class="form-check-label" for="inlineRadio2">No</label>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3 form-group">
+									<label for="link_shadow"><?php esc_html_e( 'Enable Link shadow', 'advsign' ); ?></label>
+								</div>
+								<div class="col-md-6 form-group">
+									<div class="form-check form-check-inline ml-5">
+										<input class="form-check-input" type="radio" name="link_shadow" id="inlineRadio1" value="yes">
+										<label class="form-check-label" for="inlineRadio1">Yes</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="link_shadow" id="inlineRadio2" value="no">
+										<label class="form-check-label" for="inlineRadio2">No</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Link Shadow Color -->
+						<div class="border p-3 mb-3 rounded">
+							<label for="link_shadow_color">  <?php esc_html_e( 'Link Shadow Color', 'advsign' ); ?> </label>
+							<input type="text" class="form-control" id="link_shadow_color" name="link_shadow_color" aria-describedby="bgcolorHelp">
+							<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+						</div>
+						<!-- Headline Font Style -->
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="headline_font_style"> <?php esc_html_e( 'Headline Font Style', 'advsign' ); ?>	</label>
+									<select class="form-control" id="headline_font_style" name="headline_font_style">
 									<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
 									<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
 									<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
 									</select>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="input-font-style"> <?php esc_html_e( 'Input Font Style', 'advsign' ); ?>	</label>
-									<select class="form-control" id="input-font-style" name="input-font-style">
+									<label for="input_font_style"> <?php esc_html_e( 'Input Font Style', 'advsign' ); ?>	</label>
+									<select class="form-control" id="input_font_style" name="input_font_style">
 									<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
 									<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
 									<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
 									</select>
 								</div>
 							</div>
-						</form>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<div class="row">
-							<div class="col-md-6 form-group">
-								<label for="headline-font-style"> <?php esc_html_e( 'Link Font Style', 'advsign' ); ?>	</label>
-								<select class="form-control" id="headline-font-style" name="headline-font-style">
-								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
-								</select>
-							</div>
-							<div class="col-md-6 form-group">
-								<label for="headline-font-style"> <?php esc_html_e( 'Button Font Style', 'advsign' ); ?>	</label>
-								<select class="form-control" id="headline-font-style" name="headline-font-style">
-								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
-								</select>
-							</div>
 						</div>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<div class="row">
-							<div class="col-md-3 form-group">
-								<label for="enableInputField"><?php esc_html_e( 'Enable Input Box Icon', 'advsign' ); ?></label>
-							</div>
-							<div class="col-md-6 form-group">
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="enableInputRadioOptions" id="enableInput1" value="option1">
-									<label class="form-check-label" for="enableInput1">Yes</label>
+						<!-- Link and Button Font Style -->
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="link_font_style"> <?php esc_html_e( 'Link Font Style', 'advsign' ); ?>	</label>
+									<select class="form-control" id="link_font_style" name="link_font_style">
+									<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
+									<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
+									<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+									</select>
 								</div>
-								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="enableInputRadioOptions" id="enableInput2" value="option2">
-									<label class="form-check-label" for="enableInput2">No</label>
+								<div class="col-md-6 form-group">
+									<label for="button_font_style"> <?php esc_html_e( 'Button Font Style', 'advsign' ); ?>	</label>
+									<select class="form-control" id="button_font_style" name="button_font_style">
+									<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
+									<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
+									<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+									</select>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="border p-3 mb-3 rounded">
-						<form> 
+						<!-- Enable Input Box Icon -->
+						<div class="border p-3 mb-3 rounded">
+							<div class="row">
+								<div class="col-md-3 form-group">
+									<label for="enableInputField"><?php esc_html_e( 'Enable Input Box Icon', 'advsign' ); ?></label>
+								</div>
+								<div class="col-md-6 form-group">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="enableInputRadioOptions" id="enableInput1" value="yes">
+										<label class="form-check-label" for="enableInput1">Yes</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="enableInputRadioOptions" id="enableInput2" value="no">
+										<label class="form-check-label" for="enableInput2">No</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Icon For User Input Box -->
+						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="icon_for_user_input"><?php esc_html_e( 'Icon For user Input Box', 'advsign' ); ?></label>
-									<input type="text" class="form-control" id="icon_for_user_input" aria-describedby="icon_for_user_input">
+									<input type="text" class="form-control" id="icon_for_user_input" name="icon_for_user_input" aria-describedby="icon_for_user_input">
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="icon_for_user_password"><?php esc_html_e( 'Icon For Password Input Box', 'advsign' ); ?></label>
-									<input type="text" class="form-control" id="icon_for_user_password" aria-describedby="icon_for_user_password">
+									<input type="text" class="form-control" id="icon_for_user_password" name="icon_for_user_password" aria-describedby="icon_for_user_password">
 								</div>
 							</div>
-						</form>
-					</div>
+						</div>
+						<!-- Submit Button -->
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+						</div>
+					</form>
 				  </div>
 				  <!-- font tab ends -->
 
@@ -671,6 +668,7 @@ defined( 'ABSPATH' ) || exit;
 					</form>
 				  </div>
 				  <!-- logo tab ends -->
+
 				  <!-- social tab starts -->
 				  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
 				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
@@ -907,91 +905,80 @@ defined( 'ABSPATH' ) || exit;
 					</form>
 				  </div>
 				  <!-- social tab ends -->
+
 				  <!-- google captcha tab starts -->
 				  <div class="tab-pane fade" id="nav-google" role="tabpanel" aria-labelledby="nav-google-tab">
-				 	 <div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="row">
-								<div class="col-md-6 form-group">
-									<label for="captcha"> <?php esc_html_e( 'Captcha Display', 'advsign' ); ?>	</label>
-									<div>
-										<input type="radio" name="google_captcha" id="google_captcha1" value="option1" checked>
-										<label class="form-check-label" for="social_icon_size1">
-											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
-										</label>
-									</div>
-									<div>
-										<input type="radio" name="google_captcha" id="google_captcha2" value="option2">
-										<label class="form-check-label" for="social_icon_size2">
-											<?php esc_html_e( 'No', 'advsign' ); ?> 
-										</label>
-									</div>
+				 	<div class="border p-3 mb-3 rounded">
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="captcha"> <?php esc_html_e( 'Captcha Display', 'advsign' ); ?>	</label>
+								<div>
+									<input type="radio" name="google_captcha" id="google_captcha1" value="option1" checked>
+									<label class="form-check-label" for="social_icon_size1">
+										<?php esc_html_e( 'Yes', 'advsign' ); ?> 
+									</label>
+								</div>
+								<div>
+									<input type="radio" name="google_captcha" id="google_captcha2" value="option2">
+									<label class="form-check-label" for="social_icon_size2">
+										<?php esc_html_e( 'No', 'advsign' ); ?> 
+									</label>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
-				 	 <div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="row">
-								<div class="col-md-6 form-group">
-									<label for="captcha_version"> <?php esc_html_e( 'Choose Google Captcha Version', 'advsign' ); ?></label>
-									<div>
-										<input type="radio" name="captcha_version" id="captcha_version1" value="option1" checked>
-										<label class="form-check-label" for="captcha_version2">
-											<?php esc_html_e( 'v2', 'advsign' ); ?> 
-										</label>
-									</div>
-									<div>
-										<input type="radio" name="captcha_version" id="captcha_version2" value="option2">
-										<label class="form-check-label" for="captcha_version3">
-											<?php esc_html_e( 'v3', 'advsign' ); ?> 
-										</label>
-									</div>
+				 	<div class="border p-3 mb-3 rounded">
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="captcha_version"> <?php esc_html_e( 'Choose Google Captcha Version', 'advsign' ); ?></label>
+								<div>
+									<input type="radio" name="captcha_version" id="captcha_version1" value="option1" checked>
+									<label class="form-check-label" for="captcha_version2">
+										<?php esc_html_e( 'v2', 'advsign' ); ?> 
+									</label>
+								</div>
+								<div>
+									<input type="radio" name="captcha_version" id="captcha_version2" value="option2">
+									<label class="form-check-label" for="captcha_version3">
+										<?php esc_html_e( 'v3', 'advsign' ); ?> 
+									</label>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 					<div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="form-group">
-								<label for="site_key"><?php esc_html_e( 'Site Key', 'advsign' ); ?></label>
-								<input type="text" class="form-control" id="site_key" aria-describedby="logo_link_url">
-							</div>
-						</form>
+						<div class="form-group">
+							<label for="site_key"><?php esc_html_e( 'Site Key', 'advsign' ); ?></label>
+							<input type="text" class="form-control" id="site_key" aria-describedby="logo_link_url">
+						</div>
 					</div>
 					<div class="border p-3 mb-3 rounded">
-						<form> 
-							<div class="form-group">
-								<label for="secret_key"><?php esc_html_e( 'Secret Key', 'advsign' ); ?></label>
-								<input type="text" class="form-control" id="secret_key" aria-describedby="logo_link_url">
-							</div>
-						</form>
+						<div class="form-group">
+							<label for="secret_key"><?php esc_html_e( 'Secret Key', 'advsign' ); ?></label>
+							<input type="text" class="form-control" id="secret_key" aria-describedby="logo_link_url">
+						</div>
 					</div>
 				  </div>
 				  <!-- google captcha tab ends -->
 				  <!-- export/import tab starts -->
 				  <div class="tab-pane fade" id="nav-expi" role="tabpanel" aria-labelledby="nav-expi-tab">
 				  	<div class="border p-3 mb-3 rounded">
-						<form> 
-							<label for="captcha"> <?php esc_html_e( 'Export File', 'advsign' ); ?>	</label>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Export File" aria-label="export-file" aria-describedby="basic-addon2" readonly>
-								<div class="input-group-append">
-									<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Export', 'advsign' ); ?></button>
-								</div>
+						<label for="captcha"> <?php esc_html_e( 'Export File', 'advsign' ); ?>	</label>
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Export File" aria-label="export-file" aria-describedby="basic-addon2" readonly>
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Export', 'advsign' ); ?></button>
 							</div>
-						</form>
+						</div>
 					</div>
 					<div class="border p-3 mb-3 rounded">
-						<form> 
-							<label for="captcha"> <?php esc_html_e( 'Import File', 'advsign' ); ?>	</label>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Import File" aria-label="import-file" aria-describedby="basic-addon2" readonly>
-								<div class="input-group-append">
-									<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Import', 'advsign' ); ?></button>
-								</div>
+						<label for="captcha"> <?php esc_html_e( 'Import File', 'advsign' ); ?>	</label>
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Import File" aria-label="import-file" aria-describedby="basic-addon2" readonly>
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="button"><?php esc_html_e( 'Import', 'advsign' ); ?></button>
 							</div>
-						</form>
+						</div>
 					</div>
 				  </div>
 				  <!-- export/import tab ends -->

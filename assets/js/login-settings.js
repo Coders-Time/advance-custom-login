@@ -50,7 +50,7 @@
     	/*color picker*/
 		
 
-		$('#colorPicker,#borderColorPicker,#messageFontColorPicker,#headlineFontColorPicker,#inputFontColorPicker,#linkColorPicker,#buttonColorPicker,#loginButtonColorPicker,#linkShadowColorPicker,#socialIconColorPicker,#socialHoverColorPicker,#socialIconbgColorPicker,#socialHoverbgColorPicker').wpColorPicker(myOptions);
+		$('#colorPicker,#form_border_color,#messageFontColorPicker,#headline_font_color,#input_font_color,#link_color,#button_color,#button_font_color,#link_shadow_color,#socialIconColorPicker,#socialHoverColorPicker,#socialIconbgColorPicker,#socialHoverbgColorPicker, #form_shadow_color_picker').wpColorPicker(myOptions);
 
 		var myOptions = {
 		    defaultColor: false,
@@ -79,8 +79,8 @@
             mediaUploader.on('select', function(){
                 attachment = mediaUploader.state().get('selection').first().toJSON();
                 $('.uploaded_login_bg_img')
-	                .attr('src',attachment.url)
-	                .data('id',attachment.id);
+	                .attr('src', attachment.url)
+	                .data('id', attachment.id);
                 $(".remove_login_bg_img").removeClass('d-none');
 	            $(".upload_login_bg_img").text('Change Image');
             });
@@ -125,6 +125,7 @@
                     </div> `);                 
                   });
                 $(".remove_login_bg_gallery").removeClass('d-none');
+                $(".submit_login_bg_gallery").removeClass('d-none');
                 $(".upload_login_bg_gallery").text('Change Gallery');
             });
             galleryUploader.open();

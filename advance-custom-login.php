@@ -64,7 +64,10 @@ class AdvanceCustomLogin {
         add_action( 'advsign_processing_complete',[$this,'advsign_processing_completed_func']);
         //This loads the function on the login page
         add_action( 'admin_post_bg_color_form', [$this,'advsign_bg_color_form'] );
+        add_action( 'admin_post_login_tab_form', [$this,'advsign_login_tab_form'] );
+        add_action( 'admin_post_font_tab_form', [$this,'advsign_font_tab_form'] );
         add_action( 'login_enqueue_scripts', [$this,'login_change_background_color'] );
+        
     }
 
     public function advsign_processing_completed_func( $saved_id ) {
@@ -288,12 +291,12 @@ class AdvanceCustomLogin {
             $asset_file_link = plugins_url( '/assets/', __FILE__ );
             $folder_path= __DIR__ .'/assets/';
 
-            wp_enqueue_style('select2', $asset_file_link . 'css/select2.css', [], '4.0');
+            wp_enqueue_style( 'select2', $asset_file_link . 'css/select2.css', [], '4.0');
             wp_enqueue_style( 'bootstrap', $asset_file_link . 'css/bootstrap.min.css', [], '4.6' );
             wp_enqueue_style( 'fontawesome', $asset_file_link . 'css/fontawesome.min.css', [], '5.15.2' );
             wp_enqueue_style( 'login_dashboard', $asset_file_link . 'css/login-settings.css', [], filemtime($folder_path.'css/login-settings.css') );            
             wp_enqueue_script( 'bootstrap', $asset_file_link . 'js/bootstrap.bundle.min.js',['jquery'],filemtime($folder_path.'js/bootstrap.bundle.min.js'), true );
-            wp_enqueue_script('select2', $asset_file_link . 'js/select2.js', ['jquery'], '4.0', true);
+            wp_enqueue_script( 'select2', $asset_file_link . 'js/select2.js', ['jquery'], '4.0', true);
             wp_enqueue_media(); /*media upload*/
             // Add the color picker css file       
             // wp_enqueue_style( 'wp-color-picker' ); 
@@ -344,13 +347,30 @@ class AdvanceCustomLogin {
     public function login_change_background_color($advsignbgcolor) {
         ?>
         <style type="text/css">
-            body.login {
+            body.login div#login form#loginform {
+                background-color: red !important;
             }
         </style>
     <?php }
 
+    public function advsign_login_tab_form(){
+        print_r($_POST);
+        if (isset($_POST['submit'])) {
 
+            $data_list = [
+                'login_form_position',
+                'float_settings',
+                'login_form_background',
+                'login_bg_repeat',
+                'login_form_bg_position',
+                'background',
+            ];
+        }
+    }
 
+    public function advsign_font_tab_form(){
+        print_r($_POST);
+    }
 
 
 }

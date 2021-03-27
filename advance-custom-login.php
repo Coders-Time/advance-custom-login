@@ -335,36 +335,57 @@ class AdvanceCustomLogin {
 
     public function advsign_bg_color_form(){
         $advsignbgcolor = $_POST['login_bg_color'];
-        echo $advsignbgcolor;
-        if(!get_option('login_bg_color')){
+        if( strlen($advsignbgcolor) > 3 && ($advsignbgcolor != get_option('login_bg_color')) ){
             update_option('login_bg_color', $advsignbgcolor);
         }
         
-        $this->login_change_background_color($advsignbgcolor);
+        $this->login_change_background_color();
     }
 
     //Custom CSS that removes the backgroung color in a function
-    public function login_change_background_color($advsignbgcolor) {
+    public function login_change_background_color() {
+        $advsignbgcolor = get_option('login_bg_color');
         ?>
         <style type="text/css">
             body.login div#login form#loginform {
-                background-color: red !important;
+                background-color: <?php echo $advsignbgcolor?> !important;
             }
         </style>
     <?php }
 
     public function advsign_login_tab_form(){
+        echo 'jglaj';
+
         print_r($_POST);
+        die();
+
         if (isset($_POST['submit'])) {
 
             $data_list = [
                 'login_form_position',
                 'float_settings',
                 'login_form_background',
+                'bg_img_url',
                 'login_bg_repeat',
                 'login_form_bg_position',
-                'background',
+                'login_bg_effect',
+                'login_form_width',
+                'form_border_color',
+                'login_border_radius',
+                'border_style',
+                'form_shadow',
+                'form_shadow_color_picker',
+                'username_email',
+                'username_placeholder',
+                'login_button_text',
+                'redirect_url',
+                'redirect_user',
+                'display_text',
+                'messageFontColorPicker',
+                'message_font_size',
+                'login_custom_css'
             ];
+            
         }
     }
 

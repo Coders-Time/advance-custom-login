@@ -142,7 +142,7 @@ defined( 'ABSPATH' ) || exit;
 
 				  <!-- login tab starts -->
 				  <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
-				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=login_tab_form" method="post">	
+				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">	
 					 	<!-- Login Form Position -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
@@ -367,6 +367,11 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 							</div>
 						</div>
+						<!-- special field for security reason -->
+						<input type="hidden" name="action" value="login_tab_form">
+						<input type="hidden" name="advsignlogin" value="<?php echo md5(time()); ?>">
+	                    <?php wp_nonce_field('login_advsign_form', 'login_advsign_nonce'); ?>
+
 						<!-- Custom Css -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
@@ -377,7 +382,7 @@ defined( 'ABSPATH' ) || exit;
 						</div>
 						<!-- Submit Button -->
 						<div class="text-center">
-							<button type="submit" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+							<button type="submit" name="login_submit" value="1" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
 						</div>
 					</form>
 				  </div>

@@ -107,14 +107,54 @@ class AdvanceCustomLogin {
         die();
     }
 
-    public function advsign_process_submission ( $nonce, $data_list ) {
-        $advsignlogo = $_POST['advsignlogo'];
+    public function advsign_login_tab_form(){
 
-        $processed = get_transient("advsign{$advsignlogo}");
+        if (isset($_POST['login_submit'])) {
+
+            $data_list = [
+                'login_form_position',
+                'float_settings',
+                'login_form_background',
+                'bg_img_url',
+                'login_bg_repeat',
+                'login_form_bg_position',
+                'login_bg_effect',
+                'login_form_width',
+                'form_border_color',
+                'login_border_radius',
+                'border_style',
+                'form_shadow',
+                'form_shadow_color_picker',
+                'username_email',
+                'username_placeholder',
+                'login_button_text',
+                'redirect_url',
+                'redirect_user',
+                'display_text',
+                'messageFontColorPicker',
+                'message_font_size',
+                'login_custom_css'
+            ];
+
+            $saved_id =  $this->advsign_process_submission( 'login', $data_list );
+            wp_safe_redirect(
+                esc_url_raw(
+                    add_query_arg('saved_id', $saved_id, admin_url('admin.php?page=advance-login'))
+                )
+            );
+            
+        }
+    }
+
+    public function advsign_process_submission ( $nonce, $data_list ) {
+        $advsign = $_POST['advsign' . $nonce];
+        $field = 'login_' . $nonce;
+
+        $processed = get_transient("advsign{$advsign}");
 
         if ($processed) {
             wp_send_json( $processed, 200 );
-            return 'login_logo';
+            return $advsign;
         }
 
         if ( wp_verify_nonce( sanitize_text_field($_POST[ $nonce . '_advsign_nonce']), $nonce .'_advsign_form')  ) {
@@ -122,12 +162,12 @@ class AdvanceCustomLogin {
             $data = [];
             foreach ( $_POST as $key => $value ) {
                 if ( in_array($key, $data_list )) {
-                    $data[$key] = $value;
+                    $data[$key] = sanitize_text_field($value);
                 }
             }
-            update_option('login_logo', $data);
-            set_transient("advsign{$advsignlogo}", $data, 60);
-            return 'login_logo';
+            update_option( $field, $data);
+            set_transient("advsign{$advsign}", $data, 60);
+            return $field;
             wp_send_json_success( $data, 200 );
             die();
         }
@@ -353,41 +393,7 @@ class AdvanceCustomLogin {
         </style>
     <?php }
 
-    public function advsign_login_tab_form(){
-        echo 'jglaj';
-
-        print_r($_POST);
-        die();
-
-        if (isset($_POST['submit'])) {
-
-            $data_list = [
-                'login_form_position',
-                'float_settings',
-                'login_form_background',
-                'bg_img_url',
-                'login_bg_repeat',
-                'login_form_bg_position',
-                'login_bg_effect',
-                'login_form_width',
-                'form_border_color',
-                'login_border_radius',
-                'border_style',
-                'form_shadow',
-                'form_shadow_color_picker',
-                'username_email',
-                'username_placeholder',
-                'login_button_text',
-                'redirect_url',
-                'redirect_user',
-                'display_text',
-                'messageFontColorPicker',
-                'message_font_size',
-                'login_custom_css'
-            ];
-            
-        }
-    }
+    
 
     public function advsign_font_tab_form(){
         print_r($_POST);

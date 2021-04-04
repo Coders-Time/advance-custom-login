@@ -64,8 +64,11 @@ class AdvanceCustomLogin {
         add_action( 'advsign_processing_complete',[$this,'advsign_processing_completed_func']);
         //This loads the function on the login page
         add_action( 'admin_post_bg_color_form', [$this,'advsign_bg_color_form'] );
+        add_action( 'admin_post_bg_img_form', [$this,'advsign_bg_img_form'] );
+        add_action( 'init', [$this,'advsign_form_bg_img'] );
         add_action( 'admin_post_login_tab_form', [$this,'advsign_login_tab_form'] );
         add_action( 'admin_post_font_tab_form', [$this,'advsign_font_tab_form'] );
+        add_action( 'admin_post_social_tab_form', [$this,'advsign_social_tab_form'] );
         add_action( 'login_enqueue_scripts', [$this,'login_change_background_color'] );
         
     }
@@ -108,12 +111,15 @@ class AdvanceCustomLogin {
     }
 
     public function advsign_login_tab_form(){
-
         if (isset($_POST['login_submit'])) {
 
             $data_list = [
                 'login_form_position',
                 'float_settings',
+                'float_left_margin',
+                'background_form_color',
+                'form_border_width',
+                'float_top_margin',
                 'login_form_background',
                 'bg_img_url',
                 'login_bg_repeat',
@@ -146,11 +152,58 @@ class AdvanceCustomLogin {
         }
     }
 
+    public function advsign_font_tab_form(){
+        if (isset($_POST['font_submit'])) {
+
+            $data_list = [
+                "headline_font_color",
+                "input_font_color",
+                "link_color",
+                "button_color",
+                "button_font_color",
+                "headline_font_size",
+                "input_font_size",
+                "link_font_size",
+                "button_font_size",
+                "show_remember_field",
+                "back_to_site",
+                "show_copyright_text",
+                "link_shadow",
+                "link_shadow_color",
+                "headline_font_style",
+                "input_font_style",
+                "link_font_style",
+                "button_font_style",
+                "enableInputRadioOptions",
+                "icon_for_user_input",
+                "icon_for_user_password",
+                "action","advsignfont",
+                "font_advsign_nonce",
+                "_wp_http_referer",
+                "font_submit"
+            ];
+
+            $saved_id =  $this->advsign_process_submission( 'font', $data_list );
+            wp_safe_redirect(
+                esc_url_raw(
+                    add_query_arg('saved_id', $saved_id, admin_url('admin.php?page=advance-login'))
+                )
+            );
+            
+        }
+    }
+
+    public function advsign_social_tab_form(){
+        var_dump($_POST);
+    }
+
     public function advsign_process_submission ( $nonce, $data_list ) {
         $advsign = $_POST['advsign' . $nonce];
         $field = 'login_' . $nonce;
 
         $processed = get_transient("advsign{$advsign}");
+
+        var_dump($processed);
 
         if ($processed) {
             wp_send_json( $processed, 200 );
@@ -378,8 +431,7 @@ class AdvanceCustomLogin {
         if( strlen($advsignbgcolor) > 3 && ($advsignbgcolor != get_option('login_bg_color')) ){
             update_option('login_bg_color', $advsignbgcolor);
         }
-        
-        $this->login_change_background_color();
+        wp_redirect( home_url() ); exit;
     }
 
     //Custom CSS that removes the backgroung color in a function
@@ -387,18 +439,68 @@ class AdvanceCustomLogin {
         $advsignbgcolor = get_option('login_bg_color');
         ?>
         <style type="text/css">
-            body.login div#login form#loginform {
+            body.login {
                 background-color: <?php echo $advsignbgcolor?> !important;
             }
         </style>
     <?php }
 
-    
 
-    public function advsign_font_tab_form(){
-        print_r($_POST);
+
+    //Custom image that removes the form backgroung image
+    public function advsign_form_bg_img() {
+        $login_form_info = (get_option('login_login'));
+        switch($login_form_info['login_form_position']){
+            case '2':
+                ?>
+            <style type="text/css"> 
+                body.login div#login {
+                float: <?php echo $login_form_info['float_settings']; ?> !important;
+                padding-right: 30px;
+                padding-left: 30px;
+            }
+            </style>
+            <?php    
+            break;
+            case '3':
+                ?>
+            <style>
+                body.login div#login {
+                margin-left: <?php echo $login_form_info['float_left_margin']."px"; ?> !important;
+                margin-top: <?php echo $login_form_info['float_top_margin']."px"; ?> !important;
+            }
+            </style>
+            <?php
+            break;
+            default:
+                break;
+            }
+        ?>
+        <style type="text/css">
+            
+            body.login div#login form#loginform{
+                background-color: <?php echo $login_form_info['background_form_color']; ?> !important;
+                width: <?php echo $login_form_info['login_form_width']; ?> !important;
+                border-color: <?php echo $login_form_info['form_border_color']; ?> !important;
+                border-radius: <?php echo $login_form_info['login_border_radius']."px"; ?> !important;
+                border-style: <?php echo $login_form_info['border_style']; ?> !important;
+                border-width: <?php echo $login_form_info['form_border_width']."px"; ?> !important;
+            }
+        </style>
+        <?php 
     }
 
+
+    //Custom image that removes the backgroung image
+    public function advsign_bg_img_form() {
+        $advsignbgcolor = get_option('login_bg_color');
+        ?>
+        <style type="text/css">
+            body.login {
+                background-color: <?php echo $advsignbgcolor?> !important;
+            }
+        </style>
+    <?php }
 
 }
 

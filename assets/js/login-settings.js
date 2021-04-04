@@ -30,7 +30,7 @@
     	$("#select-background").select2();
         $("#select-background").change(function(){
 
-            $(".bg_img_change_area,.bg_color_change, .bg_slider_change").addClass('d-none');
+            $(".bg_img_change_area, .bg_color_change, .bg_slider_change").addClass('d-none');
 
             switch ($(this).val()) {
                 case '2':
@@ -45,12 +45,51 @@
                 default:
                     break;
             }
-
         });
+
+        /* Login tab select */
+
+        $('#login_form_position').select2();
+        $('#login_form_position').change(function(){
+
+            $(".float_settings_tab, .float_settings_customization").addClass('d-none');
+
+            switch ($(this).val()) {
+                case '2':
+                    $(".float_settings_tab").removeClass('d-none');
+                    break;
+                case '3':
+                    $(".float_settings_customization").removeClass('d-none');
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        /* Form Background tab select */
+
+        $('#login_form_background').select2();
+        $('#login_form_background').change(function(){
+
+            $(".bg_form_color_option, .bg_form_img").addClass('d-none');
+
+            switch ($(this).val()) {
+                case '2':
+                    $(".bg_form_color_option").removeClass('d-none');
+                    break;
+                case '3':
+                    $(".bg_form_img, .bg_form_repeat, .bg_form_position").removeClass('d-none');
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
     	/*color picker*/
 		
 
-		$('#colorPicker,#form_border_color,#messageFontColorPicker,#headline_font_color,#input_font_color,#link_color,#button_color,#button_font_color,#link_shadow_color,#socialIconColorPicker,#socialHoverColorPicker,#socialIconbgColorPicker,#socialHoverbgColorPicker, #form_shadow_color_picker').wpColorPicker(myOptions);
+		$('#colorPicker,#form_border_color, #background_form_color, #messageFontColorPicker,#headline_font_color,#input_font_color,#link_color,#button_color,#button_font_color,#link_shadow_color,#socialIconColorPicker,#socialHoverColorPicker,#socialIconbgColorPicker,#socialHoverbgColorPicker, #form_shadow_color_picker').wpColorPicker(myOptions);
 
 		var myOptions = {
 		    defaultColor: false,
@@ -82,7 +121,10 @@
 	                .attr('src', attachment.url)
 	                .data('id', attachment.id);
                 $(".remove_login_bg_img").removeClass('d-none');
+                $(".submit_login_bg_img").removeClass('d-none');
 	            $(".upload_login_bg_img").text('Change Image');
+                $("#bg_img_id").val(attachment.id);
+
             });
             mediaUploader.open();
         });

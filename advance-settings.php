@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 				</nav>
 				<div class="tab-content" id="nav-tabContent">
 
-				  <!-- dashboard tab starts -->
+				  <!-- Dashboard tab starts -->
 				  <div class="tab-pane fade show active" id="nav-dashboard" role="tabpanel" aria-labelledby="nav-dashboard-tab">
 
 				  	<form>
@@ -52,9 +52,9 @@ defined( 'ABSPATH' ) || exit;
 					</form>
 
 				  </div>
-				  <!-- dashboard tab ends -->
+				  <!-- Dashboard tab ends -->
 
-				  <!-- background tab starts -->
+				  <!-- Background tab starts -->
 				  <div class="tab-pane fade" id="nav-background" role="tabpanel" aria-labelledby="nav-background-tab">
 					
 					<div class="form-group mb-5">
@@ -82,14 +82,21 @@ defined( 'ABSPATH' ) || exit;
 
 
 					<div class="bg_img_change_area form-group mb-3 d-none">
-						<label for="background_img">  <?php esc_html_e( 'Set Background Image', 'advsign' ); ?> </label>
-						<div class="preview_image mb-3">
-							<img src="<?php echo plugin_dir_url( __DIR__ )?>advance-custom-login/assets/images/background-image.png" class="img-thumbnail uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
-						</div>
-						<div class="button_area text-center">
-							<button type="button" class="btn pl-3 pr-3 btn-primary upload_login_bg_img"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
-							<button type="button" class="btn pl-3 pr-3 btn-warning ml-3 remove_login_bg_img d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
-						</div>
+						<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+							<label for="background_img">  <?php esc_html_e( 'Set Background Image', 'advsign' ); ?> </label>
+							<div class="preview_image mb-3">
+								<img src="<?php echo plugin_dir_url( __DIR__ )?>advance-custom-login/assets/images/background-image.png" class="img-thumbnail uploaded_login_bg_img" data-id="0" alt="<?php esc_html_e( 'Background image', 'advsign' ); ?>">
+								<input type="hidden" name="bg_img_id" id="bg_img_id">
+							</div>
+							<input type="hidden" name="action" value="bg_img_form">
+							<input type="hidden" name="advsignbgimg" value="<?php echo md5(time()); ?>">
+							<?php wp_nonce_field('bg_img_advsign_form', 'bg_img_advsign_nonce'); ?>
+								<div class="button_area text-center">
+								<button type="button" class="btn pl-3 pr-3 btn-primary upload_login_bg_img"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </button>
+								<button type="submit" class="btn pl-3 pr-3 btn-success ml-3 submit_login_bg_img d-none"><?php esc_html_e( 'Submit', 'advsign' ); ?></button>
+								<button type="button" class="btn pl-3 pr-3 btn-danger ml-3 remove_login_bg_img d-none"><?php esc_html_e( 'Remove', 'advsign' ); ?></button>
+							</div>
+						</form>
 					</div>
 
 
@@ -138,9 +145,9 @@ defined( 'ABSPATH' ) || exit;
 					  </div> -->
 
 				  </div>
-				  <!-- background tab ends -->
+				  <!-- Background tab ends -->
 
-				  <!-- login tab starts -->
+				  <!-- Login tab starts -->
 				  <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
 				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">	
 					 	<!-- Login Form Position -->
@@ -148,32 +155,51 @@ defined( 'ABSPATH' ) || exit;
 							<div class="form-group">
 								<label for="login_form_position"> <?php esc_html_e( 'Login Form Position', 'advsign' ); ?>	</label>
 								<select class="form-control" id="login_form_position" name="login_form_position">
-								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+								<option value="1"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
+								<option value="2"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
+								<option value="3"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
 								</select>
 							</div>
 						</div>
 						<!-- Float Settings -->
-						<div class="border p-3 mb-3 rounded">
+						<div class="border p-3 mb-3 rounded float_settings_tab d-none">
 							<label for="select-background"> <?php esc_html_e( 'Float Settings', 'advsign' ); ?>	</label>
+							<?php 
+							function float_settings_option( $val ){
+								$float_settings= get_option('login_login')['float_settings'];
+								return (trim(strtolower($float_settings))==trim(strtolower($val))) ? 'checked' : '';
+							} 
+							?>
 							<div>
-								<input type="radio" name="float_settings" id="floatsettings1" value="left" checked>
+								<input type="radio" name="float_settings" id="floatsettings1" value="left" <?php echo float_settings_option('left'); ?>>
 								<label class="form-check-label" for="floatsettings1">
 									<?php esc_html_e( 'Left', 'advsign' ); ?> 
 								</label>
 							</div>
 							<div>
-								<input type="radio" name="float_settings" id="floatsettings2" value="center">
+								<input type="radio" name="float_settings" id="floatsettings2" value="center" <?php echo float_settings_option('center'); ?>>
 								<label class="form-check-label" for="floatsettings2">
 									<?php esc_html_e( 'Center', 'advsign' ); ?> 
 								</label>
 							</div>
 							<div>
-								<input type="radio" name="float_settings" id="floatsettings3" value="right">
+								<input type="radio" name="float_settings" id="floatsettings3" value="right" <?php echo float_settings_option('right'); ?> >
 								<label class="form-check-label" for="floatsettings3">
 									<?php esc_html_e( 'Right', 'advsign' ); ?> 
 								</label>
+							</div>
+						</div>
+						<!-- Float with customization Settings -->
+						<div class="border p-3 mb-3 rounded float_settings_customization d-none">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<label for="left_margin"><?php esc_html_e( 'Left Margin', 'advsign' ); ?></label>
+									<input type="range" value="<?php echo(get_option('login_login')['float_left_margin']); ?>" min="10" max="100" step="1" class="custom-range" name="float_left_margin" id="float_left_margin">
+								</div>
+								<div class="col-md-6 form-group">
+									<label for="top_margin"><?php esc_html_e( 'Top Margin', 'advsign' ); ?></label>
+									<input type="range" value="<?php echo(get_option('login_login')['float_top_margin']); ?>" min="10" max="100" step="1" class="custom-range" name="float_top_margin" id="float_top_margin">
+								</div>
 							</div>
 						</div>
 						<!-- Background -->
@@ -181,14 +207,20 @@ defined( 'ABSPATH' ) || exit;
 							<div class="form-group">
 								<label for="select_background"> <?php esc_html_e( 'Select Background', 'advsign' ); ?>	</label>
 								<select class="form-control" id="login_form_background" name="login_form_background">
-								<option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Static Background Color', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Static Background Image', 'advsign' ); ?> </option>
+								<option value="1"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
+								<option value="2"> <?php esc_html_e( 'Static Background Color', 'advsign' ); ?> </option>
+								<option value="3"> <?php esc_html_e( 'Static Background Image', 'advsign' ); ?> </option>
 								</select>
 							</div>
 						</div>
+						<!-- Background Form Color -->
+						<div class="border p-3 mb-3 rounded d-none bg_form_color_option">
+							<label for="background_form_color">  <?php esc_html_e( 'Background Form Color', 'advsign' ); ?> </label>
+							<input type="text" class="form-control" id="background_form_color" name="background_form_color" aria-describedby="bgcolorHelp">
+							<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
+						</div>
 						<!-- Background Image Url -->
-						<div class="form-group alert border fade show">
+						<div class="form-group alert border fade show d-none bg_form_img">
 							<label for="bg_img_url"> <?php esc_html_e( 'Background Image Url', 'advsign' ); ?>  </label>
 							<input type="url" value="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" name="bg_img_url" class="form-control " id="bg_img_url" aria-describedby="bg_img_url" readonly>
 							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="uploadHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </small></a>
@@ -196,7 +228,7 @@ defined( 'ABSPATH' ) || exit;
 							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="removeHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Remove', 'advsign' ); ?> </small></a>
 						</div>
 						<!-- Background Repeat -->
-						<div class="border p-3 mb-3 rounded">
+						<div class="border p-3 mb-3 rounded d-none bg_form_repeat d-none">
 							<div class="form-group">
 								<label for="login_bg_repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?>	</label>
 								<select class="form-control" id="login_bg_repeat" name="login_bg_repeat">
@@ -208,7 +240,7 @@ defined( 'ABSPATH' ) || exit;
 							</div>
 						</div>
 						<!-- Background Position -->
-						<div class="border p-3 mb-3 rounded">
+						<div class="border p-3 mb-3 rounded d-none bg_form_position d-none">
 							<div class="form-group">
 								<label for="login_form_bg_position"> <?php esc_html_e( 'Background Position', 'advsign' ); ?>	</label>
 								<select class="form-control" id="login_form_bg_position" name="login_form_bg_position">
@@ -224,7 +256,7 @@ defined( 'ABSPATH' ) || exit;
 								</select>
 							</div>
 						</div>
-						<!-- Background Effect -->
+						<!-- Background Effect and Width -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
@@ -238,11 +270,11 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="login_form_width"><?php esc_html_e( 'Login Form Width', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" name="login_form_width" id="customRange1">
+									<input type="range" value="350" min="200" max="500" step="1" class="custom-range" name="login_form_width" id="customRange1">
 								</div>
 							</div>
 						</div>
-						<!-- Border Color -->
+						<!-- Border Color and Radius-->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
@@ -252,7 +284,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="login_border_radius"><?php esc_html_e( 'Border Radius', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="login_border_radius" name="login_border_radius">
+									<input type="range" value="<?php echo(get_option('login_login')['login_border_radius']); ?>" min="0" max="20" step="1" class="custom-range" id="login_border_radius" name="login_border_radius">
 								</div>
 							</div>
 						</div>
@@ -262,16 +294,16 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-6 form-group">
 									<label for="border_style"> <?php esc_html_e( 'Border Style', 'advsign' ); ?>	</label>
 									<select class="form-control" id="border_style" name="border_style">
-									<option value="0"> <?php esc_html_e( 'None', 'advsign' ); ?> </option>
-									<option value="1"> <?php esc_html_e( 'Solid', 'advsign' ); ?> </option>
-									<option value="2"> <?php esc_html_e( 'Dotted', 'advsign' ); ?> </option>
-									<option value="3"> <?php esc_html_e( 'Dashed', 'advsign' ); ?> </option>
-									<option value="4"> <?php esc_html_e( 'Double', 'advsign' ); ?> </option>
+									<option value="solid"> <?php esc_html_e( 'Solid', 'advsign' ); ?> </option>
+									<option value="none"> <?php esc_html_e( 'None', 'advsign' ); ?> </option>
+									<option value="dotted"> <?php esc_html_e( 'Dotted', 'advsign' ); ?> </option>
+									<option value="dashed"> <?php esc_html_e( 'Dashed', 'advsign' ); ?> </option>
+									<option value="double"> <?php esc_html_e( 'Double', 'advsign' ); ?> </option>
 									</select>
 								</div>
 								<div class="col-md-6 form-group">
-									<label for="customRange3"><?php esc_html_e( 'Border Thickness', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="customRange3">
+									<label for="form_border_width"><?php esc_html_e( 'Border Thickness', 'advsign' ); ?></label>
+									<input type="range" value="5" min="0" max="20" step="1" class="custom-range" name="form_border_width" id="form_border_width">
 								</div>
 							</div>
 						</div>
@@ -339,7 +371,7 @@ defined( 'ABSPATH' ) || exit;
 							</div>
 						</div>
 						<!-- Redirect after Login -->
-						<div class="border p-3 mb-3 rounded">
+						<!-- <div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<div>
@@ -352,9 +384,9 @@ defined( 'ABSPATH' ) || exit;
 									<input type="text" class="form-control" id="display_text" name="display_text" aria-describedby="display_text">
 								</div>
 							</div>
-						</div>
-						<!-- Message -->
-						<div class="border p-3 mb-3 rounded">
+						</div> -->
+						<!-- Message Font Color -->
+						<!-- <div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="messageFontColorPicker">  <?php esc_html_e( 'Message Font Color', 'advsign' ); ?> </label>
@@ -366,12 +398,11 @@ defined( 'ABSPATH' ) || exit;
 									<input type="range" class="custom-range" id="message_font_size" name="message_font_size">
 								</div>
 							</div>
-						</div>
-						<!-- special field for security reason -->
+						</div> -->
+						<!-- Special field for security reason -->
 						<input type="hidden" name="action" value="login_tab_form">
 						<input type="hidden" name="advsignlogin" value="<?php echo md5(time()); ?>">
 	                    <?php wp_nonce_field('login_advsign_form', 'login_advsign_nonce'); ?>
-
 						<!-- Custom Css -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
@@ -390,7 +421,7 @@ defined( 'ABSPATH' ) || exit;
 
 				  <!-- font tab starts -->
 				  <div class="tab-pane fade" id="nav-font" role="tabpanel" aria-labelledby="nav-font-tab">
-				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=font_tab_form" method="post">	
+				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">	
 					  	<!-- Headline Colors  -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
@@ -594,9 +625,13 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 							</div>
 						</div>
+						<!-- special field for security reason -->
+						<input type="hidden" name="action" value="font_tab_form">
+						<input type="hidden" name="advsignfont" value="<?php echo md5(time()); ?>">
+	                    <?php wp_nonce_field('font_advsign_form', 'font_advsign_nonce'); ?>
 						<!-- Submit Button -->
 						<div class="text-center">
-							<button type="submit" class="btn btn-primary mt-5"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+							<button type="submit" class="btn btn-primary mt-5" name="font_submit" value="1"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
 						</div>
 					</form>
 				  </div>
@@ -906,6 +941,14 @@ defined( 'ABSPATH' ) || exit;
 									</div>
 								</div>
 							</div>
+						</div>
+						<!-- special field for security reason -->
+						<input type="hidden" name="action" value="social_tab_form">
+						<input type="hidden" name="advsignsocial" value="<?php echo md5(time()); ?>">
+	                    <?php wp_nonce_field('social_advsign_form', 'social_advsign_nonce'); ?>
+						<!-- Submit Button -->
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary mt-5" name="social_submit" value="1"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
 						</div>
 					</form>
 				  </div>

@@ -194,7 +194,38 @@ class AdvanceCustomLogin {
     }
 
     public function advsign_social_tab_form(){
-        var_dump($_POST);
+        if (isset($_POST['social_submit'])) {
+
+            $data_list = [
+                "social_icon_placement",
+                "social_icon_size",
+                "social_icon_color_picker",
+                "social_hover_color_picker",
+                "social_icon_bg_color_picker",
+                "social_hover_bg_color_picker",
+                "social_icon_enable_tab",
+                "facebook_link",
+                "twitter_link",
+                "linkedin_link",
+                "g_plus_link",
+                "pinterest_link",
+                "digg_link",
+                "youtube_link",
+                "flickr_link",
+                "tumblr_link",
+                "skype_link",
+                "insta_link",
+                "telegram_link",
+            ];
+
+            $saved_id =  $this->advsign_process_submission( 'social', $data_list );
+            wp_safe_redirect(
+                esc_url_raw(
+                    add_query_arg('saved_id', $saved_id, admin_url('admin.php?page=advance-login'))
+                )
+            );
+            
+        }
     }
 
     public function advsign_process_submission ( $nonce, $data_list ) {
@@ -250,8 +281,6 @@ class AdvanceCustomLogin {
         $login_logo = get_option('login_logo') ?? '';
         include ( 'advance-settings.php' );
     }
-
-
 
     /**
      *
@@ -431,7 +460,7 @@ class AdvanceCustomLogin {
         if( strlen($advsignbgcolor) > 3 && ($advsignbgcolor != get_option('login_bg_color')) ){
             update_option('login_bg_color', $advsignbgcolor);
         }
-        wp_redirect( home_url() ); exit;
+        wp_redirect( admin_url('admin.php?page=advance-login') ); exit;
     }
 
     //Custom CSS that removes the backgroung color in a function

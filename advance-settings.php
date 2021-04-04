@@ -71,7 +71,7 @@ defined( 'ABSPATH' ) || exit;
 					<div class="bg_color_change form-group d-none">
 						<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=bg_color_form" method="post">
 							<label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
-							<input type="text" class="form-control" id="colorPicker" value="#dd3333" aria-describedby="bgcolorHelp" name="login_bg_color" data-default-color="#000000">
+							<input type="text" class="form-control" id="colorPicker" value="<?php echo(get_option('login_bg_color')); ?>" aria-describedby="bgcolorHelp" name="login_bg_color" data-default-color="#000000">
 							<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 							<input type='hidden' name='action' value='bg_color_form' />
 							<div class="text-center">
@@ -216,7 +216,7 @@ defined( 'ABSPATH' ) || exit;
 						<!-- Background Form Color -->
 						<div class="border p-3 mb-3 rounded d-none bg_form_color_option">
 							<label for="background_form_color">  <?php esc_html_e( 'Background Form Color', 'advsign' ); ?> </label>
-							<input type="text" class="form-control" id="background_form_color" name="background_form_color" aria-describedby="bgcolorHelp">
+							<input type="text" class="form-control" value="<?php echo(get_option('login_login')['background_form_color']); ?>" id="background_form_color" name="background_form_color" aria-describedby="bgcolorHelp">
 							<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 						</div>
 						<!-- Background Image Url -->
@@ -232,10 +232,10 @@ defined( 'ABSPATH' ) || exit;
 							<div class="form-group">
 								<label for="login_bg_repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?>	</label>
 								<select class="form-control" id="login_bg_repeat" name="login_bg_repeat">
-								<option value="0"> <?php esc_html_e( 'No Repeat', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Repeat', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Repeat Horizontally', 'advsign' ); ?> </option>
-								<option value="3"> <?php esc_html_e( 'Repeat Vertically', 'advsign' ); ?> </option>
+								<option value="No-repeat"> <?php esc_html_e( 'No Repeat', 'advsign' ); ?> </option>
+								<option value="Repeat"> <?php esc_html_e( 'Repeat', 'advsign' ); ?> </option>
+								<option value="Repeat-horizontally"> <?php esc_html_e( 'Repeat Horizontally', 'advsign' ); ?> </option>
+								<option value="Repeat-vertically"> <?php esc_html_e( 'Repeat Vertically', 'advsign' ); ?> </option>
 								</select>
 							</div>
 						</div>
@@ -279,7 +279,7 @@ defined( 'ABSPATH' ) || exit;
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="form_border_color">  <?php esc_html_e( 'Select Border Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="form_border_color" name="form_border_color" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_login')['form_border_color']); ?>" id="form_border_color" name="form_border_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-6 form-group">
@@ -303,7 +303,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="form_border_width"><?php esc_html_e( 'Border Thickness', 'advsign' ); ?></label>
-									<input type="range" value="5" min="0" max="20" step="1" class="custom-range" name="form_border_width" id="form_border_width">
+									<input type="range" value="<?php echo(get_option('login_login')['form_border_width']); ?>" min="0" max="20" step="1" class="custom-range" name="form_border_width" id="form_border_width">
 								</div>
 							</div>
 						</div>
@@ -327,7 +327,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="form_shadow_color_picker">  <?php esc_html_e( 'Form Shadow Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="form_shadow_color_picker" name="form_shadow_color_picker" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_login')['form_shadow_color_picker']); ?>" id="form_shadow_color_picker" name="form_shadow_color_picker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
@@ -427,17 +427,17 @@ defined( 'ABSPATH' ) || exit;
 							<div class="row">
 								<div class="col-md-4 form-group">
 									<label for="headline_font_color">  <?php esc_html_e( 'Headline Font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="headline_font_color" name="headline_font_color" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['headline_font_color']); ?>" id="headline_font_color" name="headline_font_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-4 form-group">
 									<label for="input_font_color">  <?php esc_html_e( 'Input Font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="input_font_color" name="input_font_color" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['input_font_color']); ?>" id="input_font_color" name="input_font_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-4 form-group">
 									<label for="link_color">  <?php esc_html_e( 'Link Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="link_color" name="link_color" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['link_color']); ?>" id="link_color" name="link_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
@@ -447,12 +447,12 @@ defined( 'ABSPATH' ) || exit;
 							<div class="row">
 								<div class="col-md-4 form-group">
 									<label for="button_color">  <?php esc_html_e( 'Button Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="button_color" name="button_color" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['button_color']); ?>" id="button_color" name="button_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-4 form-group">
 									<label for="button_font_color">  <?php esc_html_e( 'Login Button font Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="button_font_color" name="button_font_color" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['button_font_color']); ?>" id="button_font_color" name="button_font_color" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
@@ -462,11 +462,11 @@ defined( 'ABSPATH' ) || exit;
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="headline_font_size"><?php esc_html_e( 'Headline Font size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" name="headline_font_size" id="headline_font_size">
+									<input type="range" value="<?php echo(get_option('login_font')['headline_font_size']); ?>" class="custom-range" name="headline_font_size" id="headline_font_size">
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="input_font_size"><?php esc_html_e( 'Input Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" name="input_font_size" id="input_font_size">
+									<input type="range" value="<?php echo(get_option('login_font')['input_font_size']); ?>" class="custom-range" name="input_font_size" id="input_font_size">
 								</div>
 							</div>
 						</div>
@@ -475,11 +475,11 @@ defined( 'ABSPATH' ) || exit;
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="link_font_size"><?php esc_html_e( 'Link Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="link_font_size" name="link_font_size">
+									<input type="range" value="<?php echo(get_option('login_font')['link_font_size']); ?>" class="custom-range"  id="link_font_size" name="link_font_size">
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="button_font_size"><?php esc_html_e( 'Button Font Size', 'advsign' ); ?></label>
-									<input type="range" class="custom-range" id="button_font_size" name="button_font_size">
+									<input type="range" value="<?php echo(get_option('login_font')['button_font_size']); ?>" class="custom-range" id="button_font_size" name="button_font_size">
 								</div>
 							</div>
 						</div>
@@ -549,7 +549,7 @@ defined( 'ABSPATH' ) || exit;
 						<!-- Link Shadow Color -->
 						<div class="border p-3 mb-3 rounded">
 							<label for="link_shadow_color">  <?php esc_html_e( 'Link Shadow Color', 'advsign' ); ?> </label>
-							<input type="text" class="form-control" id="link_shadow_color" name="link_shadow_color" aria-describedby="bgcolorHelp">
+							<input type="text" class="form-control" value="<?php echo(get_option('login_font')['link_shadow_color']); ?>" id="link_shadow_color" name="link_shadow_color" aria-describedby="bgcolorHelp">
 							<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 						</div>
 						<!-- Headline Font Style -->
@@ -617,11 +617,11 @@ defined( 'ABSPATH' ) || exit;
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="icon_for_user_input"><?php esc_html_e( 'Icon For user Input Box', 'advsign' ); ?></label>
-									<input type="text" class="form-control" id="icon_for_user_input" name="icon_for_user_input" aria-describedby="icon_for_user_input">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['icon_for_user_input']); ?>" id="icon_for_user_input" name="icon_for_user_input" aria-describedby="icon_for_user_input">
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="icon_for_user_password"><?php esc_html_e( 'Icon For Password Input Box', 'advsign' ); ?></label>
-									<input type="text" class="form-control" id="icon_for_user_password" name="icon_for_user_password" aria-describedby="icon_for_user_password">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_font')['icon_for_user_password']); ?>" id="icon_for_user_password" name="icon_for_user_password" aria-describedby="icon_for_user_password">
 								</div>
 							</div>
 						</div>
@@ -712,6 +712,7 @@ defined( 'ABSPATH' ) || exit;
 				  <!-- social tab starts -->
 				  <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
 				  	<form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+						<!-- Social Icon Size -->
 						<div class="form-group border p-3 mb-3 rounded">
 							<label for="social_icon_placement"> <?php esc_html_e( 'Social Icon Placement', 'advsign' ); ?>	</label>
 							<select class="form-control" id="social_icon_placement" name="social_icon_placement">
@@ -721,6 +722,7 @@ defined( 'ABSPATH' ) || exit;
 								<option value="3"> <?php esc_html_e( 'Both', 'advsign' ); ?> </option>
 							</select>
 						</div>
+						<!-- Social Icon Placement -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
@@ -761,46 +763,49 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 							</div>
 						</div>
+						<!-- Social Icon Color -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_icon_color_picker']); ?>" name="social_icon_color_picker" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color On Hover', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_hover_color_picker']); ?>" name="social_hover_color_picker" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
 						</div>
+						<!-- Social Icon background Color -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Background Color', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_icon_bg_color_picker']); ?>" name="social_icon_bg_color_picker" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="colorPicker">  <?php esc_html_e( 'Social Media Background Color On Hover', 'advsign' ); ?> </label>
-									<input type="text" class="form-control" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_hover_bg_color_picker']); ?>" name="social_hover_bg_color_picker" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
 									<small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
 								</div>
 							</div>
 						</div>
+						<!-- Social Icon Enable -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Window', 'advsign' ); ?>	</label>
 									<div>
-										<input type="radio" name="social_icon_new_tab" id="social_icon_new1" value="option1" checked>
+										<input type="radio" name="social_icon_enable_tab" id="social_icon_new1" value="option1" checked>
 										<label class="form-check-label" for="social_icon_size1">
 											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="social_icon_new_tab" id="social_icon_new2" value="option2">
+										<input type="radio" name="social_icon_enable_tab" id="social_icon_new2" value="option2">
 										<label class="form-check-label" for="social_icon_size2">
 											<?php esc_html_e( 'No', 'advsign' ); ?> 
 										</label>
@@ -808,6 +813,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 							</div>
 						</div>
+						<!-- List of Social Icons  -->
 						<div class="border p-3 mb-3 rounded">
 							<label for="logo_link_url"><?php esc_html_e( 'Social Links', 'advsign' ); ?></label>
 							<div class="row">
@@ -817,7 +823,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-facebook-f"></i></div>
 										</div>
-										<input type="text" class="form-control" id="facebook_link" placeholder="facebook account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['facebook_link']); ?>" name="facebook_link" id="facebook_link" placeholder="facebook account url">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
@@ -826,7 +832,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-twitter"></i></div>
 										</div>
-										<input type="text" class="form-control" id="twitter_link" placeholder="twiiter account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['twitter_link']); ?>" name="twitter_link" id="twitter_link" placeholder="twiiter account url">
 									</div>
 								</div>
 							</div>
@@ -837,16 +843,16 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-linkedin-in"></i></div>
 										</div>
-										<input type="text" class="form-control" id="linkedin_link" placeholder="linkedin account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['linkedin_link']); ?>" name="linkedin_link" id="linkedin_link" placeholder="linkedin account url">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
-									<label class="sr-only" for="g+_link"><?php esc_html_e( 'Google Plus', 'advsign' ); ?></label>
+									<label class="sr-only" for="g_plus_link"><?php esc_html_e( 'Google Plus', 'advsign' ); ?></label>
 									<div class="input-group mb-2">
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-google-plus-g"></i></div>
 										</div>
-										<input type="text" class="form-control" id="g+_link" placeholder="G+ account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['g_plus_link']); ?>" name="g_plus_link" id="g_plus_link" placeholder="G+ account url">
 									</div>
 								</div>
 							</div>
@@ -857,7 +863,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-pinterest-p"></i></div>
 										</div>
-										<input type="text" class="form-control" id="pinterest_link" placeholder="pinterest account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['pinterest_link']); ?>" name="pinterest_link" id="pinterest_link" placeholder="pinterest account url">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
@@ -866,7 +872,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-digg"></i></div>
 										</div>
-										<input type="text" class="form-control" id="digg_link" placeholder="digg account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['digg_link']); ?>" name="digg_link" id="digg_link" placeholder="digg account url">
 									</div>
 								</div>
 							</div>
@@ -877,7 +883,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-youtube"></i></div>
 										</div>
-										<input type="text" class="form-control" id="youtube_link" placeholder="youtube account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['youtube_link']); ?>" name="youtube_link" id="youtube_link" placeholder="youtube account url">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
@@ -886,7 +892,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-flickr"></i></div>
 										</div>
-										<input type="text" class="form-control" id="flickr_link" placeholder="flickr account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['flickr_link']); ?>" name="flickr_link" id="flickr_link" placeholder="flickr account url">
 									</div>
 								</div>
 							</div>
@@ -897,7 +903,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-tumblr"></i></div>
 										</div>
-										<input type="text" class="form-control" id="tumblr_link" placeholder="tumblr account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['tumblr_link']); ?>" name="tumblr_link" id="tumblr_link" placeholder="tumblr account url">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
@@ -906,7 +912,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-skype"></i></div>
 										</div>
-										<input type="text" class="form-control" id="skype_link" placeholder="skype account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['skype_link']); ?>" name="skype_link" id="skype_link" placeholder="skype account url">
 									</div>
 								</div>
 							</div>
@@ -917,7 +923,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-instagram"></i></div>
 										</div>
-										<input type="text" class="form-control" id="insta_link" placeholder="instagram account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['insta_link']); ?>" name="insta_link" id="insta_link" placeholder="instagram account url">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
@@ -926,7 +932,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-telegram-plane"></i></div>
 										</div>
-										<input type="text" class="form-control" id="telegram_link" placeholder="telegram account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['telegram_link']); ?>" name="telegram_link" id="telegram_link" placeholder="telegram account url">
 									</div>
 								</div>
 							</div>

@@ -270,7 +270,7 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="login_form_width"><?php esc_html_e( 'Login Form Width', 'advsign' ); ?></label>
-									<input type="range" value="350" min="200" max="500" step="1" class="custom-range" name="login_form_width" id="customRange1">
+									<input type="range" value="<?php echo(get_option('login_login')['login_form_width']); ?>" min="200" max="500" step="1" class="custom-range" name="login_form_width" id="customRange1">
 								</div>
 							</div>
 						</div>

@@ -314,7 +314,7 @@ class AdvanceCustomLogin {
     public function remove_footer_admin ( ) {
         $developedbt = __( 'Developed by', 'advsign' );
         $coderstime = __( 'Coders Time', 'advsign' );        
-        echo '<span id="footer-thankyou"> '.$developedbt.' <a href="https://facebook.com/coderstime" target="_blank"> '. $coderstime.' </a> </span>';
+        echo '<span id="footer-thankyou> '.$developedbt.' <a href="https://facebook.com/coderstime" target="_blank"> '. $coderstime.' </a> </span>';
     }
 
     /*
@@ -506,7 +506,7 @@ class AdvanceCustomLogin {
             }
         ?>
         <style type="text/css">
-            
+            /* login form css */
             body.login div#login form#loginform{
                 background-color: <?php echo $login_form_info['background_form_color']; ?> !important;
                 width: <?php echo $login_form_info['login_form_width']; ?> !important;
@@ -514,6 +514,24 @@ class AdvanceCustomLogin {
                 border-radius: <?php echo $login_form_info['login_border_radius']."px"; ?> !important;
                 border-style: <?php echo $login_form_info['border_style']; ?> !important;
                 border-width: <?php echo $login_form_info['form_border_width']."px"; ?> !important;
+                color: black;
+            }
+
+            /* input texts color and font size*/
+            .login form .input, .login form input[type=checkbox], .login input[type=text]{
+                color: red !important;
+                font-size: 50px !important;
+            }
+            /* links color and font size*/
+            body.login div#login p#backtoblog a{
+                color: red !important;
+                font-size: 50px !important;
+            }
+            /* button color */
+            body.login div#login form#loginform p.submit input#wp-submit {
+                background-color: red;
+                color: black;
+                font-size: 50px !important;
             }
         </style>
         <?php 
@@ -525,6 +543,7 @@ class AdvanceCustomLogin {
         $advsignbgcolor = get_option('login_bg_color');
         ?>
         <style type="text/css">
+            /* login form background color */
             body.login {
                 background-color: <?php echo $advsignbgcolor?> !important;
             }

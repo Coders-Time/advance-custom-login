@@ -153,22 +153,23 @@ defined( 'ABSPATH' ) || exit;
 					 	<!-- Login Form Position -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="form-group">
-								<label for="login_form_position"> <?php esc_html_e( 'Login Form Position', 'advsign' ); ?>	</label>
+								<label for="login_form_position"> <?php esc_html_e( 'Login Form Position', 'advsign' ); ?></label>
 								<select class="form-control" id="login_form_position" name="login_form_position">
-								<option value="1"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-								<option value="3"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+									<option value="1"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
+									<option value="2"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
+									<option value="3"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
 								</select>
+
 							</div>
-						</div>
+						</div> 
 						<!-- Float Settings -->
 						<div class="border p-3 mb-3 rounded float_settings_tab d-none">
 							<label for="select-background"> <?php esc_html_e( 'Float Settings', 'advsign' ); ?>	</label>
 							<?php 
-							function float_settings_option( $val ){
-								$float_settings= get_option('login_login')['float_settings'];
-								return (trim(strtolower($float_settings))==trim(strtolower($val))) ? 'checked' : '';
-							} 
+								function float_settings_option( $val ){
+									$float_settings= get_option('login_login')['float_settings'];
+									return (trim(strtolower($float_settings))==trim(strtolower($val))) ? 'checked' : '';
+								} 
 							?>
 							<div>
 								<input type="radio" name="float_settings" id="floatsettings1" value="left" <?php echo float_settings_option('left'); ?>>
@@ -222,51 +223,73 @@ defined( 'ABSPATH' ) || exit;
 						<!-- Background Image Url -->
 						<div class="form-group alert border fade show d-none bg_form_img">
 							<label for="bg_img_url"> <?php esc_html_e( 'Background Image Url', 'advsign' ); ?>  </label>
-							<input type="url" value="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" name="bg_img_url" class="form-control " id="bg_img_url" aria-describedby="bg_img_url" readonly>
-							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="uploadHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Upload', 'advsign' ); ?> </small></a>
-							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="previewHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Preview', 'advsign' ); ?> </small></a>
-							<a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" target="blank"><small id="removeHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Remove', 'advsign' ); ?> </small></a>
+							<div class="preview_bg_img mb-3">
+								<?php 
+									$bg_img_default_url = WP_CTL_DIR . 'assets/images/form-bg-img.png'; 
+									$bg_img_url = wp_get_attachment_image_src ( $form_bg_img['login_form_bg_id'], [$form_bg_img['form_bg_img_width'],$form_bg_img['form_bg_img_height']] )[0];
+								?>
+								<img src="<?php echo esc_url( $bg_img_url ? : $bg_img_default_url ); ?>" class="img-thumbnail mx-auto d-block uploaded_form_bg_img_img" data-id="0" alt="<?php esc_html_e( 'form background image', 'advsign' ); ?>" style="width: <?php echo $form_bg_img['form_bg_img_width'] ? :'184'; ?>px;height:<?php echo $form_bg_img['form_bg_img_height'] ? :'184'; ?>px;">
+							</div>
+							<input type="url" value="<?php echo esc_url( $bg_img_url ? : $bg_img_default_url ); ?>" class="form-control " id="form_bg_img" data-id='0' aria-describedby="form_bg_img_help" readonly>
+							<input type="hidden" name="login_form_bg_id" id="login_form_bg_id" value="<?php echo $form_bg_img['login_form_bg_id'] ? : 0; ?>">
+							<small id="form_bg_img_help" class="btn btn-dark mt-3"> <?php esc_html_e( 'Change Image', 'advsign' ); ?> </small>
 						</div>
 						<!-- Background Repeat -->
 						<div class="border p-3 mb-3 rounded d-none bg_form_repeat d-none">
 							<div class="form-group">
-								<label for="login_bg_repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?>	</label>
-								<select class="form-control" id="login_bg_repeat" name="login_bg_repeat">
-								<option value="No-repeat"> <?php esc_html_e( 'No Repeat', 'advsign' ); ?> </option>
-								<option value="Repeat"> <?php esc_html_e( 'Repeat', 'advsign' ); ?> </option>
-								<option value="Repeat-horizontally"> <?php esc_html_e( 'Repeat Horizontally', 'advsign' ); ?> </option>
-								<option value="Repeat-vertically"> <?php esc_html_e( 'Repeat Vertically', 'advsign' ); ?> </option>
-								</select>
+								<label for="login_bg_repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?></label>
+								<?php $options = array('No Repeat', 'Repeat', 'Repeat Horizontally', 'Repeat Vertically');
+									echo "<select class=".'form-control'." name=".'login_bg_repeat'.">";
+									$selected = get_option('login_login')['login_bg_repeat'];
+									foreach($options as $option){
+										if($selected == $option) {
+											echo "<option selected='selected' value='$option'>$option</option>";
+										}
+										else {
+											echo "<option value='$option'>$option</option>";
+										}
+									}
+									echo "</select>";
+								?>
 							</div>
 						</div>
 						<!-- Background Position -->
 						<div class="border p-3 mb-3 rounded d-none bg_form_position d-none">
 							<div class="form-group">
 								<label for="login_form_bg_position"> <?php esc_html_e( 'Background Position', 'advsign' ); ?>	</label>
-								<select class="form-control" id="login_form_bg_position" name="login_form_bg_position">
-								<option value="0"> <?php esc_html_e( 'Left Top', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Left Center', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Left Bottom', 'advsign' ); ?> </option>
-								<option value="3"> <?php esc_html_e( 'Right Top', 'advsign' ); ?> </option>
-								<option value="4"> <?php esc_html_e( 'Right Center', 'advsign' ); ?> </option>
-								<option value="5"> <?php esc_html_e( 'Right Bottom', 'advsign' ); ?> </option>
-								<option value="6"> <?php esc_html_e( 'Center Top', 'advsign' ); ?> </option>
-								<option value="7"> <?php esc_html_e( 'Center Center', 'advsign' ); ?> </option>
-								<option value="8"> <?php esc_html_e( 'Center Bottom', 'advsign' ); ?> </option>
-								</select>
+								<?php $options = array('left top', 'left center', 'left bottom', 'right top', 'right center', 'right bottom', 'center top', 'center center', 'center bottom');
+									echo "<select class=".'form-control'." name=".'login_form_bg_position'.">";
+									$selected = get_option('login_login')['login_form_bg_position'];
+									foreach($options as $option){
+										if($selected == $option) {
+											echo "<option selected='selected' value='$option'>$option</option>";
+										}
+										else {
+											echo "<option value='$option'>$option</option>";
+										}
+									}
+									echo "</select>";
+								?>
 							</div>
 						</div>
 						<!-- Background Effect and Width -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="login_bg_effect"> <?php esc_html_e( 'Background Effect', 'advsign' ); ?>	</label>
-									<select class="form-control" id="login_bg_effect" name="login_bg_effect">
-									<option value="0"> <?php esc_html_e( 'No Overlay Effect', 'advsign' ); ?> </option>
-									<option value="1"> <?php esc_html_e( 'Overlay Effect 1', 'advsign' ); ?> </option>
-									<option value="2"> <?php esc_html_e( 'Overlay Effect 2', 'advsign' ); ?> </option>
-									<option value="3"> <?php esc_html_e( 'Overlay Effect 3', 'advsign' ); ?> </option>
-									</select>
+									<label for="login_bg_effect"> <?php esc_html_e( 'Background Effect', 'advsign' ); ?></label>
+									<?php $options = array('No Overlay Effect', 'Overlay Effect 1', 'Overlay Effect 2', 'Overlay Effect 3');
+										echo "<select class=".'form-control'." name=".'login_bg_effect'.">";
+										$selected = get_option('login_login')['login_bg_effect'];
+										foreach($options as $option){
+											if($selected == $option) {
+												echo "<option selected='selected' value='$option'>$option</option>";
+											}
+											else {
+												echo "<option value='$option'>$option</option>";
+											}
+										}
+										echo "</select>";
+									?>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="login_form_width"><?php esc_html_e( 'Login Form Width', 'advsign' ); ?></label>
@@ -292,14 +315,20 @@ defined( 'ABSPATH' ) || exit;
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="border_style"> <?php esc_html_e( 'Border Style', 'advsign' ); ?>	</label>
-									<select class="form-control" id="border_style" name="border_style">
-									<option value="solid"> <?php esc_html_e( 'Solid', 'advsign' ); ?> </option>
-									<option value="none"> <?php esc_html_e( 'None', 'advsign' ); ?> </option>
-									<option value="dotted"> <?php esc_html_e( 'Dotted', 'advsign' ); ?> </option>
-									<option value="dashed"> <?php esc_html_e( 'Dashed', 'advsign' ); ?> </option>
-									<option value="double"> <?php esc_html_e( 'Double', 'advsign' ); ?> </option>
-									</select>
+									<label for="border_style"> <?php esc_html_e( 'Border Style', 'advsign' ); ?></label>
+									<?php $options = array('Solid', 'None', 'Dotted', 'Dashed', 'Double');
+										echo "<select class=".'form-control'." name=".'border_style'.">";
+										$selected = get_option('login_login')['border_style'];
+										foreach($options as $option){
+											if($selected == $option) {
+												echo "<option selected='selected' value='$option'>$option</option>";
+											}
+											else {
+												echo "<option value='$option'>$option</option>";
+											}
+										}
+										echo "</select>";
+									?>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="form_border_width"><?php esc_html_e( 'Border Thickness', 'advsign' ); ?></label>
@@ -307,19 +336,25 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 							</div>
 						</div>
-						<!-- Box Shadow -->
+						<!-- Form Shadow -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="border-style"> <?php esc_html_e( 'Enable Form Shadow', 'advsign' ); ?>	</label>
+									<?php 
+										function form_shadow( $val ){
+											$form_shadow= get_option('login_login')['form_shadow'];
+											return ($form_shadow == $val) ? 'checked' : '';
+										} 
+									?>
 									<div>
-										<input type="radio" name="form_shadow" id="yesRadios1" value="yes" checked>
+										<input type="radio" name="form_shadow" id="yesRadios1" value="1" <?php echo form_shadow('1'); ?>>
 										<label class="form-check-label" for="yesRadios1">
 											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="form_shadow" id="noRadios2" value="no">
+										<input type="radio" name="form_shadow" id="noRadios2" value="0" <?php echo form_shadow('0'); ?>>
 										<label class="form-check-label" for="noRadios2">
 											<?php esc_html_e( 'No', 'advsign' ); ?> 
 										</label>
@@ -338,12 +373,12 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-6 form-group">
 									<div>
 										<label for="username_email"><?php esc_html_e( 'Username or Email Field Label Text', 'advsign' ); ?></label>
-										<input type="text" class="form-control" name="username_email" id="username_email" aria-describedby="username_email">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_login')['username_email']); ?>" name="username_email" id="username_email" aria-describedby="username_email">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="username_placeholder"><?php esc_html_e( 'Username or Email Field Placeholder Text', 'advsign' ); ?></label>
-									<input type="text" class="form-control" name="username_placeholder" id="username_placeholder" aria-describedby="username_placeholder">
+									<input type="text" class="form-control" value="<?php echo(get_option('login_login')['username_placeholder']); ?>" name="username_placeholder" id="username_placeholder" aria-describedby="username_placeholder">
 								</div>
 							</div>
 						</div>
@@ -353,7 +388,7 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-6 form-group">
 									<div>
 										<label for="login_button_text"><?php esc_html_e( 'Log In Button Text', 'advsign' ); ?></label>
-										<input type="text" class="form-control" id="login_button_text" name="login_button_text" aria-describedby="login_button_text">
+										<input type="text" class="form-control" id="login_button_text" value="<?php echo(get_option('login_login')['login_button_text']); ?>" name="login_button_text" aria-describedby="login_button_text">
 									</div>
 								</div>
 								<div class="col-md-6 form-group">
@@ -366,7 +401,7 @@ defined( 'ABSPATH' ) || exit;
 										<input class="form-check-input" type="radio" name="redirect_url" id="redirect_url2" value="no">
 										<label class="form-check-label" for="inlineRadio2">No</label>
 									</div>
-									<input type="text" class="form-control" id="username_placeholder" name="username_placeholder" aria-describedby="username_placeholder" placeholder="Redirect URL">
+									<input type="text" class="form-control" id="redirect_url" name="redirect_url" aria-describedby="redirect_url" placeholder="Redirect URL">
 								</div>
 							</div>
 						</div>
@@ -489,14 +524,20 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-3 form-group">
 									<label for="show_remember_field"><?php esc_html_e( 'Show Remember Me Field', 'advsign' ); ?></label>
 								</div>
+								<?php 
+									function show_remember_field( $val ){
+										$show_remember_field= get_option('login_font')['show_remember_field'];
+										return ($show_remember_field == $val) ? 'checked' : '';
+									} 
+								?>
 								<div class="col-md-6 form-group">
 									<div class="form-check form-check-inline ml-5">
-										<input class="form-check-input" type="radio" name="show_remember_field" id="inlineRadio1" value="yes">
-										<label class="form-check-label" for="inlineRadio1">Yes</label>
+										<input class="form-check-input" type="radio" name="show_remember_field" id="inlineRadio1" value="1" <?php echo show_remember_field('1'); ?>>
+										<label class="form-check-label" for="inlineRadio1"><?php esc_html_e( 'Yes', 'advsign' ); ?></label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="show_remember_field" id="inlineRadio2" value="no">
-										<label class="form-check-label" for="inlineRadio2">No</label>
+										<input class="form-check-input" type="radio" name="show_remember_field" id="inlineRadio2" value="0" <?php echo show_remember_field('0'); ?>>
+										<label class="form-check-label" for="inlineRadio2"><?php esc_html_e( 'No', 'advsign' ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -504,14 +545,20 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-3 form-group">
 									<label for="back_to_site"><?php esc_html_e( 'Show Back To Site Link', 'advsign' ); ?></label>
 								</div>
+								<?php 
+									function back_to_site( $val ){
+										$back_to_site= get_option('login_font')['back_to_site'];
+										return ($back_to_site == $val) ? 'checked' : '';
+									} 
+								?>
 								<div class="col-md-6 form-group">
 									<div class="form-check form-check-inline ml-5">
-										<input class="form-check-input" type="radio" name="back_to_site" id="inlineRadio1" value="yes">
-										<label class="form-check-label" for="inlineRadio1">Yes</label>
+										<input class="form-check-input" type="radio" name="back_to_site" id="inlineRadio1" value="1" <?php echo back_to_site('1'); ?>>
+										<label class="form-check-label" for="inlineRadio1"><?php esc_html_e( 'Yes', 'advsign' ); ?></label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="back_to_site" id="inlineRadio2" value="no">
-										<label class="form-check-label" for="inlineRadio2">No</label>
+										<input class="form-check-input" type="radio" name="back_to_site" id="inlineRadio2" value="0" <?php echo back_to_site('0'); ?>>
+										<label class="form-check-label" for="inlineRadio2"><?php esc_html_e( 'No', 'advsign' ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -519,14 +566,20 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-3 form-group">
 									<label for="show_copyright_text"><?php esc_html_e( 'Show Copyright link text', 'advsign' ); ?></label>
 								</div>
+								<?php 
+									function show_copyright_text( $val ){
+										$show_copyright_text= get_option('login_font')['show_copyright_text'];
+										return ($show_copyright_text ==  $val) ? 'checked' : '';
+									} 
+								?>
 								<div class="col-md-6 form-group">
 									<div class="form-check form-check-inline ml-5">
-										<input class="form-check-input" type="radio" name="show_copyright_text" id="inlineRadio1" value="yes">
-										<label class="form-check-label" for="inlineRadio1">Yes</label>
+										<input class="form-check-input" type="radio" name="show_copyright_text" id="inlineRadio1" value="1"  <?php echo show_copyright_text('1'); ?>>
+										<label class="form-check-label" for="inlineRadio1"><?php esc_html_e( 'Yes', 'advsign' ); ?></label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="show_copyright_text" id="inlineRadio2" value="no">
-										<label class="form-check-label" for="inlineRadio2">No</label>
+										<input class="form-check-input" type="radio" name="show_copyright_text" id="inlineRadio2" value="0" <?php echo show_copyright_text('0'); ?>>
+										<label class="form-check-label" for="inlineRadio2"><?php esc_html_e( 'No', 'advsign' ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -534,14 +587,20 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-3 form-group">
 									<label for="link_shadow"><?php esc_html_e( 'Enable Link shadow', 'advsign' ); ?></label>
 								</div>
+								<?php 
+									function link_shadow( $val ){
+										$link_shadow= get_option('login_font')['link_shadow'];
+										return ($link_shadow == $val) ? 'checked' : '';
+									} 
+								?>
 								<div class="col-md-6 form-group">
 									<div class="form-check form-check-inline ml-5">
-										<input class="form-check-input" type="radio" name="link_shadow" id="inlineRadio1" value="yes">
-										<label class="form-check-label" for="inlineRadio1">Yes</label>
+										<input class="form-check-input" type="radio" name="link_shadow" id="inlineRadio1" value="1"  <?php echo link_shadow('1'); ?>>
+										<label class="form-check-label" for="inlineRadio1"><?php esc_html_e( 'Yes', 'advsign' ); ?></label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="link_shadow" id="inlineRadio2" value="no">
-										<label class="form-check-label" for="inlineRadio2">No</label>
+										<input class="form-check-input" type="radio" name="link_shadow" id="inlineRadio2" value="0" <?php echo link_shadow('0'); ?>>
+										<label class="form-check-label" for="inlineRadio2"><?php esc_html_e( 'No', 'advsign' ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -600,14 +659,20 @@ defined( 'ABSPATH' ) || exit;
 								<div class="col-md-3 form-group">
 									<label for="enableInputField"><?php esc_html_e( 'Enable Input Box Icon', 'advsign' ); ?></label>
 								</div>
+								<?php 
+									function enable_input_icon( $val ){
+										$enable_input_icon= get_option('login_font')['enable_input_icon'];
+										return (trim(strtolower($enable_input_icon))==trim(strtolower($val))) ? 'checked' : '';
+									} 
+								?>
 								<div class="col-md-6 form-group">
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="enableInputRadioOptions" id="enableInput1" value="yes">
-										<label class="form-check-label" for="enableInput1">Yes</label>
+										<input class="form-check-input" type="radio" name="enable_input_icon" id="enableInput1" value="Yes" <?php echo enable_input_icon('Yes'); ?>>
+										<label class="form-check-label" for="enableInput1"><?php esc_html_e( 'Yes', 'advsign' ); ?></label>
 									</div>
 									<div class="form-check form-check-inline">
-										<input class="form-check-input" type="radio" name="enableInputRadioOptions" id="enableInput2" value="no">
-										<label class="form-check-label" for="enableInput2">No</label>
+										<input class="form-check-input" type="radio" name="enable_input_icon" id="enableInput2" value="No" <?php echo enable_input_icon('No'); ?>>
+										<label class="form-check-label" for="enableInput2"><?php esc_html_e( 'No', 'advsign' ); ?></label>
 									</div>
 								</div>
 							</div>
@@ -649,23 +714,30 @@ defined( 'ABSPATH' ) || exit;
 									$logo_url = wp_get_attachment_image_src ( $login_logo['login_logo_id'], [$login_logo['logo_width'],$login_logo['logo_height']] )[0];
 								?>
 
-								<img src="<?php echo esc_url( $logo_url ? : $logo_default_url ); ?>" class="img-thumbnail mx-auto d-block uploaded_login_logo_img" data-id="0" alt="<?php esc_html_e( 'logo image', 'advsign' ); ?>" style="width: <?php echo $login_logo['logo_width'] ? :'84'; ?>px;height:<?php echo $login_logo['logo_width'] ? :'84'; ?>px;">
+								<img src="<?php echo esc_url( $logo_url ? : $logo_default_url ); ?>" class="img-thumbnail mx-auto d-block uploaded_login_logo_img" data-id="0" alt="<?php esc_html_e( 'logo image', 'advsign' ); ?>" style="width: <?php echo $login_logo['logo_width'] ? :'84'; ?>px;height:<?php echo $login_logo['logo_height'] ? :'84'; ?>px;">
 								
 							</div>
 							<input type="url" value="<?php echo esc_url( $logo_url ? : $logo_default_url ); ?>" class="form-control " id="login_logo" data-id='0' aria-describedby="login_logoHelp" readonly>
 							<input type="hidden" name="login_logo_id" id="login_logo_id" value="<?php echo $login_logo['login_logo_id'] ? : 0; ?>">
 							<small id="login_logoHelp" class="btn btn-dark mt-3"> <?php esc_html_e( 'Change Image', 'advsign' ); ?> </small>
 						</div>
+						<!-- Logo Show  -->
 						<div class="border p-3 mb-3 rounded">
-							<label for="select-background"> <?php esc_html_e( 'Show Logo', 'advsign' ); ?>	</label>
+							<label for="select-background"> <?php esc_html_e( 'Show Logo', 'advsign' ); ?></label>
+							<?php 
+								function logo_show( $val ){
+									$logo_show= get_option('login_logo')['logo_show'];
+									return ($logo_show == $val) ? 'checked' : '';
+								} 
+							?>
 							<div>
-								<input type="radio" name="logo_show" id="showLogo1" value="1" checked>
+								<input type="radio" name="logo_show" id="showLogo1" value="1" <?php echo logo_show('1'); ?>>
 								<label class="form-check-label" for="showLogo1">
 									<?php esc_html_e( 'Yes', 'advsign' ); ?> 
 								</label>
 							</div>
 							<div>
-								<input type="radio" name="logo_show" id="showLogo2" value="0">
+								<input type="radio" name="logo_show" id="showLogo2" value="0" <?php echo logo_show('0'); ?>>
 								<label class="form-check-label" for="showLogo2">
 									<?php esc_html_e( 'No', 'advsign' ); ?> 
 								</label>
@@ -676,11 +748,11 @@ defined( 'ABSPATH' ) || exit;
 								<div class="row">
 									<div class="col-md-6 form-group">
 										<label for="logo_width"><?php esc_html_e( 'Logo Image Width', 'advsign' ); ?></label>
-										<input name="logo_width" type="range" value="84" min="10" max="400" step="1" class="custom-range" id="logo_width">
+										<input name="logo_width" type="range" value="<?php echo(get_option('login_logo')['logo_width']); ?>" min="10" max="400" step="1" class="custom-range" id="logo_width">
 									</div>
 									<div class="col-md-6 form-group">
 										<label for="logo_height"><?php esc_html_e( 'Logo Image Height', 'advsign' ); ?></label>
-										<input name="logo_height" value="84" min="10" max="200" step="1" type="range" class="custom-range" id="logo_height">
+										<input name="logo_height" value="<?php echo(get_option('login_logo')['logo_height']); ?>" min="10" max="200" step="1" type="range" class="custom-range" id="logo_height">
 									</div>
 								</div>
 							
@@ -715,32 +787,45 @@ defined( 'ABSPATH' ) || exit;
 						<!-- Social Icon Size -->
 						<div class="form-group border p-3 mb-3 rounded">
 							<label for="social_icon_placement"> <?php esc_html_e( 'Social Icon Placement', 'advsign' ); ?>	</label>
-							<select class="form-control" id="social_icon_placement" name="social_icon_placement">
-								<option value="0"> <?php esc_html_e( 'No Icon', 'advsign' ); ?> </option>
-								<option value="1"> <?php esc_html_e( 'Outer', 'advsign' ); ?> </option>
-								<option value="2"> <?php esc_html_e( 'Inner', 'advsign' ); ?> </option>
-								<option value="3"> <?php esc_html_e( 'Both', 'advsign' ); ?> </option>
-							</select>
+							<?php $options = array('No Icon', 'Outer', 'Inner', 'Both');
+								echo "<select class=".'form-control'." name=".'social_icon_placement'.">";
+								$selected = get_option('login_social')['social_icon_placement'];
+								foreach($options as $option){
+									if($selected == $option) {
+										echo "<option selected='selected' value='$option'>$option</option>";
+									}
+									else {
+										echo "<option value='$option'>$option</option>";
+									}
+								}
+								echo "</select>";
+							?>
 						</div>
 						<!-- Social Icon Placement -->
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label for="select-background"> <?php esc_html_e( 'Social Media Icon Size', 'advsign' ); ?>	</label>
+									<?php 
+										function social_icon_size( $val ){
+											$social_icon_size_settings= get_option('login_social')['social_icon_size'];
+											return (trim(strtolower($social_icon_size_settings)) == trim(strtolower($val))) ? 'checked' : '';
+										} 
+									?>
 									<div>
-										<input type="radio" name="social_icon_size" id="social_icon_size1" value="option1" checked>
+										<input type="radio" name="social_icon_size" id="social_icon_size1" value="Small" <?php echo social_icon_size('Small'); ?>>
 										<label class="form-check-label" for="social_icon_size1">
 											<?php esc_html_e( 'Small', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="social_icon_size" id="social_icon_size2" value="option2">
+										<input type="radio" name="social_icon_size" id="social_icon_size2" value="Medium" <?php echo social_icon_size('Medium'); ?>>
 										<label class="form-check-label" for="social_icon_size2">
 											<?php esc_html_e( 'Medium', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="social_icon_size" id="social_icon_size3" value="option2">
+										<input type="radio" name="social_icon_size" id="social_icon_size3" value="Rectangle" <?php echo social_icon_size('Rectangle'); ?>>
 										<label class="form-check-label" for="social_icon_size3">
 											<?php esc_html_e( 'Rectangle', 'advsign' ); ?> 
 										</label>
@@ -748,14 +833,20 @@ defined( 'ABSPATH' ) || exit;
 								</div>
 								<div class="col-md-6 form-group">
 									<label for="select-background"> <?php esc_html_e( 'Social Media Icon Layout', 'advsign' ); ?>	</label>
+									<?php 
+										function social_icon_layout( $val ){
+											$social_icon_layout= get_option('login_social')['social_icon_layout'];
+											return (trim(strtolower($social_icon_layout)) == trim(strtolower($val))) ? 'checked' : '';
+										} 
+									?>
 									<div>
-										<input type="radio" name="social_icon_layout" id="social_icon_layout1" value="option1" checked>
+										<input type="radio" name="social_icon_layout" id="social_icon_layout1" value="Rectangle" <?php echo social_icon_layout('Rectangle'); ?>>
 										<label class="form-check-label" for="social_icon_layout1">
 											<?php esc_html_e( 'Rectangle', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="social_icon_layout" id="social_icon_layout2" value="option2">
+										<input type="radio" name="social_icon_layout" id="social_icon_layout2" value="Circle" <?php echo social_icon_layout('Circle'); ?>>
 										<label class="form-check-label" for="social_icon_layout2">
 											<?php esc_html_e( 'Circle', 'advsign' ); ?> 
 										</label>
@@ -797,15 +888,21 @@ defined( 'ABSPATH' ) || exit;
 						<div class="border p-3 mb-3 rounded">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Window', 'advsign' ); ?>	</label>
+									<label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Window', 'advsign' ); ?></label>
+									<?php 
+										function social_icon_enable_tab( $val ){
+											$social_icon_enable_tab= get_option('login_social')['social_icon_enable_tab'];
+											return (trim(strtolower($social_icon_enable_tab))==trim(strtolower($val))) ? 'checked' : '';
+										} 
+									?>
 									<div>
-										<input type="radio" name="social_icon_enable_tab" id="social_icon_new1" value="option1" checked>
+										<input type="radio" name="social_icon_enable_tab" id="social_icon_new1" value="Yes" <?php echo social_icon_enable_tab('Yes'); ?>>
 										<label class="form-check-label" for="social_icon_size1">
 											<?php esc_html_e( 'Yes', 'advsign' ); ?> 
 										</label>
 									</div>
 									<div>
-										<input type="radio" name="social_icon_enable_tab" id="social_icon_new2" value="option2">
+										<input type="radio" name="social_icon_enable_tab" id="social_icon_new2" value="No" <?php echo social_icon_enable_tab('No'); ?>>
 										<label class="form-check-label" for="social_icon_size2">
 											<?php esc_html_e( 'No', 'advsign' ); ?> 
 										</label>
@@ -832,7 +929,7 @@ defined( 'ABSPATH' ) || exit;
 										<div class="input-group-prepend">
 										<div class="input-group-text"><i class="fab fa-twitter"></i></div>
 										</div>
-										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['twitter_link']); ?>" name="twitter_link" id="twitter_link" placeholder="twiiter account url">
+										<input type="text" class="form-control" value="<?php echo(get_option('login_social')['twitter_link']); ?>" name="twitter_link" id="twitter_link" placeholder="twitter account url">
 									</div>
 								</div>
 							</div>

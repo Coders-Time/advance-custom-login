@@ -121,7 +121,7 @@ class AdvanceCustomLogin {
                 'form_border_width',
                 'float_top_margin',
                 'login_form_background',
-                'bg_img_url',
+                'login_form_bg_id',
                 'login_bg_repeat',
                 'login_form_bg_position',
                 'login_bg_effect',
@@ -174,7 +174,7 @@ class AdvanceCustomLogin {
                 "input_font_style",
                 "link_font_style",
                 "button_font_style",
-                "enableInputRadioOptions",
+                "enable_input_icon",
                 "icon_for_user_input",
                 "icon_for_user_password",
                 "action","advsignfont",
@@ -199,6 +199,7 @@ class AdvanceCustomLogin {
             $data_list = [
                 "social_icon_placement",
                 "social_icon_size",
+                "social_icon_layout",
                 "social_icon_color_picker",
                 "social_hover_color_picker",
                 "social_icon_bg_color_picker",
@@ -380,6 +381,8 @@ class AdvanceCustomLogin {
 
     public function gen_gettext( $translated_text, $text_to_translate, $textdomain )
     {
+        // return $_POST['login_login'];
+        // die();
         if ( 'Username or Email Address' == $text_to_translate ) {
             $translated_text = __( 'Username or Email', 'advsign' );
         } elseif ( 'Password' == $text_to_translate ) {
@@ -479,6 +482,7 @@ class AdvanceCustomLogin {
     //Custom image that removes the form backgroung image
     public function advsign_form_bg_img() {
         $login_form_info = (get_option('login_login'));
+        $font_tabs = (get_option('login_font'));
         switch($login_form_info['login_form_position']){
             case '2':
                 ?>
@@ -504,28 +508,58 @@ class AdvanceCustomLogin {
             default:
                 break;
             }
+
+        if (!$font_tabs['show_remember_field']) { ?>
+            <style> body.login div#login form#loginform p.forgetmenot{ display: none; } </style> 
+        <?php }
+        
         ?>
+
+        <?php
+        if (!$font_tabs['back_to_site']) { ?>
+            <style> body.login div#login p#backtoblog a { display: none; } </style> 
+        <?php }
+        ?>
+
+        <?php
+        if ($font_tabs['link_shadow']) { ?>
+            <style> body.login div#login p#backtoblog a { 
+                text-shadow: 2px 2px 5px <?php echo ($font_tabs['link_shadow_color']); ?> ;
+             } </style> 
+        <?php }
+        ?>
+
+        <?php
+        if (!$font_tabs['form_shadow']) { ?>
+            <style> body.login div#login form#loginform { box-shadow: 0; } </style> 
+        <?php }
+        ?>
+            
+        
         <style type="text/css">
             /* login form css */
             body.login div#login form#loginform{
                 background-color: <?php echo $login_form_info['background_form_color']; ?> !important;
+                background-image: url();
+                background-repeat: <?php echo $login_form_info['login_bg_repeat']; ?> !important;
+                background-position: <?php echo $login_form_info['login_form_bg_position']; ?> !important;
                 width: <?php echo $login_form_info['login_form_width']; ?> !important;
                 border-color: <?php echo $login_form_info['form_border_color']; ?> !important;
                 border-radius: <?php echo $login_form_info['login_border_radius']."px"; ?> !important;
                 border-style: <?php echo $login_form_info['border_style']; ?> !important;
                 border-width: <?php echo $login_form_info['form_border_width']."px"; ?> !important;
-                color: black;
+                box-shadow: 10px 10px 5px <?php echo $login_form_info['form_shadow_color_picker']?>;
             }
 
             /* input texts color and font size*/
             .login form .input, .login form input[type=checkbox], .login input[type=text]{
-                color: red !important;
-                font-size: 50px !important;
+                color: <?php echo $font_tabs['input_font_color']; ?> !important;
+                font-size: <?php echo $font_tabs['input_font_size']."px"; ?> !important;
             }
             /* links color and font size*/
             body.login div#login p#backtoblog a{
-                color: red !important;
-                font-size: 50px !important;
+                color: <?php echo $font_tabs['link_color']; ?> !important;
+                font-size: <?php echo $font_tabs['link_font_size']."px"; ?> !important;
             }
             /* button color */
             body.login div#login form#loginform p.submit input#wp-submit {

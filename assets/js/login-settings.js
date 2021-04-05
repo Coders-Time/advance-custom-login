@@ -274,7 +274,25 @@
         $("#logo_height").change(function(){
             console.log($(this).val());
             var logo_height = $(this).val();
-            $(".uploaded_login_logo_img").css('height',logo_height + 'px');
+            $(".uploaded_login_logo_img").css('height', logo_height + 'px');
+        });
+
+        $("#form_bg_img_help").click(function(e){
+            e.preventDefault();
+            singleImageUpload( "#form_bg_img",'.uploaded_form_bg_img','#login_form_bg_id' );
+        });
+
+        $("#form_bg_img_width").change(function(){
+            console.log($(this).val());
+            var form_bg_img_width = $(this).val();
+            $(".uploaded_form_bg_img").css('width', form_bg_img_width + 'px');
+            $(".uploaded_form_bg_img").css('height','auto');
+        });
+
+        $("#form_bg_img_height").change(function(){
+            console.log($(this).val());
+            var form_bg_img_height = $(this).val();
+            $(".uploaded_form_bg_img").css('height', form_bg_img_height + 'px');
         });
 
         if ($('#advsign-modal .data').length > 0) {

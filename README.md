@@ -75,9 +75,9 @@ For automatic download and installation:
 - It is quite easy. Anyone can install it from the the plugin repository and afterwards can be found in the install new plugin section. Once installed, it will require activation from the admin. Later, the plugin form can be found in the Admin Custom Login tab.
 
 For manual download, you can download the plugin from https://wordpress.org/plugins:
-- Upload the entire admin-custom-login folder to the /wp-content/plugins/ directory.
+- Upload the entire advance-custom-login folder to the /wp-content/plugins/ directory.
 - Activate the plugin through the Plugins menu in WordPress admin.
-- Go to the under Setting menu -> Admin Custom Login plugin sub menu page.
+- Go to the under Setting menu -> Advance Custom Login plugin sub menu page.
 - Start customising your admin login form.
 
 # Frequently Asked Questions 

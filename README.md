@@ -1,5 +1,3 @@
-# advance-custom-login
-
 # Advance Custom Login 
 Contributors: coderstime, lincolndu
 Tags: advance custom login, advance login, admin login, custom login

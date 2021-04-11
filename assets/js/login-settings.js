@@ -66,6 +66,47 @@
             }
         });
 
+                
+        /* Range Slider Value */
+
+        $(document).on('input', '#login_form_width', function() {
+            $('#login_form_width_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#login_border_radius', function() {
+            $('#login_border_radius_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#form_border_width', function() {
+            $('#form_border_width_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#headline_font_size', function() {
+            $('#headline_font_size_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#input_font_size', function() {
+            $('#input_font_size_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#link_font_size', function() {
+            $('#link_font_size_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#button_font_size', function() {
+            $('#button_font_size_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#logo_width', function() {
+            $('#logo_width_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#logo_height', function() {
+            $('#logo_height_value').html( $(this).val() );
+        });
+
+        
+
         /* Form Background tab select */
 
         $('#login_form_background').select2();
@@ -98,6 +139,7 @@
 		    hide: true,
 		    palettes: true
 		};	
+
 
 		/*Media upload */
         var mediaUploader;

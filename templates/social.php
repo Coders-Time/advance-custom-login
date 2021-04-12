@@ -1,3 +1,18 @@
+
+<?php 
+
+function get_social_link ( $name ) {
+    $login_social = get_option('login_social');
+
+    if ( $login_social && isset($login_social[$name]) ) {
+       return $login_social[$name];
+    }
+    return '';
+}
+
+
+?>
+
 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
     <!-- Social Icon Size -->
     <div class="form-group border p-3 mb-3 rounded">
@@ -22,9 +37,18 @@
             <div class="col-md-6 form-group">
                 <label for="select-background"> <?php esc_html_e( 'Social Media Icon Size', 'advsign' ); ?>	</label>
                 <?php 
-                    function social_icon_size( $val ){
-                        $social_icon_size_settings= get_option('login_social')['social_icon_size'];
-                        return (trim(strtolower($social_icon_size_settings)) == trim(strtolower($val))) ? 'checked' : '';
+                    function social_icon_size( $val ) {
+                        $login_social = get_option('login_social');
+
+                        if ( !isset($login_social) ) {
+                            return '';
+                        }
+
+                        if ( isset($login_social['social_icon_size']) ) {
+                            return (trim(strtolower($login_social['social_icon_size'])) == trim(strtolower($val))) ? 'checked' : '';
+                        }
+                        
+                        return '';
                     } 
                 ?>
                 <div>
@@ -50,8 +74,14 @@
                 <label for="select-background"> <?php esc_html_e( 'Social Media Icon Layout', 'advsign' ); ?>	</label>
                 <?php 
                     function social_icon_layout( $val ){
-                        $social_icon_layout= get_option('login_social')['social_icon_layout'];
-                        return (trim(strtolower($social_icon_layout)) == trim(strtolower($val))) ? 'checked' : '';
+                        $login_social = get_option('login_social');
+                        if (!isset($login_social)) {
+                            return;
+                        }
+                        if ( isset($login_social['social_icon_layout']) ) {
+                            return (trim(strtolower($login_social['social_icon_layout'])) == trim(strtolower($val))) ? 'checked' : '';
+                        }
+                        return '';
                     } 
                 ?>
                 <div>
@@ -74,12 +104,12 @@
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_icon_color_picker']); ?>" name="social_icon_color_picker" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo get_social_link('social_icon_color_picker'); ?>" name="social_icon_color_picker" id="socialIconColorPicker" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
             <div class="col-md-6 form-group">
                 <label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Color On Hover', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_hover_color_picker']); ?>" name="social_hover_color_picker" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo get_social_link('social_hover_color_picker'); ?>" name="social_hover_color_picker" id="socialHoverColorPicker" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
         </div>
@@ -89,12 +119,12 @@
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="colorPicker">  <?php esc_html_e( 'Social Media Icon Background Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_icon_bg_color_picker']); ?>" name="social_icon_bg_color_picker" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo get_social_link('social_icon_bg_color_picker'); ?>" name="social_icon_bg_color_picker" id="socialIconbgColorPicker" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
             <div class="col-md-6 form-group">
                 <label for="colorPicker">  <?php esc_html_e( 'Social Media Background Color On Hover', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_social')['social_hover_bg_color_picker']); ?>" name="social_hover_bg_color_picker" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo get_social_link('social_hover_bg_color_picker'); ?>" name="social_hover_bg_color_picker" id="socialHoverbgColorPicker" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
         </div>
@@ -103,11 +133,18 @@
     <div class="border p-3 mb-3 rounded">
         <div class="row">
             <div class="col-md-6 form-group">
-                <label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Window', 'advsign' ); ?></label>
+                <label for="select-background"> <?php esc_html_e( 'Enable To Open Social Link In New Tab', 'advsign' ); ?></label>
                 <?php 
-                    function social_icon_enable_tab( $val ){
-                        $social_icon_enable_tab= get_option('login_social')['social_icon_enable_tab'];
-                        return (trim(strtolower($social_icon_enable_tab))==trim(strtolower($val))) ? 'checked' : '';
+                    function social_icon_enable_tab ( $val ) {
+                        $login_social = get_option('login_social');
+                        if (!isset($login_social)) {
+                            return;
+                        }
+
+                        if (isset($login_social['social_icon_enable_tab'])) {
+                           return (trim(strtolower($login_social['social_icon_enable_tab']))==trim(strtolower($val))) ? 'checked' : '';
+                        }
+                        return '';
                     } 
                 ?>
                 <div>
@@ -135,7 +172,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-facebook-f"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['facebook_link']); ?>" name="facebook_link" id="facebook_link" placeholder="facebook account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('facebook_link'); ?>" name="facebook_link" id="facebook_link" placeholder="facebook account url">
                 </div>
             </div>
             <div class="col-md-6 form-group">
@@ -144,7 +181,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-twitter"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['twitter_link']); ?>" name="twitter_link" id="twitter_link" placeholder="twitter account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('twitter_link'); ?>" name="twitter_link" id="twitter_link" placeholder="twitter account url">
                 </div>
             </div>
         </div>
@@ -155,7 +192,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-linkedin-in"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['linkedin_link']); ?>" name="linkedin_link" id="linkedin_link" placeholder="linkedin account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('linkedin_link'); ?>" name="linkedin_link" id="linkedin_link" placeholder="linkedin account url">
                 </div>
             </div>
             <div class="col-md-6 form-group">
@@ -164,7 +201,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-google-plus-g"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['g_plus_link']); ?>" name="g_plus_link" id="g_plus_link" placeholder="G+ account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('g_plus_link'); ?>" name="g_plus_link" id="g_plus_link" placeholder="G+ account url">
                 </div>
             </div>
         </div>
@@ -175,7 +212,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-pinterest-p"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['pinterest_link']); ?>" name="pinterest_link" id="pinterest_link" placeholder="pinterest account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('pinterest_link'); ?>" name="pinterest_link" id="pinterest_link" placeholder="pinterest account url">
                 </div>
             </div>
             <div class="col-md-6 form-group">
@@ -184,7 +221,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-digg"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['digg_link']); ?>" name="digg_link" id="digg_link" placeholder="digg account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('digg_link'); ?>" name="digg_link" id="digg_link" placeholder="digg account url">
                 </div>
             </div>
         </div>
@@ -195,7 +232,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-youtube"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['youtube_link']); ?>" name="youtube_link" id="youtube_link" placeholder="youtube account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('youtube_link'); ?>" name="youtube_link" id="youtube_link" placeholder="youtube account url">
                 </div>
             </div>
             <div class="col-md-6 form-group">
@@ -204,7 +241,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-flickr"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['flickr_link']); ?>" name="flickr_link" id="flickr_link" placeholder="flickr account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('flickr_link'); ?>" name="flickr_link" id="flickr_link" placeholder="flickr account url">
                 </div>
             </div>
         </div>
@@ -215,7 +252,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-tumblr"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['tumblr_link']); ?>" name="tumblr_link" id="tumblr_link" placeholder="tumblr account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('tumblr_link'); ?>" name="tumblr_link" id="tumblr_link" placeholder="tumblr account url">
                 </div>
             </div>
             <div class="col-md-6 form-group">
@@ -224,7 +261,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-skype"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['skype_link']); ?>" name="skype_link" id="skype_link" placeholder="skype account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('skype_link'); ?>" name="skype_link" id="skype_link" placeholder="skype account url">
                 </div>
             </div>
         </div>
@@ -235,7 +272,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-instagram"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['insta_link']); ?>" name="insta_link" id="insta_link" placeholder="instagram account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('insta_link'); ?>" name="insta_link" id="insta_link" placeholder="instagram account url">
                 </div>
             </div>
             <div class="col-md-6 form-group">
@@ -244,7 +281,7 @@
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-telegram-plane"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_social')['telegram_link']); ?>" name="telegram_link" id="telegram_link" placeholder="telegram account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('telegram_link'); ?>" name="telegram_link" id="telegram_link" placeholder="telegram account url">
                 </div>
             </div>
         </div>

@@ -483,10 +483,17 @@ class AdvanceCustomLogin {
     //Custom image that removes the form backgroung image
     public function advsign_form_bg_img() {
 
-        $social_tab_info =(get_option('login_social'));
-        $login_form_info = (get_option('login_login'));
-        $font_tabs = (get_option('login_font'));
-        switch($login_form_info['login_form_position']){
+        $social_tab_info =get_option('login_social');
+        $login_form_info = get_option('login_login');
+        $font_tabs = get_option('login_font');
+
+        if ( !isset($social_tab_info) ) {
+            return;
+        }
+
+
+        switch( $login_form_info['login_form_position'] )
+        {
             case '2':
                 ?>
             <style type="text/css"> 
@@ -510,20 +517,20 @@ class AdvanceCustomLogin {
                 break;
             }
 
-        if (!$font_tabs['show_remember_field']) { ?>
+        if ( !isset($font_tabs['show_remember_field']) ) { ?>
             <style> body.login div#login form#loginform p.forgetmenot{ display: none; } </style> 
         <?php }
         
         ?>
 
         <?php
-        if (!$font_tabs['back_to_site']) { ?>
+        if ( !isset($font_tabs['back_to_site']) ) { ?>
             <style> body.login div#login p#backtoblog a { display: none; } </style> 
         <?php }
         ?>
 
         <?php
-        if ($font_tabs['link_shadow']) { ?>
+        if ( isset($font_tabs['link_shadow']) ) { ?>
             <style> body.login div#login p#backtoblog a { 
                 text-shadow: 2px 2px 5px <?php echo ($font_tabs['link_shadow_color']); ?> ;
              } </style> 
@@ -531,28 +538,32 @@ class AdvanceCustomLogin {
         ?>
 
         <?php
-        if (!$font_tabs['form_shadow']) { ?>
+        if (!isset($font_tabs['form_shadow']) ) { ?>
             <style> body.login div#login form#loginform { box-shadow: 0; } </style> 
         <?php }
         ?>
         
         <?php
-        switch($social_tab_info['social_icon_placement']){
-            case 'No Icon': 
-                break;
-            case 'Outer':
-                add_action( 'login_footer', [$this,'advsign_social_icons_outer'] );   
-                break;
-            case 'Inner':
-                add_action( 'login_form', [$this,'advsign_social_icons_inner'], );   
-                break;
-            case 'Both':
-                add_action( 'login_form', [$this,'advsign_social_icons_inner'], );
-                add_action( 'login_footer', [$this,'advsign_social_icons_outer'] );
-                break;
-            default:
-                break;
+        if ( isset($social_tab_info['social_icon_placement']) ) :
+           
+            switch( $social_tab_info['social_icon_placement'] )
+            {
+                case 'No Icon': 
+                    break;
+                case 'Outer':
+                    add_action( 'login_footer', [$this,'advsign_social_icons_outer'] );   
+                    break;
+                case 'Inner':
+                    add_action( 'login_form', [ $this,'advsign_social_icons_inner'], );   
+                    break;
+                case 'Both':
+                    add_action( 'login_form', [$this,'advsign_social_icons_inner'], );
+                    add_action( 'login_footer', [$this,'advsign_social_icons_outer'] );
+                    break;
+                default:
+                    break;
             }
+        endif;
 
         ?>
         
@@ -571,7 +582,6 @@ class AdvanceCustomLogin {
             /* login form css */
             body.login div#login form#loginform{
                 background-color: <?php echo $login_form_info['background_form_color']; ?> !important;
-                background-image: url();
                 background-repeat: <?php echo $login_form_info['login_bg_repeat']; ?> !important;
                 background-position: <?php echo $login_form_info['login_form_bg_position']; ?> !important;
                 width: <?php echo $login_form_info['login_form_width']; ?> !important;
@@ -619,53 +629,74 @@ class AdvanceCustomLogin {
 
 
 
-    public function advsign_social_icons_inner(){
+    public function advsign_social_icons_inner () 
+    {
         echo '<div style="text-align: center;">
                 <a href="#"><i class="fab fa-facebook-f fa-2x"></i></a>
                 <a href="#" style="margin-left: 1%"><i class="fab fa-instagram fa-2x"></i></a>
             </div>';
     }
 
-    public function advsign_social_icons_outer(){
+    public function advsign_social_icons_outer ()
+    {
         $social_icons = get_option('login_social');
+
+        if (!isset($social_icons)) {
+            return;
+        }
+
+        $new_tab = ( strtolower(isset($social_icons['social_icon_enable_tab'])) == 'no' ) ? '_self':'_blank' ;
+
         echo '<div style="text-align: center;">';
         
-        if(get_option('login_social')['facebook_link']){
-            echo ('<a href="'.$social_icons['facebook_link'].'"><i class="fab fa-facebook-f '.$social_icons['social_icon_size'].'" target="_blank"></i></a>');
+        if( $social_icons['facebook_link'] ){
+            echo ('<a href="'.$social_icons['facebook_link'].'"><i class="fab fa-facebook-f '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['twitter_link']){
-            echo ('<a href="'.$social_icons['twitter_link'].'" style="margin-left: 10px"><i class="fab fa-twitter '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['twitter_link'] ) {
+            echo ('<a href="'.$social_icons['twitter_link'].'" style="margin-left: 10px"><i class="fab fa-twitter '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['linkedin_link']){
-            echo ('<a href="'.$social_icons['linkedin_link'].'" style="margin-left: 10px"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['linkedin_link']){
+            echo ('<a href="'.$social_icons['linkedin_link'].'" style="margin-left: 10px"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['g_plus_link']){
-            echo ('<a href="'.$social_icons['g_plus_link'].'" style="margin-left: 10px"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['g_plus_link']){
+            echo ('<a href="'.$social_icons['g_plus_link'].'" style="margin-left: 10px"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['pinterest_link']){
-            echo ('<a href="'.$social_icons['pinterest_link'].'" style="margin-left: 10px"><i class="fab fa-pinterest '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['pinterest_link']){
+            echo ('<a href="'.$social_icons['pinterest_link'].'" style="margin-left: 10px"><i class="fab fa-pinterest '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['digg_link']){
-            echo ('<a href="'.$social_icons['digg_link'].'" style="margin-left: 10px"><i class="fab fa-digg '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['digg_link']){
+            echo ('<a href="'.$social_icons['digg_link'].'" style="margin-left: 10px"><i class="fab fa-digg '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['youtube_link']){
-            echo ('<a href="'.$social_icons['youtube_link'].'" style="margin-left: 10px"><i class="fab fa-youtube '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['youtube_link']){
+            echo ('<a href="'.$social_icons['youtube_link'].'" style="margin-left: 10px"><i class="fab fa-youtube '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['flickr_link']){
-            echo ('<a href="'.$social_icons['flickr_link'].'" style="margin-left: 10px"><i class="fab fa-flickr '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['flickr_link']){
+            echo ('<a href="'.$social_icons['flickr_link'].'" style="margin-left: 10px"><i class="fab fa-flickr '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['tumblr_link']){
-            echo ('<a href="'.$social_icons['tumblr_link'].'" style="margin-left: 10px"><i class="fab fa-tumblr '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['tumblr_link']){
+            echo ('<a href="'.$social_icons['tumblr_link'].'" style="margin-left: 10px"><i class="fab fa-tumblr '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['skype_link']){
-            echo ('<a href="'.$social_icons['skype_link'].'" style="margin-left: 10px"><i class="fab fa-skype '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['skype_link']){
+            echo ('<a href="'.$social_icons['skype_link'].'" style="margin-left: 10px"><i class="fab fa-skype '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['insta_link']){
-            echo ('<a href="'.$social_icons['insta_link'].'" style="margin-left: 10px"><i class="fab fa-instagram '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['insta_link']){
+            echo ('<a href="'.$social_icons['insta_link'].'" style="margin-left: 10px"><i class="fab fa-instagram '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
-        if(get_option('login_social')['telegram_link']){
-            echo ('<a href="'.$social_icons['telegram_link'].'" style="margin-left: 10px"><i class="fab fa-telegram '.$social_icons['social_icon_size'].'" target="_blank></i></a>');
+
+        if( $social_icons['telegram_link']){
+            echo ('<a href="'.$social_icons['telegram_link'].'" style="margin-left: 10px"><i class="fab fa-telegram '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
+
         echo '</div>';
     }
 }

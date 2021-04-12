@@ -650,51 +650,51 @@ class AdvanceCustomLogin {
         echo '<div style="text-align: center;">';
         
         if( $social_icons['facebook_link'] ){
-            echo ('<a href="'.$social_icons['facebook_link'].'"><i class="fab fa-facebook-f '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['facebook_link'].'" target="'.$new_tab.'"><i class="fab fa-facebook-f '.$social_icons['social_icon_size'].'"></i></a>');
         }
 
         if( $social_icons['twitter_link'] ) {
-            echo ('<a href="'.$social_icons['twitter_link'].'" style="margin-left: 10px"><i class="fab fa-twitter '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['twitter_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-twitter '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
         }
 
         if( $social_icons['linkedin_link']){
-            echo ('<a href="'.$social_icons['linkedin_link'].'" style="margin-left: 10px"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['linkedin_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['g_plus_link']){
-            echo ('<a href="'.$social_icons['g_plus_link'].'" style="margin-left: 10px"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['g_plus_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['pinterest_link']){
-            echo ('<a href="'.$social_icons['pinterest_link'].'" style="margin-left: 10px"><i class="fab fa-pinterest '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['pinterest_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-pinterest '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['digg_link']){
-            echo ('<a href="'.$social_icons['digg_link'].'" style="margin-left: 10px"><i class="fab fa-digg '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['digg_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-digg '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['youtube_link']){
-            echo ('<a href="'.$social_icons['youtube_link'].'" style="margin-left: 10px"><i class="fab fa-youtube '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['youtube_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-youtube '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['flickr_link']){
-            echo ('<a href="'.$social_icons['flickr_link'].'" style="margin-left: 10px"><i class="fab fa-flickr '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['flickr_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-flickr '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['tumblr_link']){
-            echo ('<a href="'.$social_icons['tumblr_link'].'" style="margin-left: 10px"><i class="fab fa-tumblr '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['tumblr_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-tumblr '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['skype_link']){
-            echo ('<a href="'.$social_icons['skype_link'].'" style="margin-left: 10px"><i class="fab fa-skype '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['skype_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-skype '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['insta_link']){
-            echo ('<a href="'.$social_icons['insta_link'].'" style="margin-left: 10px"><i class="fab fa-instagram '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['insta_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-instagram '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['telegram_link']){
-            echo ('<a href="'.$social_icons['telegram_link'].'" style="margin-left: 10px"><i class="fab fa-telegram '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['telegram_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-telegram '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         echo '</div>';

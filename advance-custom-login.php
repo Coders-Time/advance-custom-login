@@ -580,11 +580,13 @@ class AdvanceCustomLogin {
         
         <style type="text/css">
             /* login form css */
+            body.login div#login{
+                 width: <?php echo $login_form_info['login_form_width']; ?> !important;
+            }
             body.login div#login form#loginform{
                 background-color: <?php echo $login_form_info['background_form_color']; ?> !important;
                 background-repeat: <?php echo $login_form_info['login_bg_repeat']; ?> !important;
-                background-position: <?php echo $login_form_info['login_form_bg_position']; ?> !important;
-                width: <?php echo $login_form_info['login_form_width']; ?> !important;
+                background-position: <?php echo $login_form_info['login_form_bg_position']; ?> !important;               
                 border-color: <?php echo $login_form_info['form_border_color']; ?> !important;
                 border-radius: <?php echo $login_form_info['login_border_radius']."px"; ?> !important;
                 border-style: <?php echo $login_form_info['border_style']; ?> !important;

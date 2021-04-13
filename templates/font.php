@@ -163,17 +163,63 @@
             <div class="col-md-6 form-group">
                 <label for="headline_font_style"> <?php esc_html_e( 'Headline Font Style', 'advsign' ); ?>	</label>
                 <select class="form-control" id="headline_font_style" name="headline_font_style">
-                <option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-                <option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-                <option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+                    <optgroup label="Google Fonts">
+                        <?php
+                            // fetch the Google font list
+                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
+                            $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
+                            if(!is_wp_error( $response_font_api ) ) {
+                                $fonts_list = json_decode($response_font_api,  true);
+                                // that's it
+                                if(is_array($fonts_list)) {
+                                    if(isset($fonts_list['items'])){
+                                        $g_fonts = $fonts_list['items'];
+                                        foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                        }
+                                    }
+                                    
+                                } else {
+                                    echo esc_html(esc_html("<option disabled>Error to fetch Google fonts.</option>"));
+                                    echo esc_html("<option disabled>Google font will not available in offline mode.</option>");
+                                }
+                                    
+                            } 
+                        ?>
+                        <option value="ntf-grandregular"><?php esc_html_e('NTF Grand Regular', 'advsign')?></option>
+                        <option value="jameel_noori_nastaleeqregular"><?php esc_html_e('Jameel Noori Nastaleeq', 'advsign')?></option>
+                    </optgroup>	
                 </select>
             </div>
             <div class="col-md-6 form-group">
                 <label for="input_font_style"> <?php esc_html_e( 'Input Font Style', 'advsign' ); ?>	</label>
                 <select class="form-control" id="input_font_style" name="input_font_style">
-                <option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-                <option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-                <option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+                    <optgroup label="Google Fonts">
+                        <?php
+                            // fetch the Google font list
+                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
+                            $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
+                            if(!is_wp_error( $response_font_api ) ) {
+                                $fonts_list = json_decode($response_font_api,  true);
+                                // that's it
+                                if(is_array($fonts_list)) {
+                                    if(isset($fonts_list['items'])){
+                                        $g_fonts = $fonts_list['items'];
+                                        foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                        }
+                                    }
+                                    
+                                } else {
+                                    echo esc_html(esc_html("<option disabled>Error to fetch Google fonts.</option>"));
+                                    echo esc_html("<option disabled>Google font will not available in offline mode.</option>");
+                                }
+                                    
+                            } 
+                        ?>
+                        <option value="ntf-grandregular"><?php esc_html_e('NTF Grand Regular', 'advsign')?></option>
+                        <option value="jameel_noori_nastaleeqregular"><?php esc_html_e('Jameel Noori Nastaleeq', 'advsign')?></option>
+                    </optgroup>
                 </select>
             </div>
         </div>
@@ -184,17 +230,63 @@
             <div class="col-md-6 form-group">
                 <label for="link_font_style"> <?php esc_html_e( 'Link Font Style', 'advsign' ); ?>	</label>
                 <select class="form-control" id="link_font_style" name="link_font_style">
-                <option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-                <option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-                <option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+                    <optgroup label="Google Fonts">
+                        <?php
+                            // fetch the Google font list
+                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
+                            $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
+                            if(!is_wp_error( $response_font_api ) ) {
+                                $fonts_list = json_decode($response_font_api,  true);
+                                // that's it
+                                if(is_array($fonts_list)) {
+                                    if(isset($fonts_list['items'])){
+                                        $g_fonts = $fonts_list['items'];
+                                        foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                        }
+                                    }
+                                    
+                                } else {
+                                    echo esc_html(esc_html("<option disabled>Error to fetch Google fonts.</option>"));
+                                    echo esc_html("<option disabled>Google font will not available in offline mode.</option>");
+                                }
+                                    
+                            } 
+                        ?>
+                        <option value="ntf-grandregular"><?php esc_html_e('NTF Grand Regular', 'advsign')?></option>
+                        <option value="jameel_noori_nastaleeqregular"><?php esc_html_e('Jameel Noori Nastaleeq', 'advsign')?></option>
+                    </optgroup>
                 </select>
             </div>
             <div class="col-md-6 form-group">
                 <label for="button_font_style"> <?php esc_html_e( 'Button Font Style', 'advsign' ); ?>	</label>
                 <select class="form-control" id="button_font_style" name="button_font_style">
-                <option value="0"> <?php esc_html_e( 'Default', 'advsign' ); ?> </option>
-                <option value="1"> <?php esc_html_e( 'Floating', 'advsign' ); ?> </option>
-                <option value="2"> <?php esc_html_e( 'Floating with Customization', 'advsign' ); ?> </option>
+                    <optgroup label="Google Fonts">
+                        <?php
+                            // fetch the Google font list
+                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
+                            $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
+                            if(!is_wp_error( $response_font_api ) ) {
+                                $fonts_list = json_decode($response_font_api,  true);
+                                // that's it
+                                if(is_array($fonts_list)) {
+                                    if(isset($fonts_list['items'])){
+                                        $g_fonts = $fonts_list['items'];
+                                        foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                        }
+                                    }
+                                    
+                                } else {
+                                    echo esc_html(esc_html("<option disabled>Error to fetch Google fonts.</option>"));
+                                    echo esc_html("<option disabled>Google font will not available in offline mode.</option>");
+                                }
+                                    
+                            } 
+                        ?>
+                        <option value="ntf-grandregular"><?php esc_html_e('NTF Grand Regular', 'advsign')?></option>
+                        <option value="jameel_noori_nastaleeqregular"><?php esc_html_e('Jameel Noori Nastaleeq', 'advsign')?></option>
+                    </optgroup>
                 </select>
             </div>
         </div>

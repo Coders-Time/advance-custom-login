@@ -45,10 +45,12 @@
             <div class="col-md-6 form-group">
                 <label for="left_margin"><?php esc_html_e( 'Left Margin', 'advsign' ); ?></label>
                 <input type="range" value="<?php echo(get_option('login_login')['float_left_margin']); ?>" min="10" max="100" step="1" class="custom-range" name="float_left_margin" id="float_left_margin">
+                <span id="float_left_margin_value"><?php echo(get_option('login_login')['float_left_margin']); ?></span>
             </div>
             <div class="col-md-6 form-group">
                 <label for="top_margin"><?php esc_html_e( 'Top Margin', 'advsign' ); ?></label>
                 <input type="range" value="<?php echo(get_option('login_login')['float_top_margin']); ?>" min="10" max="100" step="1" class="custom-range" name="float_top_margin" id="float_top_margin">
+                <span id="float_top_margin_value"><?php echo(get_option('login_login')['float_top_margin']); ?></span>
             </div>
         </div>
     </div>
@@ -142,7 +144,7 @@
             </div>
             <div class="col-md-6 form-group">
                 <label for="login_form_width"><?php esc_html_e( 'Login Form Width', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_login')['login_form_width']); ?>" min="200" max="500" step="1" class="custom-range" name="login_form_width" id="login_form_width">
+                <input type="range" value="<?php echo(get_option('login_login')['login_form_width']); ?>" min="300" max="500" step="1" class="custom-range" name="login_form_width" id="login_form_width">
                 <span id="login_form_width_value"><?php echo(get_option('login_login')['login_form_width']); ?></span>
             </div>
         </div>
@@ -195,8 +197,15 @@
                 <label for="border-style"> <?php esc_html_e( 'Enable Form Shadow', 'advsign' ); ?>	</label>
                 <?php 
                     function form_shadow( $val ){
-                        $form_shadow= get_option('login_login')['form_shadow'];
-                        return ($form_shadow == $val) ? 'checked' : '';
+                        $login_login = get_option('login_login');
+                        if (!isset($login_login)) {
+                            return;
+                        }
+                        $form_shadow = $login_login['form_shadow'];
+                        if (isset($form_shadow)) {
+                            return ($form_shadow == $val) ? 'checked' : '';
+                        }
+                        return '';
                     } 
                 ?>
                 <div>
@@ -223,14 +232,12 @@
     <div class="border p-3 mb-3 rounded">
         <div class="row">
             <div class="col-md-6 form-group">
-                <div>
-                    <label for="username_email"><?php esc_html_e( 'Username or Email Field Label Text', 'advsign' ); ?></label>
-                    <input type="text" class="form-control" value="<?php echo(get_option('login_login')['username_email']); ?>" name="username_email" id="username_email" aria-describedby="username_email">
-                </div>
+                <label for="username_email"><?php esc_html_e( 'Username or Email Field Label Text', 'advsign' ); ?></label>
+                <input type="text" class="form-control" value="<?php echo(get_option('login_login')['username_email']); ?>" name="username_email" id="username_email" aria-describedby="username_email">
             </div>
             <div class="col-md-6 form-group">
-                <label for="username_placeholder"><?php esc_html_e( 'Username or Email Field Placeholder Text', 'advsign' ); ?></label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_login')['username_placeholder']); ?>" name="username_placeholder" id="username_placeholder" aria-describedby="username_placeholder">
+                <label for="password_label_text"><?php esc_html_e( 'Password Field Label Text', 'advsign' ); ?></label>
+                <input type="text" class="form-control" value="<?php echo(get_option('login_login')['password_label_text']); ?>" name="password_label_text" id="password_label_text" aria-describedby="password_label_text">
             </div>
         </div>
     </div>

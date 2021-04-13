@@ -30,9 +30,12 @@
     	$("#select-background").select2();
         $("#select-background").change(function(){
 
-            $(".bg_img_change_area, .bg_color_change, .bg_slider_change").addClass('d-none');
+            $(".bg_default, .bg_img_change_area, .bg_color_change, .bg_slider_change").addClass('d-none');
 
             switch ($(this).val()) {
+                case '1':
+                    $(".bg_default").removeClass('d-none');
+                    break
                 case '2':
                     $(".bg_img_change_area").removeClass('d-none');
                     break;
@@ -68,6 +71,14 @@
 
                 
         /* Range Slider Value */
+
+        $(document).on('input', '#float_left_margin', function() {
+            $('#float_left_margin_value').html( $(this).val() );
+        });
+
+        $(document).on('input', '#float_top_margin', function() {
+            $('#float_top_margin_value').html( $(this).val() );
+        });
 
         $(document).on('input', '#login_form_width', function() {
             $('#login_form_width_value').html( $(this).val() );

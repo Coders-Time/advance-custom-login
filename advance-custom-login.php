@@ -65,13 +65,15 @@ class AdvanceCustomLogin {
         //This loads the function on the login page
         add_action( 'admin_post_bg_color_form', [$this,'advsign_bg_color_form'] );
         add_action( 'admin_post_bg_img_form', [$this,'advsign_bg_img_form'] );
+        add_action( 'admin_default_bg_img', [$this,'advsign_default_bg_form'] );
         add_action( 'init', [$this,'advsign_form_bg_img'] );
         add_action( 'admin_post_login_tab_form', [$this,'advsign_login_tab_form'] );
         add_action( 'admin_post_font_tab_form', [$this,'advsign_font_tab_form'] );
         add_action( 'admin_post_social_tab_form', [$this,'advsign_social_tab_form'] );
         add_action( 'login_enqueue_scripts', [$this,'login_change_background_color'] );
-        
     }
+
+
 
     public function advsign_processing_completed_func( $saved_id ) {
 
@@ -132,7 +134,7 @@ class AdvanceCustomLogin {
                 'form_shadow',
                 'form_shadow_color_picker',
                 'username_email',
-                'username_placeholder',
+                'password_label_text',
                 'login_button_text',
                 'redirect_url',
                 'redirect_user',
@@ -217,6 +219,7 @@ class AdvanceCustomLogin {
                 "skype_link",
                 "insta_link",
                 "telegram_link",
+                "watsapp_link"
             ];
 
             $saved_id =  $this->advsign_process_submission( 'social', $data_list );
@@ -290,7 +293,7 @@ class AdvanceCustomLogin {
      */
     
     public function activate ( ) {
-        add_option('advsign_active',time());
+        add_option('advsign_active', time());
     }
 
     /**
@@ -300,7 +303,7 @@ class AdvanceCustomLogin {
      */
 
     public function deactivate ( ) {
-        add_option('advsign_deactive',time());
+        add_option('advsign_deactive', time());
     }
 
     /**
@@ -381,15 +384,16 @@ class AdvanceCustomLogin {
 
     public function gen_gettext( $translated_text, $text_to_translate, $textdomain )
     {
-        // return $_POST['login_login'];
-        // die();
+        $login_info = get_option('login_login');
         if ( 'Username or Email Address' == $text_to_translate ) {
-            $translated_text = __( 'Username or Email', 'advsign' );
-        } elseif ( 'Password' == $text_to_translate ) {
-            $translated_text = __( 'Your Password', 'advsign' );
+            $translated_text = __( $login_info['username_email'], 'advsign' );
+        } 
+        if ( 'Password' == $text_to_translate ) {
+            $translated_text = __( $login_info['password_label_text'], 'advsign' );
         }
         return $translated_text;
     }
+
 
     public function gen_login_logo_url() {
         return home_url();
@@ -473,7 +477,7 @@ class AdvanceCustomLogin {
         ?>
         <style type="text/css">
             body.login {
-                background-color: <?php echo $advsignbgcolor?> !important;
+                background-color: <?php echo ($advsignbgcolor ? $advsignbgcolor : '#f0f0f1'); ?> !important;
             }
         </style>
     <?php }
@@ -483,7 +487,7 @@ class AdvanceCustomLogin {
     //Custom image that removes the form backgroung image
     public function advsign_form_bg_img() {
 
-        $social_tab_info =get_option('login_social');
+        $social_tab_info = get_option('login_social');
         $login_form_info = get_option('login_login');
         $font_tabs = get_option('login_font');
 
@@ -492,8 +496,18 @@ class AdvanceCustomLogin {
         }
 
 
+        // Login Form Position
         switch( $login_form_info['login_form_position'] )
         {
+            case '1':
+                ?>
+            <style type="text/css"> 
+                body.login div#login {
+                float: center !important;
+            }
+            </style>
+            <?php    
+            break;
             case '2':
                 ?>
             <style type="text/css"> 
@@ -517,32 +531,62 @@ class AdvanceCustomLogin {
                 break;
             }
 
-        if ( !isset($font_tabs['show_remember_field']) ) { ?>
-            <style> body.login div#login form#loginform p.forgetmenot{ display: none; } </style> 
-        <?php }
-        
+
+        // Copyright Text Show or Hide
+        if ( $font_tabs){
+            if ( $font_tabs['show_copyright_text'] ) { 
+                add_action( 'login_footer', [$this,'advsign_copyright_text'] );
+            }
+        }
+
+        // Remember Field Show or Hide
+        if ( $font_tabs){
+            if ( !$font_tabs['show_remember_field'] ) { ?>
+                <style> body.login div#login form#loginform p.forgetmenot{ display: none; } </style> 
+            <?php }
+        }
         ?>
 
+        <!-- Go Back to Link Enable and Disable -->
         <?php
-        if ( !isset($font_tabs['back_to_site']) ) { ?>
-            <style> body.login div#login p#backtoblog a { display: none; } </style> 
+        if ( $font_tabs){
+            if( !$font_tabs['back_to_site'] ){ ?>
+                <style> body.login div#login p#backtoblog a { display:none !important; } </style> 
         <?php }
+        } 
         ?>
 
+        <!-- Go Back to Link Shadow Enable and Disable -->
         <?php
-        if ( isset($font_tabs['link_shadow']) ) { ?>
-            <style> body.login div#login p#backtoblog a { 
-                text-shadow: 2px 2px 5px <?php echo ($font_tabs['link_shadow_color']); ?> ;
+        if ( $font_tabs['link_shadow'] ) { 
+            if( !isset($font_tabs['link_shadow']) ){?>
+                <style> body.login div#login p#backtoblog a { 
+                    text-shadow: ;}  
+                </style> <?php }?>
+                <style> body.login div#login p#backtoblog a { 
+                    text-shadow: 1px 1px 3px <?php echo ($font_tabs['link_shadow_color']); ?> ;
              } </style> 
         <?php }
         ?>
 
+
+        <!-- Login Form Shadow Enable and Disable -->
         <?php
-        if (!isset($font_tabs['form_shadow']) ) { ?>
-            <style> body.login div#login form#loginform { box-shadow: 0; } </style> 
+        if ( $login_form_info['form_shadow'] ) { 
+            if( !isset($login_form_info['form_shadow']) ){?>
+                <style> body.login div#login form#loginform { 
+                    box-shadow: ;}  
+                </style> <?php }?>
+                <style> body.login div#login form#loginform { 
+                    box-shadow: 3px 3px 5px <?php echo ($login_form_info['form_shadow_color_picker']); ?> ;
+             } </style> 
         <?php }
         ?>
-        
+
+
+
+
+        <!-- Social Icon Placement -->
         <?php
         if ( isset($social_tab_info['social_icon_placement']) ) :
            
@@ -551,31 +595,20 @@ class AdvanceCustomLogin {
                 case 'No Icon': 
                     break;
                 case 'Outer':
-                    add_action( 'login_footer', [$this,'advsign_social_icons_outer'] );   
+                    add_action( 'login_footer', [$this,'advsign_social_icons'] );   
                     break;
                 case 'Inner':
-                    add_action( 'login_form', [ $this,'advsign_social_icons_inner'], );   
+                    add_action( 'login_form', [$this,'advsign_social_icons'] );
                     break;
                 case 'Both':
-                    add_action( 'login_form', [$this,'advsign_social_icons_inner'], );
-                    add_action( 'login_footer', [$this,'advsign_social_icons_outer'] );
+                    add_action( 'login_form', [$this,'advsign_social_icons'] );
+                    add_action( 'login_footer', [$this,'advsign_social_icons'] );
                     break;
                 default:
                     break;
             }
         endif;
-
         ?>
-        
-        <?php
-        if ($login_form_info['username_email']) { ?>
-            <style> body.login div#login p#backtoblog a { 
-                text-shadow: 2px 2px 5px <?php echo ($font_tabs['link_shadow_color']); ?> ;
-             } </style> 
-        <?php }
-        ?>
-
-
             
         
         <style type="text/css">
@@ -584,14 +617,13 @@ class AdvanceCustomLogin {
                  width: <?php echo $login_form_info['login_form_width']; ?> !important;
             }
             body.login div#login form#loginform{
-                background-color: <?php echo $login_form_info['background_form_color']; ?> !important;
-                background-repeat: <?php echo $login_form_info['login_bg_repeat']; ?> !important;
-                background-position: <?php echo $login_form_info['login_form_bg_position']; ?> !important;               
-                border-color: <?php echo $login_form_info['form_border_color']; ?> !important;
-                border-radius: <?php echo $login_form_info['login_border_radius']."px"; ?> !important;
-                border-style: <?php echo $login_form_info['border_style']; ?> !important;
-                border-width: <?php echo $login_form_info['form_border_width']."px"; ?> !important;
-                box-shadow: 10px 10px 5px <?php echo $login_form_info['form_shadow_color_picker']?>;
+                background-color: <?php echo $login_form_info['background_form_color'] ? $login_form_info['background_form_color'] : '#fff'; ?> !important;
+                background-repeat: <?php echo $login_form_info['login_bg_repeat'] ? $login_form_info['login_bg_repeat'] : 'no-repeat'; ?> !important;
+                background-position: <?php echo $login_form_info['login_form_bg_position'] ? $login_form_info['login_form_bg_position'] : '0% 0%'; ?> !important;               
+                border-color: <?php echo $login_form_info['form_border_color'] ? $login_form_info['form_border_color'] : '1px solid #c3c4c7'; ?> !important;
+                border-radius: <?php echo $login_form_info['login_border_radius'] ? $login_form_info['login_border_radius'].'px' : '5px'?> !important;
+                border-style: <?php echo $login_form_info['border_style'] ? $login_form_info['border_style'] : 'solid'; ?> !important;
+                border-width: <?php echo $login_form_info['form_border_width'] ? $login_form_info['form_border_width']."px" : '1px'; ?> !important;
             }
 
             /* input texts color and font size*/
@@ -629,17 +661,15 @@ class AdvanceCustomLogin {
 
 
 
-
-
-    public function advsign_social_icons_inner () 
-    {
-        echo '<div style="text-align: center;">
-                <a href="#"><i class="fab fa-facebook-f fa-2x"></i></a>
-                <a href="#" style="margin-left: 1%"><i class="fab fa-instagram fa-2x"></i></a>
-            </div>';
+    // Copyright View Function
+    public function advsign_copyright_text(){
+        echo '<div style="text-align: center; position:absolute; bottom:50; width:100%;">
+                &copy; Copyright 2021 <a href="'.get_home_url().'">'.get_bloginfo('name').'</a>
+             </div>';
     }
 
-    public function advsign_social_icons_outer ()
+
+    public function advsign_social_icons ()
     {
         $social_icons = get_option('login_social');
 
@@ -652,54 +682,59 @@ class AdvanceCustomLogin {
         echo '<div style="text-align: center;">';
         
         if( $social_icons['facebook_link'] ){
-            echo ('<a href="'.$social_icons['facebook_link'].'" target="'.$new_tab.'"><i class="fab fa-facebook-f '.$social_icons['social_icon_size'].'"></i></a>');
+            echo ('<a href="'.$social_icons['facebook_link'].'" target="'.$new_tab.'" style="color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-facebook-f '.$social_icons['social_icon_size'].'"></i></a>');
         }
 
         if( $social_icons['twitter_link'] ) {
-            echo ('<a href="'.$social_icons['twitter_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-twitter '.$social_icons['social_icon_size'].'" target="'.$new_tab.'"></i></a>');
+            echo ('<a href="'.$social_icons['twitter_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-twitter '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['linkedin_link']){
-            echo ('<a href="'.$social_icons['linkedin_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['linkedin_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['g_plus_link']){
-            echo ('<a href="'.$social_icons['g_plus_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['g_plus_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['pinterest_link']){
-            echo ('<a href="'.$social_icons['pinterest_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-pinterest '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['pinterest_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-pinterest '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['digg_link']){
-            echo ('<a href="'.$social_icons['digg_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-digg '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['digg_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-digg '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['youtube_link']){
-            echo ('<a href="'.$social_icons['youtube_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-youtube '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['youtube_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-youtube '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['flickr_link']){
-            echo ('<a href="'.$social_icons['flickr_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-flickr '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['flickr_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-flickr '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['tumblr_link']){
-            echo ('<a href="'.$social_icons['tumblr_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-tumblr '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['tumblr_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-tumblr '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['skype_link']){
-            echo ('<a href="'.$social_icons['skype_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-skype '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['skype_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-skype '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['insta_link']){
-            echo ('<a href="'.$social_icons['insta_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-instagram '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['insta_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-instagram '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['telegram_link']){
-            echo ('<a href="'.$social_icons['telegram_link'].'" target="'.$new_tab.'" style="margin-left: 10px"><i class="fab fa-telegram '.$social_icons['social_icon_size'].'" ></i></a>');
+            echo ('<a href="'.$social_icons['telegram_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-telegram '.$social_icons['social_icon_size'].'" ></i></a>');
+        }
+
+        if( $social_icons['telegram_link']){
+            echo ('<a href="'.$social_icons['telegram_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-whatsapp '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         echo '</div>';
     }
+
 }
 new AdvanceCustomLogin();

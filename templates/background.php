@@ -11,6 +11,21 @@
     </select>
 </div>
 
+<div class="bg_default form-group d-none">
+    <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+        <label for="default_img">  <?php esc_html_e( 'Set Default Image', 'advsign' ); ?> </label>
+        <div class="preview_image mb-3">
+            <img src="<?php echo plugin_dir_url( __DIR__ )?>/assets/images/default-image.png" class="img-thumbnail" data-id="0" alt="<?php esc_html_e( 'Default image', 'advsign' ); ?>">
+        </div>
+        <input type="hidden" name="action" value="default_bg_form">
+        <input type="hidden" name="advsigndefaultbgimg" value="<?php echo md5(time()); ?>">
+        <?php wp_nonce_field('default_bg_img_advsign_form', 'default_bg_img_advsign_nonce'); ?>
+        <div class="button_area text-center">
+            <button type="submit" class="btn btn-primary "><?php esc_html_e( 'Submit', 'advsign' ); ?></button>
+        </div>
+    </form>
+</div>
+
 <div class="bg_color_change form-group d-none">
     <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>?action=bg_color_form" method="post">
         <label for="colorPicker">  <?php esc_html_e( 'Set Background Color', 'advsign' ); ?> </label>
@@ -22,7 +37,6 @@
         </div>								
     </form>
 </div>
-
 
 <div class="bg_img_change_area form-group mb-3 d-none">
     <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">

@@ -144,6 +144,7 @@ function get_social_link ( $name ) {
                         if (isset($login_social['social_icon_enable_tab'])) {
                            return (trim(strtolower($login_social['social_icon_enable_tab']))==trim(strtolower($val))) ? 'checked' : '';
                         }
+                        
                         return '';
                     } 
                 ?>
@@ -292,7 +293,7 @@ function get_social_link ( $name ) {
                     <div class="input-group-prepend">
                     <div class="input-group-text"><i class="fab fa-whatsapp"></i></div>
                     </div>
-                    <input type="text" class="form-control" id="watsapp_link" placeholder="watsapp account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('watsapp_link'); ?>" name="watsapp_link" id="watsapp_link" placeholder="watsapp account url">
                 </div>
             </div>
         </div>

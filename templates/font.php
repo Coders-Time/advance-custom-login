@@ -1,20 +1,112 @@
+<?php 
+
+$login_font = get_option('login_font');
+$headline_font_color = null;
+$input_font_color = null;
+$link_color = null;
+$button_font_color = null;
+$button_color = null;
+$headline_font_size = null;
+$input_font_size = null;
+$login_font = null;
+$button_font_size = null;
+$show_remember_field = null;
+$show_copyright_text = null;
+$link_shadow = null;
+$enable_input_icon = null;
+$icon_for_user_input = null;
+$icon_for_user_password = null;
+$back_to_site = null;
+
+
+if ( isset($login_font) ) {
+
+    if ( isset($login_font['headline_font_color']) ) {
+        $headline_font_color = $login_font['headline_font_color'];
+    }
+    
+    if ( isset($login_font['input_font_color']) ) {
+        $input_font_color = $login_font['input_font_color'];
+    }
+    
+    if ( isset($login_font['link_color']) ) {
+        $link_color = $login_font['link_color'];
+    }
+    
+    if ( isset($login_font['button_font_color']) ) {
+        $button_font_color = $login_font['button_font_color'];
+    }
+    
+    if ( isset($login_font['button_color']) ) {
+        $button_color = $login_font['button_color'];
+    }
+    
+    if ( isset($login_font['headline_font_size']) ) {
+        $headline_font_size = $login_font['headline_font_size'];
+    }
+    
+    if ( isset($login_font['input_font_size']) ) {
+        $input_font_size = $login_font['input_font_size'];
+    }
+    
+    if ( isset($login_font['login_font']) ) {
+        $login_font = $login_font['login_font'];
+    }
+    
+    if ( isset($login_font['button_font_size']) ) {
+        $button_font_size = $login_font['button_font_size'];
+    }
+    
+    if ( isset($login_font['show_remember_field']) ) {
+        $show_remember_field = $login_font['show_remember_field'];
+    }
+    
+    if ( isset($login_font['show_copyright_text']) ) {
+        $show_copyright_text = $login_font['show_copyright_text'];
+    }
+    
+    if ( isset($login_font['link_shadow']) ) {
+        $link_shadow = $login_font['link_shadow'];
+    }
+    
+    if ( isset($login_font['enable_input_icon']) ) {
+        $enable_input_icon = $login_font['enable_input_icon'];
+    }
+    
+    if ( isset($login_font['icon_for_user_input']) ) {
+        $icon_for_user_input = $login_font['icon_for_user_input'];
+    }
+    
+    if ( isset($login_font['icon_for_user_password']) ) {
+        $icon_for_user_password = $login_font['icon_for_user_password'];
+    }
+    
+    if ( isset($login_font['back_to_site']) ) {
+        $back_to_site = $login_font['back_to_site'];
+    }
+    
+}
+
+
+?>
+
 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">	
     <!-- Headline Colors  -->
     <div class="border p-3 mb-3 rounded">
         <div class="row">
             <div class="col-md-4 form-group">
                 <label for="headline_font_color">  <?php esc_html_e( 'Headline Font Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['headline_font_color']); ?>" id="headline_font_color" name="headline_font_color" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $headline_font_color; ?>" id="headline_font_color" name="headline_font_color" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
             <div class="col-md-4 form-group">
                 <label for="input_font_color">  <?php esc_html_e( 'Input Font Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['input_font_color']); ?>" id="input_font_color" name="input_font_color" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $input_font_color; ?>" id="input_font_color" name="input_font_color" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
             <div class="col-md-4 form-group">
                 <label for="link_color">  <?php esc_html_e( 'Link Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['link_color']); ?>" id="link_color" name="link_color" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $link_color; ?>" id="link_color" name="link_color" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
         </div>
@@ -24,12 +116,12 @@
         <div class="row">
             <div class="col-md-4 form-group">
                 <label for="button_color">  <?php esc_html_e( 'Button Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['button_color']); ?>" id="button_color" name="button_color" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $button_color; ?>" id="button_color" name="button_color" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
             <div class="col-md-4 form-group">
                 <label for="button_font_color">  <?php esc_html_e( 'Login Button font Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['button_font_color']); ?>" id="button_font_color" name="button_font_color" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $button_font_color; ?>" id="button_font_color" name="button_font_color" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
         </div>
@@ -39,13 +131,13 @@
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="headline_font_size"><?php esc_html_e( 'Headline Font size', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_font')['headline_font_size']); ?>" class="custom-range" name="headline_font_size" id="headline_font_size">
-                <span id="headline_font_size_value"><?php echo(get_option('login_font')['headline_font_size']); ?></span>
+                <input type="range" value="<?php echo $headline_font_size; ?>" class="custom-range" name="headline_font_size" id="headline_font_size">
+                <span id="headline_font_size_value"><?php echo $headline_font_size; ?></span>
             </div>
             <div class="col-md-6 form-group">
                 <label for="input_font_size"><?php esc_html_e( 'Input Font Size', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_font')['input_font_size']); ?>" class="custom-range" name="input_font_size" id="input_font_size">
-                <span id="input_font_size_value"><?php echo(get_option('login_font')['input_font_size']); ?></span>
+                <input type="range" value="<?php echo $input_font_size; ?>" class="custom-range" name="input_font_size" id="input_font_size">
+                <span id="input_font_size_value"><?php echo $input_font_size; ?></span>
             </div>
         </div>
     </div>
@@ -54,13 +146,13 @@
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="link_font_size"><?php esc_html_e( 'Link Font Size', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_font')['link_font_size']); ?>" class="custom-range"  id="link_font_size" name="link_font_size">
-                <span id="link_font_size_value"><?php echo(get_option('login_font')['link_font_size']); ?></span>
+                <input type="range" value="<?php echo $login_font; ?>" class="custom-range"  id="link_font_size" name="link_font_size">
+                <span id="link_font_size_value"><?php echo $login_font; ?></span>
             </div>
             <div class="col-md-6 form-group">
                 <label for="button_font_size"><?php esc_html_e( 'Button Font Size', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_font')['button_font_size']); ?>" class="custom-range" id="button_font_size" name="button_font_size">
-                <span id="button_font_size_value"><?php echo(get_option('login_font')['button_font_size']); ?></span>
+                <input type="range" value="<?php echo $button_font_size; ?>" class="custom-range" id="button_font_size" name="button_font_size">
+                <span id="button_font_size_value"><?php echo $button_font_size; ?></span>
             </div>
         </div>
     </div>
@@ -71,8 +163,8 @@
                 <label for="show_remember_field"><?php esc_html_e( 'Show Remember Me Field', 'advsign' ); ?></label>
             </div>
             <?php 
-                function show_remember_field( $val ){
-                    $show_remember_field= get_option('login_font')['show_remember_field'];
+                function show_remember_field( $val ) {
+                    global $show_remember_field;
                     return ($show_remember_field == $val) ? 'checked' : '';
                 } 
             ?>
@@ -93,7 +185,7 @@
             </div>
             <?php 
                 function back_to_site( $val ){
-                    $back_to_site= get_option('login_font')['back_to_site'];
+                    global $back_to_site;
                     return ($back_to_site == $val) ? 'checked' : '';
                 } 
             ?>
@@ -114,7 +206,7 @@
             </div>
             <?php 
                 function show_copyright_text( $val ){
-                    $show_copyright_text= get_option('login_font')['show_copyright_text'];
+                    global $show_copyright_text;
                     return ($show_copyright_text ==  $val) ? 'checked' : '';
                 } 
             ?>
@@ -137,7 +229,7 @@
                 <label for="link_shadow"><?php esc_html_e( 'Enable Link shadow', 'advsign' ); ?></label>
                 <?php 
                     function link_shadow( $val ){
-                        $link_shadow= get_option('login_font')['link_shadow'];
+                        global $link_shadow;
                         return ($link_shadow == $val) ? 'checked' : '';
                     } 
                 ?>
@@ -152,7 +244,7 @@
             </div>
             <div class="col-md-6 form-group">
                 <label for="link_shadow_color">  <?php esc_html_e( 'Link Shadow Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['link_shadow_color']); ?>" id="link_shadow_color" name="link_shadow_color" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $link_shadow_color; ?>" id="link_shadow_color" name="link_shadow_color" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
         </div>
@@ -174,9 +266,13 @@
                                 if(is_array($fonts_list)) {
                                     if(isset($fonts_list['items'])){
                                         $g_fonts = $fonts_list['items'];
-                                        foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
-                                        }
+                                        foreach( $g_fonts as $g_font) { 
+                                            $font_name = $g_font['family']; 
+                                        ?>
+                                            <option value="<?php echo esc_attr($font_name); ?>"><?php echo esc_html($font_name); ?>
+                                                
+                                            </option>
+                                        <?php }
                                     }
                                     
                                 } else {
@@ -206,7 +302,7 @@
                                     if(isset($fonts_list['items'])){
                                         $g_fonts = $fonts_list['items'];
                                         foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                            <option value="<?php echo esc_attr($font_name); ?>"><?php echo esc_html($font_name); ?></option><?php 
                                         }
                                     }
                                     
@@ -242,7 +338,7 @@
                                     if(isset($fonts_list['items'])){
                                         $g_fonts = $fonts_list['items'];
                                         foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                            <option value="<?php echo esc_attr($font_name); ?>"><?php echo esc_html($font_name); ?></option><?php 
                                         }
                                     }
                                     
@@ -273,7 +369,7 @@
                                     if(isset($fonts_list['items'])){
                                         $g_fonts = $fonts_list['items'];
                                         foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo esc_html($font_name); ?></option><?php 
+                                            <option value="<?php echo esc_attr($font_name); ?>"><?php echo esc_html($font_name); ?></option><?php 
                                         }
                                     }
                                     
@@ -299,7 +395,7 @@
             </div>
             <?php 
                 function enable_input_icon( $val ){
-                    $enable_input_icon= get_option('login_font')['enable_input_icon'];
+                    global $enable_input_icon;                    
                     return (trim(strtolower($enable_input_icon))==trim(strtolower($val))) ? 'checked' : '';
                 } 
             ?>
@@ -320,11 +416,11 @@
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="icon_for_user_input"><?php esc_html_e( 'Icon For user Input Box', 'advsign' ); ?></label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['icon_for_user_input']); ?>" id="icon_for_user_input" name="icon_for_user_input" aria-describedby="icon_for_user_input">
+                <input type="text" class="form-control" value="<?php echo $icon_for_user_input; ?>" id="icon_for_user_input" name="icon_for_user_input" aria-describedby="icon_for_user_input">
             </div>
             <div class="col-md-6 form-group">
                 <label for="icon_for_user_password"><?php esc_html_e( 'Icon For Password Input Box', 'advsign' ); ?></label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_font')['icon_for_user_password']); ?>" id="icon_for_user_password" name="icon_for_user_password" aria-describedby="icon_for_user_password">
+                <input type="text" class="form-control" value="<?php echo $icon_for_user_password; ?>" id="icon_for_user_password" name="icon_for_user_password" aria-describedby="icon_for_user_password">
             </div>
         </div>
     </div>
@@ -334,6 +430,6 @@
     <?php wp_nonce_field('font_advsign_form', 'font_advsign_nonce'); ?>
     <!-- Submit Button -->
     <div class="text-center">
-        <button type="submit" class="btn btn-primary mt-5" name="font_submit" value="1"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+        <button type="submit" class="btn btn-primary mt-5 col-md-6" name="font_submit" value="1"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
     </div>
 </form>

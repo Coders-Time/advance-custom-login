@@ -1,7 +1,9 @@
 ;(function($){
 	
     $(document).ready(function(){
-    	console.clear();
+    	// console.clear();
+        var mediaUploader;
+
     	/*set and get last selected tab*/
 		if ( typeof(Storage) !== "undefined" ) {
 		  var tab = sessionStorage.getItem("tab");
@@ -153,7 +155,6 @@
 
 
 		/*Media upload */
-        var mediaUploader;
         $('.upload_login_bg_img').on('click',function(e) {
             e.preventDefault();
             if( mediaUploader ){
@@ -277,40 +278,7 @@
             }
         });
 
-        function singleImageUpload ( ...areas ) {
-            var attachment = '';
-            var mediaUploader;
-
-            if( mediaUploader ){
-                mediaUploader.open();
-                return;
-            }
-            mediaUploader = wp.media.frames.file_frame = wp.media({
-                title: 'Choose a Image',
-                button: {
-                    text: 'Choose image'
-                },
-                multiple: false
-            });  
-            mediaUploader.on('select', function(){
-                attachment = mediaUploader.state().get('selection').first().toJSON();
-                
-                for(var i=0; i<areas.length;i++) {
-
-                    if ( $(areas[i]).is(":hidden")) {
-                        console.log('testing');
-                        $(areas[i]).val(attachment.id);
-                    } else {
-                        if ($(areas[i]).attr('src')) {
-                            $(areas[i]).attr('src',attachment.url);
-                        } else {
-                            $(areas[i]).val(attachment.url);
-                        }
-                    }           
-                }
-            });
-            mediaUploader.open();
-        }
+        
 
         $("#login_logoHelp").click(function(e){
             e.preventDefault();
@@ -348,10 +316,54 @@
             $(".uploaded_form_bg_img").css('height', form_bg_img_height + 'px');
         });
 
+
+        function singleImageUpload ( ...areas ) 
+        {
+            var attachment = '';       
+
+            if( mediaUploader )
+            {
+                mediaUploader.open();
+                return;
+            }
+
+            mediaUploader = wp.media.frames.file_frame = wp.media({
+                title: 'Choose a Image',
+                button: {
+                    text: 'Choose image'
+                },
+                library: {
+                    type: [ 'image' ]
+                },
+                multiple: false
+            });
+
+            mediaUploader.on('select', function(){
+                attachment = mediaUploader.state().get('selection').first().toJSON();
+                console.log(attachment);
+                
+                // for(var i=0; i<areas.length;i++) {
+
+                //     if ( $(areas[i]).is(":hidden")) {
+                //         console.log('testing');
+                //         $(areas[i]).val(attachment.id);
+                //     } else {
+                //         if ($(areas[i]).attr('src')) {
+                //             $(areas[i]).attr('src',attachment.url);
+                //         } else {
+                //             $(areas[i]).val(attachment.url);
+                //         }
+                //     }           
+                // }
+            });
+            mediaUploader.open();
+        }
+
+        /*Thickbox settings*/
         if ($('#advsign-modal .data').length > 0) {
             tb_show( $('#content').text(), "#TB_inline?inlineId=advsign-modal&width=700");
         }
-
+        /*hide thickbox when click outside box*/
         $( 'body' ).on( 'thickbox:removed', function() {
             var url = window.location.href;
             var a = url.indexOf("?");

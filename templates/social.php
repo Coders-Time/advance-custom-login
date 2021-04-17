@@ -197,14 +197,14 @@ function get_social_link ( $name ) {
                 </div>
             </div>
             <div class="col-md-6 form-group">
-                <label class="sr-only" for="g_plus_link"><?php esc_html_e( 'Google Plus', 'advsign' ); ?></label>
+                <label class="sr-only" for="watsapp_link"><?php esc_html_e( 'Watsapp', 'advsign' ); ?></label>
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fab fa-google-plus-g"></i></div>
+                    <div class="input-group-text"><i class="fab fa-whatsapp"></i></div>
                     </div>
-                    <input type="text" class="form-control" value="<?php echo get_social_link('g_plus_link'); ?>" name="g_plus_link" id="g_plus_link" placeholder="G+ account url">
+                    <input type="text" class="form-control" value="<?php echo get_social_link('watsapp_link'); ?>" name="watsapp_link" id="watsapp_link" placeholder="watsapp account url">
                 </div>
-            </div>
+            </div>           
         </div>
         <div class="row">
             <div class="col-md-6 form-group">
@@ -286,17 +286,6 @@ function get_social_link ( $name ) {
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label class="sr-only" for="watsapp_link"><?php esc_html_e( 'Watsapp', 'advsign' ); ?></label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                    <div class="input-group-text"><i class="fab fa-whatsapp"></i></div>
-                    </div>
-                    <input type="text" class="form-control" value="<?php echo get_social_link('watsapp_link'); ?>" name="watsapp_link" id="watsapp_link" placeholder="watsapp account url">
-                </div>
-            </div>
-        </div>
     </div>
     <!-- special field for security reason -->
     <input type="hidden" name="action" value="social_tab_form">
@@ -304,6 +293,6 @@ function get_social_link ( $name ) {
     <?php wp_nonce_field('social_advsign_form', 'social_advsign_nonce'); ?>
     <!-- Submit Button -->
     <div class="text-center">
-        <button type="submit" class="btn btn-primary mt-5" name="social_submit" value="1"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
+        <button type="submit" class="btn btn-primary mt-5 col-md-6" name="social_submit" value="1"> <?php esc_html_e( 'Submit', 'advsign' ); ?> </button>
     </div>
 </form>

@@ -42,38 +42,103 @@ class AdvanceCustomLogin {
 
     public function __construct ( ) 
     {
-        register_activation_hook( WP_CTL_FILE, [ $this, 'activate' ] );
-        register_deactivation_hook( WP_CTL_FILE, [ $this, 'deactivate' ] );
-
         /*Localize our plugin*/
         add_action( 'init', [ $this, 'localization_setup' ] );
-        add_filter( 'plugin_action_links_' . WP_CTL_BASENAME, [ $this, 'action_links' ] );
-
-        /*Create Dashboad menu*/
-        add_action( 'admin_menu', [$this,'create_dashboard_menu']);
         add_action( 'login_head', [ $this,'gen_login_head' ] );
         add_filter( 'login_headerurl', [ $this,'gen_login_logo_url' ] );
         add_filter( 'login_headertext', [ $this,'gen_login_logo_url_title' ] );
         
-       
-
         add_filter( 'wp_login_errors', [ $this, 'gen_registered_success_message' ], 10, 2 );
         add_filter( 'login_title', [ $this, 'custom_login_title' ], 99 );
-        add_filter( 'admin_footer_text', [ $this, 'remove_footer_admin' ]);
 
+        add_action( 'login_enqueue_scripts', [ $this, 'login_page_stylesheet' ] ); 
+
+        if ( !is_admin() ) {return;}
+        register_activation_hook( WP_CTL_FILE, [ $this, 'activate' ] );
+        register_deactivation_hook( WP_CTL_FILE, [ $this, 'deactivate' ] );
+
+               
+        add_filter( 'plugin_action_links_' . WP_CTL_BASENAME, [ $this, 'action_links' ] );
+
+        /*Create Dashboad menu*/
+        add_action( 'admin_menu', [$this,'create_dashboard_menu']);
         add_action( 'admin_post_logo_form',[$this,'admin_post_advsign_logo_func']);
         add_action( 'advsign_processing_complete',[$this,'advsign_processing_completed_func']);
+
         //This loads the function on the login page
-        add_action( 'admin_post_bg_color_form', [$this,'advsign_bg_color_form'] );
-        add_action( 'admin_post_bg_img_form', [$this,'advsign_bg_img_form'] );
-        add_action( 'admin_default_bg_img', [$this,'advsign_default_bg_form'] );
+        add_action( 'admin_post_bg_color_form', [ $this,'advsign_bg_color_form'] );
+        add_action( 'admin_post_bg_img_form', [ $this,'advsign_bg_img_form'] );
+        add_action( 'admin_post_bg_slider_imgs', [ $this,'advsign_bg_slider_imgs'] );
         
         add_action( 'admin_post_login_tab_form', [$this,'advsign_login_tab_form'] );
         add_action( 'admin_post_font_tab_form', [$this,'advsign_font_tab_form'] );
         add_action( 'admin_post_social_tab_form', [$this,'advsign_social_tab_form'] );
-
-        add_action( 'login_enqueue_scripts', [ $this, 'login_page_stylesheet' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'adv_login_dashboard_stylesheet' ] );
+        /*plugin enable action*/
+        add_action( 'wp_ajax_plugin_enable', [ $this,'adcl_plugin_enable_func'] );
+
+    }
+
+    /*Background custom color*/
+    public function advsign_bg_slider_imgs ( )
+    {
+        $action_nonce = sanitize_text_field( $_POST['bg_slider_advsign_nonce'] );
+        $slider_type = sanitize_text_field( $_POST['slide-type'] );
+        $slider = array_map('intval', $_POST['slider']);
+
+        if ( isset($_POST['bg_slider']) && wp_verify_nonce( $action_nonce  ,'bg_slider_advsign_form') ) 
+        {
+            $success = update_option('login_bg_slider', ['bg_slider_type'=>$slider_type,'bg_sliders'=>$slider]);
+            delete_option('bg_img_id');
+            delete_option('login_bg_color');
+            if ( $success ) {
+                $saved_id =  'login_bg_slider';
+                wp_safe_redirect(
+                    esc_url_raw(
+                        add_query_arg('saved_id', $saved_id, admin_url('admin.php?page=advance-login'))
+                    )
+                );
+            }
+        }
+        die();              
+    }
+
+    /*Background custom color*/
+    public function advsign_bg_color_form()
+    {
+        if( isset($advsignbgcolor) &&  strlen($advsignbgcolor) > 3 && ($advsignbgcolor != get_option('login_bg_color')) ){
+            $success = update_option('login_bg_color', $advsignbgcolor);
+            delete_option('bg_img_id');
+            delete_option('login_bg_slider');
+            if ( $success ) {
+                $saved_id =  'login_bg_color';
+                wp_safe_redirect(
+                    esc_url_raw(
+                        add_query_arg('saved_id', $saved_id, admin_url('admin.php?page=advance-login'))
+                    )
+                );
+            }        
+        }                
+    }
+
+    /*Custom image that removes the backgroung image*/
+    public function advsign_bg_img_form() 
+    {
+       
+        $bg_img_id = $_POST['bg_img_id'];
+        if ( isset($_POST['bg_img_id_submit']) && isset($bg_img_id) && $bg_img_id ) 
+        {
+            $success = update_option('bg_img_id', intval($bg_img_id) );
+            delete_option('login_bg_color');
+            if ( $success ) {
+                $bg_img_id =  'bg_img_id';
+                wp_safe_redirect(
+                    esc_url_raw(
+                        add_query_arg('saved_id', $bg_img_id, admin_url('admin.php?page=advance-login'))
+                    )
+                );
+            }          
+        }
     }
 
     public function advsign_processing_completed_func( $saved_id ) 
@@ -83,9 +148,21 @@ class AdvanceCustomLogin {
 
         $msg = '{<br>';
 
-        foreach ($saved_info as $key => $value) {
-            $msg .= "<span> '{$key}'' : '{$value}'  </span><br>";
-        }
+        if ( is_array($saved_info )) {
+            foreach ( $saved_info as $key => $value ) {
+                if ( is_array($value) ) {
+                    $msg .= '{<br>';
+                    foreach ( $value as $s_key => $s_value ) {
+                        $msg .= "<span> '{$s_key}' : '{$s_value}'  </span><br>";
+                    }
+                    $msg .= '}<br>';
+                } else {
+                    $msg .= "<span> '{$key}' : '{$value}'  </span><br>";
+                }                
+            }
+        } else {
+            $msg .= "<span> '{$saved_id}' : '{$saved_info}'  </span><br>";
+        }       
 
         printf($message, $msg . '}' );
     }
@@ -212,7 +289,6 @@ class AdvanceCustomLogin {
                 "facebook_link",
                 "twitter_link",
                 "linkedin_link",
-                "g_plus_link",
                 "pinterest_link",
                 "digg_link",
                 "youtube_link",
@@ -289,6 +365,7 @@ class AdvanceCustomLogin {
         include ( 'advance-settings.php' );
     }
 
+
     /**
      *
      * run when plugin install
@@ -298,6 +375,13 @@ class AdvanceCustomLogin {
     public function activate ( ) 
     {
         add_option('advsign_active', time());
+
+        if ( null !== get_option('bg_img_id') ) {
+            $default_bg_img = WP_CTL_ASSET_FILE . 'images/background-image.png';
+            $default_bg_img_id = $this->upload_image_file( $default_bg_img );
+            update_option( 'bg_img_id', $default_bg_img_id); 
+        }        
+
     }
 
     /**
@@ -308,7 +392,71 @@ class AdvanceCustomLogin {
 
     public function deactivate ( ) 
     {
-        update_option('advsign_deactive', time());
+        update_option('advsign_deactive', time());        
+    }
+
+    /**
+    *
+    * Enable and disable plugin funtin
+    * Return server save response with custom message
+    */
+    public function adcl_plugin_enable_func ( ) 
+    {
+        $form_action = 'plugin_enable' . get_current_user_id();
+        $nonce_value = sanitize_text_field( $_POST['form_id'] );
+        $data        = wp_validate_boolean($_POST['form_value']);
+
+        // Check for nonce security      
+        if ( wp_verify_nonce( $nonce_value, $form_action )  ) {
+            $saved = update_option( 'advsign_active', $data );
+            if ( $saved ) {
+                wp_send_json_success( $return = array(
+                    'message' => __( 'Data Updated Successfully', 'advsign' )
+                ) );
+            }else {
+                $error = [ 'message' => __( 'Something wrong, Data not updated', 'advsign' ) ];
+                wp_send_json_error( $error );
+            }
+            die();            
+        }
+
+        die();
+    }
+
+
+    /*Upload image file from local path*/
+
+    public function upload_image_file ( $image_url ) {
+
+        $upload_dir = wp_upload_dir();
+        $image_data = file_get_contents( $image_url );
+
+        $filename = basename( $image_url );
+
+        if ( wp_mkdir_p( $upload_dir['path'] ) ) {
+          $file = $upload_dir['path'] . '/' . $filename;
+        }
+        else {
+          $file = $upload_dir['basedir'] . '/' . $filename;
+        }
+
+        file_put_contents( $file, $image_data );
+
+        $wp_filetype = wp_check_filetype( $filename, null );
+
+        $attachment = array(
+          'post_mime_type' => $wp_filetype['type'],
+          'post_title' => sanitize_file_name( $filename ),
+          'post_content' => '',
+          'post_status' => 'inherit'
+        );
+
+        $attach_id = wp_insert_attachment( $attachment, $file );
+        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+        wp_update_attachment_metadata( $attach_id, $attach_data );
+        
+        return $attach_id;
     }
 
     /**
@@ -319,13 +467,6 @@ class AdvanceCustomLogin {
     public function localization_setup() 
     {
         load_plugin_textdomain( 'advsign', false, dirname( WP_CTL_BASENAME ) . '/languages/' );
-    }
-
-    public function remove_footer_admin ( ) 
-    {
-        $developedbt = __( 'Developed by', 'advsign' );
-        $coderstime = __( 'Coders Time', 'advsign' );        
-        echo '<span id="footer-thankyou> '.$developedbt.' <a href="https://facebook.com/coderstime" target="_blank"> '. $coderstime.' </a> </span>';
     }
 
     /*
@@ -378,6 +519,10 @@ class AdvanceCustomLogin {
 
         if ( 'Password' == $text_to_translate && isset($login_info['password_label_text']) ) {
             $translated_text = __( $login_info['password_label_text'], 'advsign' );
+        } 
+
+        if ( 'Log In' == trim($text_to_translate) && isset($login_info['login_button_text']) ) {
+            $translated_text = __( $login_info['login_button_text'], 'advsign' );
         }
 
         return $translated_text;
@@ -400,11 +545,31 @@ class AdvanceCustomLogin {
         wp_enqueue_style( 'custom-login', WP_CTL_ASSET_FILE . 'css/style-login.css', [], filemtime( WP_CTL_ASSET_DIR .'css\style-login.css') );
         wp_enqueue_script( 'advance-login', WP_CTL_ASSET_FILE . 'js/advance-login.js',['jquery'],filemtime( WP_CTL_ASSET_DIR .'js/advance-login.js'), true );
 
+        if ( null !== get_option('login_bg_img') ) { 
+            $login_bg_img = get_option('login_bg_img');
+            if (isset($login_bg_img['bg_img_id'])) {
+                $bg_img_id = $login_bg_img['bg_img_id'];
+                $bg_image_path = wp_get_attachment_image_src($bg_img_id,'full')[0];
+            }
+            
+            ?>
+            <style type="text/css">
+                body.login {background-image: url(<?php echo $bg_image_path ?>)}
+            </style>
+            <?php 
+        }
+
 
         $advsignbgcolor = get_option('login_bg_color');
-        if ( isset($advsignbgcolor) ) { ?>
+        if (  null !== $advsignbgcolor ) { ?>
             <style type="text/css">
-                body.login {background-color:<?php echo $advsignbgcolor; ?> !important;}
+                body.login {
+                    background-color:<?php echo $advsignbgcolor; ?> !important;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                }
             </style>
         <?php }
 
@@ -461,18 +626,14 @@ class AdvanceCustomLogin {
                 case '1':
                     ?>
                 <style type="text/css"> 
-                    body.login div#login {
-                    float: center !important;
-                }
+                    body.login div#login { float: center !important; }
                 </style>
                 <?php    
                 break;
                 case '2':
                     ?>
                 <style type="text/css"> 
-                    body.login div#login {
-                    float: <?php echo $login_form_info['float_settings']; ?> !important;
-                }
+                    body.login div#login { float: <?php echo $login_form_info['float_settings']; ?> !important; }
                 </style>
                 <?php    
                 break;
@@ -526,19 +687,19 @@ class AdvanceCustomLogin {
             <style type="text/css">
                 /* input texts color and font size*/
                 .login form .input, .login form input[type=checkbox], .login input[type=text]{
-                    color: <?php echo $font_tabs['input_font_color']; ?> !important;
-                    font-size: <?php echo $font_tabs['input_font_size']."px"; ?> !important;
+                    color: <?php echo isset($font_tabs['input_font_color']) ? $font_tabs['input_font_color'] : 'inherit'; ?> !important;
+                    font-size: <?php echo isset($font_tabs['input_font_size']) ? $font_tabs['input_font_size']."px" : 'inherit'; ?> !important;
                 }
                 /* links color and font size*/
                 body.login div#login p#backtoblog a{
-                    color: <?php echo $font_tabs['link_color']; ?> !important;
-                    font-size: <?php echo $font_tabs['link_font_size']."px"; ?> !important;
+                    color: <?php echo isset($font_tabs['link_color']) ? $font_tabs['link_color'] : 'inherit'; ?> !important;
+                    font-size: <?php echo isset($font_tabs['link_font_size']) ? $font_tabs['link_font_size']."px" : 'inherit'; ?> !important;
                 }
                 /* button color */
                 body.login div#login form#loginform p.submit input#wp-submit {
-                    background-color: <?php echo $font_tabs['button_color']; ?>;
-                    color: <?php echo $font_tabs['button_font_color']; ?>;
-                    font-size: <?php echo $font_tabs['button_font_size']."px"; ?> !important;
+                    background-color: <?php echo isset($font_tabs['button_color']) ? $font_tabs['button_color'] : 'inherit'; ?>;
+                    color: <?php echo isset($font_tabs['button_font_color']) ? $font_tabs['button_font_color'] : 'inherit'; ?>;
+                    font-size: <?php echo isset($font_tabs['button_font_size']) ? $font_tabs['button_font_size']."px" : 'inherit'; ?> !important;
                 }
             </style>
 
@@ -619,6 +780,9 @@ class AdvanceCustomLogin {
             add_thickbox();
             wp_enqueue_script( 'login_dashboard_script', WP_CTL_ASSET_FILE . 'js/login-settings.js',['jquery','wp-color-picker'],filemtime( WP_CTL_ASSET_DIR.'js/login-settings.js'), true );
 
+            // in JavaScript, object properties are accessed as adcl.ajax_url, adcl.we_value
+            wp_localize_script( 'login_dashboard_script', 'adcl',
+            array( 'adcl_url' => admin_url( 'admin-ajax.php' ), 'adcl_nonce' => wp_create_nonce( 'plugin_enable' . get_current_user_id() ) ) );
             
     }
 
@@ -650,29 +814,17 @@ class AdvanceCustomLogin {
             ], $links );
     }
 
-
-    public function advsign_bg_color_form()
-    {
-        $advsignbgcolor = $_POST['login_bg_color'];
-        if( strlen($advsignbgcolor) > 3 && ($advsignbgcolor != get_option('login_bg_color')) ){
-            update_option('login_bg_color', $advsignbgcolor);
-        }
-        wp_redirect( admin_url('admin.php?page=advance-login') ); exit;
-    }
-
-
     //Custom image that removes the backgroung image
-    public function advsign_bg_img_form() 
+    public function advsign_bg_img_form_old() 
     {
         $advsignbgcolor = get_option('login_bg_color');
         ?>
         <style type="text/css">
             /* login form background color */
-            body.login {
-                background-color: <?php echo $advsignbgcolor?> !important;
-            }
+            body.login { background-color: <?php echo $advsignbgcolor?> !important;}
         </style>
-    <?php }
+        <?php 
+    }
 
 
 
@@ -707,10 +859,6 @@ class AdvanceCustomLogin {
 
         if( $social_icons['linkedin_link']){
             echo ('<a href="'.$social_icons['linkedin_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-linkedin-in '.$social_icons['social_icon_size'].'" ></i></a>');
-        }
-
-        if( $social_icons['g_plus_link']){
-            echo ('<a href="'.$social_icons['g_plus_link'].'" target="'.$new_tab.'" style="margin-left: 10px; color:'.$social_icons['social_icon_color_picker'].'"><i class="fab fa-google-plus-g '.$social_icons['social_icon_size'].'" ></i></a>');
         }
 
         if( $social_icons['pinterest_link']){

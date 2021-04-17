@@ -30,14 +30,19 @@ defined( 'ABSPATH' ) || exit;
 				  <div class="tab-pane fade show active" id="nav-dashboard" role="tabpanel" aria-labelledby="nav-dashboard-tab">
 
 				  	<form>
-						<!-- <div class="custom-control custom-switch my-5">
-						  <input type="checkbox" value="0" class="custom-control-input" id="enableplugin">
-						  <label class="custom-control-label" for="enableplugin"> <?php esc_html_e( 'Enable the plugin', 'advsign' ); ?> </label>
-						</div> -->
-						<div class="border rounded p-3 mb-3">
+						<div class="border rounded p-3 mb-3">	
+							<div class="row customSwitch_message">
+								<div class="col-md-6 notice is-dismissible" style="display: none;"> <p></p> </div>
+							</div>
+							<?php 
+								$advsign_active = false;
+								if( null !== get_option('advsign_active') ) {
+									$advsign_active = get_option('advsign_active');
+								}
+							?>
 							<div class="custom-control custom-switch my-3">
-								<input type="checkbox" class="custom-control-input" id="customSwitch1">
-								<label class="custom-control-label" for="customSwitch1"><?php esc_html_e( 'Enable the plugin', 'advsign' ); ?></label>
+								<input type="checkbox" class="custom-control-input" id="customSwitch" <?php echo $advsign_active ? 'checked' : ''; ?>>
+								<label class="custom-control-label" for="customSwitch"><?php esc_html_e( 'Enable the plugin', 'advsign' ); ?></label>
 							</div>
 						</div>
 						

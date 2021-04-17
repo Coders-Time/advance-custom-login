@@ -15,7 +15,7 @@
     	function setItem ( item_id ) {
     		if ( typeof(Storage) !== "undefined" ) {
 			  sessionStorage.setItem("tab", item_id );
-			  console.log( item_id + ' set this id');
+			  // console.log( item_id + ' set this id');
 			} else {
 				console.log('something wrong to set id');
 			}
@@ -217,7 +217,8 @@
 
                     $("#logincarousel .carousel-inner").append(`
                     <div class="carousel-item ${active_class}">
-                      <img src="${attachment.sizes.full.url}" data-id="${attachment.id}" class="img-fluid d-block w-100" alt="${attachment.alt}">
+                      <img src="${attachment.sizes.full.url}" class="img-fluid d-block w-100" alt="${attachment.alt}">
+                      <input type="hidden" name="slider[]" value="${attachment.id}">
                     </div> `);                 
                   });
                 $(".remove_login_bg_gallery").removeClass('d-none');
@@ -247,10 +248,7 @@
                             $("#logincarousel .carousel-indicators").append(`
                             <li data-target="#logincarousel" data-slide-to="${i}" class="${active_class}"></li>
                             `);
-                        } else {
-
-                        }
-                        
+                        }                        
                         break;
                     case '4':
                         $("#logincarousel").addClass('carousel-fade');
@@ -277,8 +275,6 @@
                 $(".bg_img_change_area .uploaded_login_bg_img").attr('src','');
             }
         });
-
-        
 
         $("#login_logoHelp").click(function(e){
             e.preventDefault();
@@ -340,24 +336,34 @@
 
             mediaUploader.on('select', function(){
                 attachment = mediaUploader.state().get('selection').first().toJSON();
-                console.log(attachment);
-                
-                // for(var i=0; i<areas.length;i++) {
 
-                //     if ( $(areas[i]).is(":hidden")) {
-                //         console.log('testing');
-                //         $(areas[i]).val(attachment.id);
-                //     } else {
-                //         if ($(areas[i]).attr('src')) {
-                //             $(areas[i]).attr('src',attachment.url);
-                //         } else {
-                //             $(areas[i]).val(attachment.url);
-                //         }
-                //     }           
-                // }
+                $(areas[0]).val(attachment.url);
+                $(areas[1]).attr('src',attachment.url);
+                $(areas[2]).val(attachment.id);
+                
             });
             mediaUploader.open();
         }
+
+        $("#customSwitch").change(function(){
+            if ( this.checked === true || this.checked === false ) {
+                var data = {
+                    'action': 'plugin_enable',
+                    'form_id': adcl.adcl_nonce,      // We pass php values differently!
+                    'form_value': this.checked      //  plugin enable 
+                };
+                // We can also pass the url value separately from ajaxurl for front end AJAX implementations
+                $.post( adcl.adcl_url, data, function( response ) {
+                    var notice = (response.success) ? 'notice-success' : 'notice-error';
+
+                    $(".customSwitch_message .notice").show().addClass(notice);
+                    $(".customSwitch_message .notice p").append(response.data.message);
+                    setTimeout(function() {
+                        $(".customSwitch_message .notice").hide();
+                    }, 3000);
+                });
+            }
+        });
 
         /*Thickbox settings*/
         if ($('#advsign-modal .data').length > 0) {

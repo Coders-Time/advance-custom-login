@@ -8,13 +8,22 @@ if ( !isset($login_login) ) {
 
 $login_form_width = null;
 $form_border_color = null;
-$login_border_radius = null;
+$login_border_radius = 0;
 $border_style = null;
-$form_border_width = null;
+$form_border_width = 0;
 $form_shadow = null;
 $username_email = null;
 $password_label_text = null;
 $login_button_text = null;
+$float_settings = null;
+$float_left_margin = null;
+$float_top_margin = null;
+$background_form_color = null;
+$login_form_bg_position = null;
+$login_bg_effect = null;
+$login_bg_repeat = null;
+$login_form_bg_id = 0;
+$form_shadow_color_picker = '#b5b5b5';
 
 if ( isset($login_login) ) {
 
@@ -53,7 +62,44 @@ if ( isset($login_login) ) {
     if (isset($login_login['login_button_text'])) {
         $login_button_text = $login_login['login_button_text'];
     }
+
+    if (isset($login_login['float_settings'])) {
+        $float_settings = $login_login['float_settings'];
+    }
+
+    if (isset($login_login['float_left_margin'])) {
+        $float_left_margin = $login_login['float_left_margin'];
+    }
+
+    if (isset($login_login['float_top_margin'])) {
+        $float_top_margin = $login_login['float_top_margin'];
+    }
+
+    if (isset($login_login['background_form_color'])) {
+        $background_form_color = $login_login['background_form_color'];
+    }
+
+    if (isset($login_login['login_form_bg_position'])) {
+        $login_form_bg_position = $login_login['login_form_bg_position'];
+    }
+
+    if (isset($login_login['login_bg_effect'])) {
+        $login_bg_effect = $login_login['login_bg_effect'];
+    }
+
+    if (isset($login_login['login_bg_repeat'])) {
+        $login_bg_repeat = $login_login['login_bg_repeat'];
+    }
+
+    if (isset($login_login['form_shadow_color_picker'])) {
+        $form_shadow_color_picker = $login_login['form_shadow_color_picker'];
+    }
+
+    if (isset($login_login['login_form_bg_id'])) {
+        $login_form_bg_id = $login_login['login_form_bg_id'];
+    }
 }
+
 
 ?>
 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">	
@@ -74,7 +120,7 @@ if ( isset($login_login) ) {
         <label for="select-background"> <?php esc_html_e( 'Float Settings', 'advsign' ); ?>	</label>
         <?php 
             function float_settings_option( $val ){
-                $float_settings= $login_login['float_settings'];
+                global $float_settings;
                 return (trim(strtolower($float_settings))==trim(strtolower($val))) ? 'checked' : '';
             } 
         ?>
@@ -102,13 +148,13 @@ if ( isset($login_login) ) {
         <div class="row">
             <div class="col-md-6 form-group">
                 <label for="left_margin"><?php esc_html_e( 'Left Margin', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_login')['float_left_margin']); ?>" min="10" max="100" step="1" class="custom-range" name="float_left_margin" id="float_left_margin">
-                <span id="float_left_margin_value"><?php echo(get_option('login_login')['float_left_margin']); ?></span>
+                <input type="range" value="<?php echo $float_left_margin; ?>" min="10" max="100" step="1" class="custom-range" name="float_left_margin" id="float_left_margin">
+                <span id="float_left_margin_value"><?php echo $float_left_margin; ?></span>
             </div>
             <div class="col-md-6 form-group">
                 <label for="top_margin"><?php esc_html_e( 'Top Margin', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_login')['float_top_margin']); ?>" min="10" max="100" step="1" class="custom-range" name="float_top_margin" id="float_top_margin">
-                <span id="float_top_margin_value"><?php echo(get_option('login_login')['float_top_margin']); ?></span>
+                <input type="range" value="<?php echo $float_top_margin; ?>" min="10" max="100" step="1" class="custom-range" name="float_top_margin" id="float_top_margin">
+                <span id="float_top_margin_value"><?php echo $float_top_margin; ?></span>
             </div>
         </div>
     </div>
@@ -126,7 +172,7 @@ if ( isset($login_login) ) {
     <!-- Background Form Color -->
     <div class="border p-3 mb-3 rounded d-none bg_form_color_option">
         <label for="background_form_color">  <?php esc_html_e( 'Background Form Color', 'advsign' ); ?> </label>
-        <input type="text" class="form-control" value="<?php echo(get_option('login_login')['background_form_color']); ?>" id="background_form_color" name="background_form_color" aria-describedby="bgcolorHelp">
+        <input type="text" class="form-control" value="<?php echo $background_form_color; ?>" id="background_form_color" name="background_form_color" aria-describedby="bgcolorHelp">
         <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
     </div>
     <!-- Background Image Url -->
@@ -151,7 +197,7 @@ if ( isset($login_login) ) {
             <img src="<?php echo esc_url( $bg_img_url ? : $bg_img_default_url ); ?>" class="img-thumbnail mx-auto d-block uploaded_form_bg_img" data-id="0" alt="<?php esc_html_e( 'form background image', 'advsign' ); ?>" style="width: <?php echo $login_login['form_bg_img_width'] ? :'184'; ?>px;height:<?php echo $login_login['form_bg_img_height'] ? :'184'; ?>px;">
         </div>
         <input type="url" value="<?php echo esc_url( $bg_img_url ? : $bg_img_default_url ); ?>" class="form-control " id="form_bg_img" data-id='0' aria-describedby="form_bg_img_help" readonly>
-        <input type="hidden" name="login_form_bg_id" id="login_form_bg_id" value="<?php echo $login_login['login_form_bg_id'] ? : 0; ?>">
+        <input type="hidden" name="login_form_bg_id" id="login_form_bg_id" value="<?php echo $login_form_bg_id; ?>">
         <small id="form_bg_img_help" class="btn btn-dark mt-3"> <?php esc_html_e( 'Change Image', 'advsign' ); ?> </small>
     </div>
     <!-- Background Repeat -->
@@ -160,9 +206,9 @@ if ( isset($login_login) ) {
             <label for="login_bg_repeat"> <?php esc_html_e( 'Background Repeat', 'advsign' ); ?></label>
             <?php $options = array('No Repeat', 'Repeat', 'Repeat Horizontally', 'Repeat Vertically');
                 echo "<select class=".'form-control'." name=".'login_bg_repeat'.">";
-                $selected = get_option('login_login')['login_bg_repeat'];
+               
                 foreach( $options as $option ){
-                    if( $selected == $option ) {
+                    if( $login_bg_repeat == $option ) {
                         echo "<option selected='selected' value='{$option}'>{$option}</option>";
                     } else {
                         echo "<option value='{$option}'>{$option}</option>";
@@ -178,13 +224,13 @@ if ( isset($login_login) ) {
             <label for="login_form_bg_position"> <?php esc_html_e( 'Background Position', 'advsign' ); ?>	</label>
             <?php $options = array('left top', 'left center', 'left bottom', 'right top', 'right center', 'right bottom', 'center top', 'center center', 'center bottom');
                 echo "<select class=".'form-control'." name=".'login_form_bg_position'.">";
-                $selected = get_option('login_login')['login_form_bg_position'];
+               
                 foreach($options as $option){
-                    if($selected == $option) {
-                        echo "<option selected='selected' value='$option'>$option</option>";
+                    if($login_form_bg_position == $option) {
+                        echo "<option selected='selected' value='{$option}'>{$option}</option>";
                     }
                     else {
-                        echo "<option value='$option'>$option</option>";
+                        echo "<option value='{$option}'>{$option}</option>";
                     }
                 }
                 echo "</select>";
@@ -198,10 +244,9 @@ if ( isset($login_login) ) {
                 <label for="login_bg_effect"> <?php esc_html_e( 'Background Effect', 'advsign' ); ?></label>
                 <?php $options = array('No Overlay Effect', 'Overlay Effect 1', 'Overlay Effect 2', 'Overlay Effect 3');
                     echo "<select class=".'form-control'." name=".'login_bg_effect'.">";
-                    $selected = get_option('login_login')['login_bg_effect'];
                     foreach($options as $option){
-                        if($selected == $option) {
-                            echo "<option selected='selected' value='$option'>$option</option>";
+                        if($login_bg_effect == $option) {
+                            echo "<option selected='selected' value='{$option}'>{$option}</option>";
                         }
                         else {
                             echo "<option value='$option'>$option</option>";
@@ -227,7 +272,7 @@ if ( isset($login_login) ) {
             </div>
             <div class="col-md-6 form-group">
                 <label for="login_border_radius"><?php esc_html_e( 'Border Radius', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_login')['login_border_radius']); ?>" min="0" max="20" step="1" class="custom-range" id="login_border_radius" name="login_border_radius">
+                <input type="range" value="<?php echo $login_border_radius; ?>" min="0" max="30" step="1" class="custom-range" id="login_border_radius" name="login_border_radius">
                 <span id="login_border_radius_value"><?php echo $login_border_radius; ?></span>
             </div>
         </div>
@@ -252,7 +297,7 @@ if ( isset($login_login) ) {
             </div>
             <div class="col-md-6 form-group">
                 <label for="form_border_width"><?php esc_html_e( 'Border Thickness', 'advsign' ); ?></label>
-                <input type="range" value="<?php echo(get_option('login_login')['form_border_width']); ?>" min="0" max="20" step="1" class="custom-range" name="form_border_width" id="form_border_width">
+                <input type="range" value="<?php echo $form_border_width; ?>" min="0" max="10" step="1" class="custom-range" name="form_border_width" id="form_border_width">
                 <span id="form_border_width_value"><?php $form_border_width; ?></span>
             </div>
         </div>
@@ -286,7 +331,7 @@ if ( isset($login_login) ) {
             </div>
             <div class="col-md-6 form-group">
                 <label for="form_shadow_color_picker">  <?php esc_html_e( 'Form Shadow Color', 'advsign' ); ?> </label>
-                <input type="text" class="form-control" value="<?php echo(get_option('login_login')['form_shadow_color_picker']); ?>" id="form_shadow_color_picker" name="form_shadow_color_picker" aria-describedby="bgcolorHelp">
+                <input type="text" class="form-control" value="<?php echo $form_shadow_color_picker; ?>" id="form_shadow_color_picker" name="form_shadow_color_picker" aria-describedby="bgcolorHelp">
                 <small id="bgcolorHelp" class="form-text text-muted"> <?php esc_html_e( 'Pick a color', 'advsign' ); ?> </small>
             </div>
         </div>
